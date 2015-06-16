@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.6.3.201411271034-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[true]]></enableImports>
+	<configs>
+	</configs>
+	<autoconfigs>
+		<config>src/main/webapp/WEB-INF/CONFIG/jpa-hibernate-embedded.xml</config>
+		<config>src/main/webapp/WEB-INF/CONFIG/i18n.xml</config>
+		<config>src/main/webapp/WEB-INF/CONFIG/applicationContext.xml</config>
+		<config>src/main/webapp/WEB-INF/CONFIG/dispatcher-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/CONFIG/security-in-mem.xml</config>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>
