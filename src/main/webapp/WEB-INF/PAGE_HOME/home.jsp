@@ -84,7 +84,7 @@ body {
 
 .thumbnail {
 	padding: 0;
-	height: 505px;
+	height: 460px;
 }
 
 .thumbnail .caption-full {

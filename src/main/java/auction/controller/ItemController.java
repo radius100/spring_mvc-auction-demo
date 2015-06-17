@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import auction.entity.Item;
 import auction.service.ItemService;
 import auction.service.ItemUserDetailService;
 import auction.service.TradePoolService;
@@ -32,6 +31,19 @@ public class ItemController {
 		return "items";
 	}
 
+	@RequestMapping("/item")
+	public String showItemDetail1() {
+		
+		return "item";
+	}
+
+	
+	@RequestMapping("/items/item-{id}")
+	public String showItemDetail(Model model, @PathVariable int id) {
+		
+		return "item";
+	}
+	/*
 	@RequestMapping("/items/item-{id}")
 	public String detail(Model model, @PathVariable int id) {
 
@@ -42,9 +54,8 @@ public class ItemController {
 		//publish-item-trade-detail
 		model.addAttribute("p", tradePoolService.findItemTradeDetail(item));		
 		model.addAttribute("follows", itemUserDetailService.findItemUsersFollow(item));
-//		int i=1;
-//		i=i/(i-1);
+
 		return "item-user-detail";
-		//return "index";
 	}
+	*/
 }

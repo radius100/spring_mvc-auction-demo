@@ -5,17 +5,22 @@
 
 <tiles-definitions>
  	
-	<definition name="item" template="/WEB-INF/PAGE_ITEM/item.jsp">
-	
-	</definition>
-
-	<definition name="item1" extends="item">
-		<put-attribute name="title" value="!!!" />
+	<definition name="home" template="/WEB-INF/PAGE_ITEM/home.jsp">
 		<put-attribute name="menu" value="/WEB-INF/LAYOUTS/menu.jsp" />
 		<put-attribute name="sidemenu" value="/WEB-INF/LAYOUTS/sidemenu.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/LAYOUTS/footer.jsp" />
+	
+	</definition>
+
+	<definition name="item" extends="home">
+		<put-attribute name="title" value="!!!" />
 		
+		<put-attribute name="slidebar" value="/WEB-INF/PAGE_ITEM/slidebar.jsp" />
+		<put-attribute name="carusel" value="/WEB-INF/PAGE_ITEM/carusel_item.jsp" />
+		<put-attribute name="showitem" value="/WEB-INF/PAGE_ITEM/showitem.jsp" />
+
 		<put-attribute name="current" value="item" />
 	</definition>
+
 
 </tiles-definitions>

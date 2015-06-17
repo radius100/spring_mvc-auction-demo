@@ -118,9 +118,12 @@
 						</c:choose>
 					</div>
 					<div class="row">
+						<!-- 
 						<hr>
+						 -->
 					</div>
 					<div class="row">
+						<p>
 						<security:authorize access="isAuthenticated()">
 							<div class="col-md-4" align="center">
 								<c:choose>
@@ -151,9 +154,10 @@
 						</security:authorize>
 						<security:authorize access="! isAuthenticated()">
 							<div class="col-md-12" align="center">
-								<a href="#" class="btn btn-xs btn-primary btn-product"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
+								<a href="#" class="btn btn-sm btn-primary btn-product"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
 							</div>
 						</security:authorize>
+						</p>
 					</div>
 				</div>
 			</div>

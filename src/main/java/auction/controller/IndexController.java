@@ -20,7 +20,7 @@ public class IndexController {
 	@RequestMapping("/index")
 	public String index(Model model, Principal principal) {
 
-//		String name = principal.getName();
+	//	String name = principal.getName();
 		String name = "admin";
 		
 		model.addAttribute("items", itemService.findAll(name));
