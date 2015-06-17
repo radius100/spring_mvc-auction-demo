@@ -164,6 +164,9 @@ public class InitDbService {
 		tradePool3.setItem(item2);
 		tradePool3.setDate(new Date());
 		tradePoolRepository.save(tradePool3);
+
+		//Date dd = new Date();
+		
 		
 		TradePool tradePool4 = new TradePool();
 		tradePool4.setUser(userAdmin);

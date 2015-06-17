@@ -23,9 +23,9 @@ public class Item {
 	
 	private Date startDate;
 
-	private Integer startAmount;
-
 	private Date finishDate;
+	
+	private Integer startAmount;
 
 	private boolean block;
 
@@ -51,9 +51,11 @@ public class Item {
 	private Boolean tradeedByCurrentUser = false;
 
 	@Transient
-	private String dateMessage;
-
+	private int dateMessage;
 	
+	@Transient
+	private long dateValue;
+
 	/*
 	 * public List<Image> getImages() { return images; }
 	 * 
@@ -140,14 +142,6 @@ public class Item {
 		this.tradeedByCurrentUser = tradeedByCurrentUser;
 	}
 
-	public String getDateMessage() {
-		return dateMessage;
-	}
-
-	public void setDateMessage(String dateMessage) {
-		this.dateMessage = dateMessage;
-	}
-
 	public boolean isBlock() {
 		return block;
 	}
@@ -202,6 +196,22 @@ public class Item {
 
 	public void setStartAmount(Integer startAmount) {
 		this.startAmount = startAmount;
+	}
+
+	public long getDateValue() {
+		return dateValue;
+	}
+
+	public void setDateValue(long dateValue) {
+		this.dateValue = dateValue;
+	}
+
+	public int getDateMessage() {
+		return dateMessage;
+	}
+
+	public void setDateMessage(int dateMessage) {
+		this.dateMessage = dateMessage;
 	}
 
 }

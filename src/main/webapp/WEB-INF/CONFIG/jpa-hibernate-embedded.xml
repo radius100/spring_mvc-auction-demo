@@ -19,7 +19,7 @@
 		</property>
 		<property name="persistenceProvider">
 			<bean class="org.hibernate.jpa.HibernatePersistenceProvider" />
-		</property>
+		</property>	
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />

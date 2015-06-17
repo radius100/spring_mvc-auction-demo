@@ -23,7 +23,58 @@
 					</div>
 					<!-- 	<p>32GB, 2GB Ram, 1080HD, 5.1 inches, Android</p>  -->
 					<div class="row">
-						<div class="col-md-12 lead" align="center">${item.dateMessage}</div>
+						<c:choose>
+							<c:when test="${item.dateMessage eq 1}">
+								<div class="col-md-8" align="left">
+									<p>
+										<spring:message code="showitem.date.info_1" />
+									</p>
+								</div>
+								<div class="col-md-4" align="center">${item.dateValue}</div>
+							</c:when>
+							<c:when test="${item.dateMessage eq 2}">
+								<div class="col-md-8" align="left">
+									<p>
+										<spring:message code="showitem.date.info_2" />
+									</p>
+								</div>
+								<div class="col-md-4" align="center">${item.dateValue}</div>
+							</c:when>
+							<c:when test="${item.dateMessage eq 3}">
+								<div class="col-md-12" align="center">
+									<p>
+									<strong>
+										<spring:message code="showitem.date.info_3" />
+									</strong>
+									</p>
+								</div>
+							</c:when>
+							<c:when test="${item.dateMessage eq 4}">
+								<div class="col-md-8" align="left">
+									<p>
+										<spring:message code="showitem.date.info_4" />
+									</p>
+								</div>
+								<div class="col-md-4" align="center">${item.dateValue}</div>
+							</c:when>
+							<c:when test="${item.dateMessage eq 5}">
+								<div class="col-md-8" align="left">
+									<p>
+										<spring:message code="showitem.date.info_5" />
+									</p>
+								</div>
+								<div class="col-md-4" align="center">${item.dateValue}</div>
+							</c:when>
+							<c:when test="${item.dateMessage eq 6}">
+								<div class="col-md-12" align="center">
+									<p>
+									<strong>
+										<spring:message code="showitem.date.info_6" />
+									</strong>
+									</p>
+								</div>
+							</c:when>
+						</c:choose>
 					</div>
 					<div class="row">
 						<div class="col-md-8" align="left">
@@ -34,7 +85,7 @@
 							<spring:message code="showitem.current_price" />
 						</div>
 						<c:choose>
-							<c:when test="${item.currentAmount > 0}">
+							<c:when test="${item.currentAmount gt 0}">
 								<div class="col-md-4" align="center">${item.currentAmount}</div>
 							</c:when>
 							<c:otherwise>
