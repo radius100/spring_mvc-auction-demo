@@ -134,7 +134,7 @@ public class InitDbService {
 		
 		UserItemDetail userItemDetail6 = new UserItemDetail();
 		userItemDetail6.setUser(userAdmin);
-		userItemDetail6.setItem(item3);
+		userItemDetail6.setItem(item2);
 		userItemDetail6.setFollow(true);
 		userItemDetailRepository.save(userItemDetail6);
 	

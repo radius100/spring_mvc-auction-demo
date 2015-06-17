@@ -124,8 +124,11 @@
 						<security:authorize access="isAuthenticated()">
 							<div class="col-md-4" align="center">
 								<c:choose>
-									<c:when test="${item.followedByCurrentUser eq true}">
+									<c:when test="${(item.followedByCurrentUser eq true) && (item.tradeedByCurrentUser eq false)}">
 										<a class="btn btn-xs btn-success btn-product disabled"><span class="glyphicon glyphicon-star"></span> <spring:message code="showitem.btn.follow" /></a>
+									</c:when>
+									<c:when test="${(item.followedByCurrentUser eq true) && (item.tradeedByCurrentUser eq true) }">
+										<a class="btn btn-xs btn-primary btn-product disabled"><span class="glyphicon glyphicon-star"></span> <spring:message code="showitem.btn.follow" /></a>
 									</c:when>
 									<c:otherwise>
 										<a class="btn btn-xs btn-primary btn-product"><span class="glyphicon glyphicon-star-empty"></span> <spring:message code="showitem.btn.follow" /></a>
