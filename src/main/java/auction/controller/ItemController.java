@@ -1,20 +1,27 @@
 package auction.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import auction.entity.User;
 import auction.service.ItemService;
 import auction.service.ItemUserDetailService;
 import auction.service.TradePoolService;
+import auction.service.UserService;
 
 @Controller
 public class ItemController {
 
 	@Autowired
 	private ItemService itemService;
+
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private TradePoolService tradePoolService;
@@ -26,20 +33,16 @@ public class ItemController {
 	@RequestMapping("/items")
 	public String users(Model model) {
 
-		model.addAttribute("items", itemService.findAll());
+		//model.addAttribute("items", itemService.findAll());
 
 		return "items";
 	}
 
-	@RequestMapping("/item")
-	public String showItemDetail1() {
-		
-		return "item";
-	}
-
-	
 	@RequestMapping("/items/item-{id}")
-	public String showItemDetail(Model model, @PathVariable int id) {
+	public String showItemDetail(Principal principal, Model model, @PathVariable int id) {
+		
+		//model.addAttribute("item", itemService.getOne(principal.getName(),id));
+		model.addAttribute("item", itemService.getOne("admin",id));
 		
 		return "item";
 	}

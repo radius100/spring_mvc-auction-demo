@@ -173,6 +173,7 @@ public class InitDbService {
 		tradePool4.setAmount(300);
 		tradePool4.setItem(item3);
 		tradePool4.setDate(new Date());
+		
 		tradePoolRepository.save(tradePool4);		
 		
 		TradePool tradePool5 = new TradePool();
@@ -180,6 +181,7 @@ public class InitDbService {
 		tradePool5.setAmount(400);
 		tradePool5.setItem(item3);
 		tradePool5.setDate(new Date());
+		tradePool5.setMessageDate(tradePool5.getDate().toString());
 		tradePoolRepository.save(tradePool5);		
 
 	}

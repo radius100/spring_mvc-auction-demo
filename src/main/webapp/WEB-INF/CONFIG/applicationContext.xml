@@ -6,7 +6,7 @@
 	<context:component-scan base-package="auction">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	
+
 	<import resource="jpa-hibernate-embedded.xml" />
 	<import resource="security-in-mem.xml" />
 	<import resource="i18n.xml" />

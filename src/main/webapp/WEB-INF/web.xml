@@ -11,7 +11,6 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
- 
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -43,6 +42,8 @@
 		<url-pattern>*.htm</url-pattern>
 		<url-pattern>*.json</url-pattern>
 		<url-pattern>*.xml</url-pattern>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.css</url-pattern>
 	</servlet-mapping>
 
 	<listener>

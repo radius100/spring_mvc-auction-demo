@@ -30,7 +30,7 @@ public class UserController {
 	@RequestMapping("/users")
 	public String users(Model model){
 		
-		model.addAttribute("users", userService.findAll());
+		model.addAttribute("users", userService.getAll());
 		
 		return "users";
 	}
@@ -38,7 +38,7 @@ public class UserController {
 	@RequestMapping("/users/user-{id}")
 	public String detail(Model model, @PathVariable int id){
 	
-		User user = userService.findOne(id);
+		User user = userService.getOne(id);
 
 		model.addAttribute("user", user);
 		model.addAttribute("publishs", userItemDetailService.findUserItemsPublish(user));	

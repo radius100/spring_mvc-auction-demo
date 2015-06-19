@@ -6,6 +6,6 @@ import auction.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 
-	User getOneByName(String name);
-
+	User findOneByName(String name);
+	
 }

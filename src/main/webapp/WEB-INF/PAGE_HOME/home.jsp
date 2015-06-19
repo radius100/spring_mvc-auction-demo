@@ -131,7 +131,7 @@ footer {
 		<tiles:insertAttribute name="menu" />
 	</div>
 	<!-- Page Content -->
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-3">
 				<tiles:insertAttribute name="slidebar" />

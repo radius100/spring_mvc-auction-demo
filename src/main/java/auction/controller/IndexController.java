@@ -23,7 +23,7 @@ public class IndexController {
 	//	String name = principal.getName();
 		String name = "admin";
 		
-		model.addAttribute("items", itemService.findAll(name));
+		model.addAttribute("items", itemService.getAll(name));
 
 		return "index";
 	}

@@ -16,13 +16,8 @@ public interface TradePoolRepository extends JpaRepository<TradePool, Integer>{
 
 	public int countDistinctUserByItem(Item item);
 
-//	public TradePool findFirstItemByOrderByAmountDesc(Item item);
-
 	public int countByUserAndItem(User user, Item item);
 
 	public TradePool findFirstByItemOrderByAmountDesc(Item item);
 	
-	//findFirstByOrderByLastnameAsc()
-	
-	//public TradePool findFirstByOderByAmountDesc(Item item);
 }

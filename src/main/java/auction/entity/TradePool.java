@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class TradePool {
@@ -26,6 +27,12 @@ public class TradePool {
 	private int amount;
 	
 	private Date date;
+	
+	@Transient
+	private String messageDate;
+	
+	@Transient
+	private String messageTime;
 
 	
 	public Item getItem() {
@@ -66,6 +73,22 @@ public class TradePool {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getMessageDate() {
+		return messageDate;
+	}
+
+	public void setMessageDate(String messageDate) {
+		this.messageDate = messageDate;
+	}
+
+	public String getMessageTime() {
+		return messageTime;
+	}
+
+	public void setMessageTime(String messageTime) {
+		this.messageTime = messageTime;
 	}
 	
 }

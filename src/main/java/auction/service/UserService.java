@@ -14,15 +14,20 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 
-	public List<User> findAll() {
-		return userRepository.findAll();
+	public User getOne(int id) {
+		return userRepository.findOne(id);
 	}
 
-	public User findOne(int id) {
-		return userRepository.findOne(id);
+	public User getOne(String name) {
+		return userRepository.findOneByName(name);
 	}
 
 	public void save(User user) {
 		userRepository.save(user);
 	}
+
+	public List<User> getAll() {
+		return userRepository.findAll();
+	}
+
 }

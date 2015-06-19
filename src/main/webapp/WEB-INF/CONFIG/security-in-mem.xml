@@ -6,6 +6,7 @@
 		   http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<http>
+		<intercept-url pattern="/resources/**" access="permitAll()"/>
 		<intercept-url pattern="/users**" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/users/**" access="hasRole('ADMIN')" />
 		<form-login login-page="/login.html" default-target-url="/index.html" authentication-failure-url="/login.jsp?error=true" />
