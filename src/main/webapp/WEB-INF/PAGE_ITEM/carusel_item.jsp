@@ -15,5 +15,5 @@
 	</div>
 </div>
  --> 
- <img src="http://marktyrrell.com/labs/blueberry/img/slide1.jpg" />
+ 
  

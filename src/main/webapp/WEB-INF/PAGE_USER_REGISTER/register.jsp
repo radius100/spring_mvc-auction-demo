@@ -25,8 +25,8 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-2">
-			<input type="submit" value="<spring:message code="button.save" />" class="btn btn-primary"/>
+		<div class="col-sm-12">
+			<input type="submit" value="<spring:message code="button.save" />" class="btn btn-lg btn-primary"/>
 		</div>
 	</div>
 </form:form>

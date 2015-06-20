@@ -61,7 +61,7 @@ public class ItemService {
 
 		}
 		
-		item.createDateMessage();
+		item=DateTimeUtils.createItemDateMessage4IndexJsp(item);
 
 		return item;
 	}
@@ -77,8 +77,8 @@ public class ItemService {
 		
 		for(TradePool tradePool : tradePools){
 			
-			tradePool.setMessageDate(DateTimeUtils.getStringDate(tradePool));
-			tradePool.setMessageTime(DateTimeUtils.getStringTime(tradePool));
+			tradePool.setMessageDate(DateTimeUtils.getDateAsString(tradePool));
+			tradePool.setMessageTime(DateTimeUtils.getTimeAsString(tradePool));
 		}
 		
 		item.setTradePools(tradePools);
@@ -91,7 +91,7 @@ public class ItemService {
 		
 		Item item = itemRepository.findOne(id);
 		User user = userRepository.findOneByName("admin");
-		//User user = userRepository.findOneByName(userName);
+		//if( null != userName ) User user = userRepository.findOneByName(userName);
 				
 		item=getOneCore(item, user);
 		item=getOneWithTradePoolAndUserItemDetailCore(item);

@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import auction.entity.User;
 import auction.service.ItemService;
 import auction.service.ItemUserDetailService;
 import auction.service.TradePoolService;

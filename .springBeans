@@ -7,14 +7,28 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
+		<config>src/main/webapp/WEB-INF/CONFIG/i18n.xml</config>
+		<config>src/main/webapp/WEB-INF/CONFIG/jpa-hibernate-embedded.xml</config>
+		<config>src/main/webapp/WEB-INF/CONFIG/security-jdbc.xml</config>
 	</configs>
 	<autoconfigs>
-		<config>src/main/webapp/WEB-INF/CONFIG/jpa-hibernate-embedded.xml</config>
-		<config>src/main/webapp/WEB-INF/CONFIG/i18n.xml</config>
 		<config>src/main/webapp/WEB-INF/CONFIG/applicationContext.xml</config>
 		<config>src/main/webapp/WEB-INF/CONFIG/dispatcher-servlet.xml</config>
-		<config>src/main/webapp/WEB-INF/CONFIG/security-in-mem.xml</config>
 	</autoconfigs>
 	<configSets>
+		<configSet>
+			<name><![CDATA[dev]]></name>
+			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>src/main/webapp/WEB-INF/CONFIG/applicationContext.xml</config>
+				<config>src/main/webapp/WEB-INF/CONFIG/dispatcher-servlet.xml</config>
+				<config>src/main/webapp/WEB-INF/CONFIG/i18n.xml</config>
+				<config>src/main/webapp/WEB-INF/CONFIG/jpa-hibernate-embedded.xml</config>
+				<config>src/main/webapp/WEB-INF/CONFIG/security-jdbc.xml</config>
+			</configs>
+			<profiles>
+			</profiles>
+		</configSet>
 	</configSets>
 </beansProjectDescription>
