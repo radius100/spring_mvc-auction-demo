@@ -37,7 +37,9 @@
 				<li><a href="#">Contact</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="../navbar-static-top/"><spring:message code="menu.account" /></a></li>
+			<security:authorize access="isAuthenticated()">	
+				<li class="${current=='account'?'active':''}"><a href="<spring:url value="/account.html" />"><spring:message code="menu.account" /></a></li>
+			</security:authorize>
 				<li id="en"><a href="?lang=en"><spring:message code="lang.en" /></a></li>
 				<li id="ru"><a href="?lang=ru"><spring:message code="lang.ru" /></a></li>
 			</ul>

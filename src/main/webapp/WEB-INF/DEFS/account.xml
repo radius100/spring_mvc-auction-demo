@@ -4,16 +4,17 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
- 	
-	<definition name="account" template="/WEB-INF/PAGE_ACCOUNT/account.jsp">
 
-	</definition>
-
-	<definition name="index1" extends="account">
-		<put-attribute name="title" value="!!!" />
+	<definition name="accounttempl" template="/WEB-INF/PAGE_ACCOUNT/home.jsp">
 		<put-attribute name="menu" value="/WEB-INF/LAYOUTS/menu.jsp" />
 		<put-attribute name="sidemenu" value="/WEB-INF/LAYOUTS/sidemenu.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/LAYOUTS/footer.jsp" />
+
+	</definition>
+
+	<definition name="account" extends="accounttempl">
+		<put-attribute name="title" value="!!!" />
+		<put-attribute name="account" value="/WEB-INF/PAGE_ACCOUNT/account.jsp" />
 		
 		<put-attribute name="current" value="account" />
 	</definition>
