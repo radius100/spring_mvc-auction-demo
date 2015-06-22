@@ -16,7 +16,8 @@
 				<value>/WEB-INF/DEFS/item.xml</value>
 				<value>/WEB-INF/DEFS/account.xml</value>
 				<value>/WEB-INF/DEFS/login.xml</value>
-				<value>/WEB-INF/DEFS/register.xml</value>
+				<value>/WEB-INF/DEFS/user-register.xml</value>
+				<value>/WEB-INF/DEFS/item-register.xml</value>
 			</list>
 		</property>
 	</bean>

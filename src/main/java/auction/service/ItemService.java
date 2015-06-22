@@ -104,11 +104,18 @@ public class ItemService {
 		User user = userRepository.findOneByName(name);
 
 		List<Item> items = itemRepository.findItemByActiveTrueAndSellFalseAndBlockFalse();
+		//List<Item> items = itemRepository.findItemBySellFalseAndBlockFalse();
 
 		for (Item item : items)
 			item = getOneCore(item, user);
 
 		return items;
+	}
+
+	public void save(Item item) {
+
+		item.setActive(true);
+		itemRepository.save(item);		
 	}
 
 /*

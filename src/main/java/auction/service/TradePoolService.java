@@ -25,6 +25,7 @@ public class TradePoolService {
 	public int findCurrentAmount(Item item) {
 		
 		TradePool tradePool = tradePoolRepository.findFirstByItemOrderByAmountDesc(item);
-		return tradePool.getAmount();
+		
+		return (null != tradePool)?tradePool.getAmount():-1;
 	}
 }

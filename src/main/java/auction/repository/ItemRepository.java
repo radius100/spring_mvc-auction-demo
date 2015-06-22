@@ -10,4 +10,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
 
 	public List<Item> findItemByActiveTrueAndSellFalseAndBlockFalse();
 
+	public List<Item> findItemBySellFalseAndBlockFalse();
+
 }

@@ -128,33 +128,33 @@
 							<div class="col-md-4" align="center">
 								<c:choose>
 									<c:when test="${(item.followedByCurrentUser eq true) && (item.tradeedByCurrentUser eq false)}">
-										<a class="btn btn-xs btn-success btn-product disabled"><span class="glyphicon glyphicon-star"></span> <spring:message code="showitem.btn.follow" /></a>
+										<a class="btn btn-xs btn-success btn-product btn-block disabled"><span class="glyphicon glyphicon-star"></span> <spring:message code="showitem.btn.follow" /></a>
 									</c:when>
 									<c:when test="${(item.followedByCurrentUser eq true) && (item.tradeedByCurrentUser eq true) }">
-										<a class="btn btn-xs btn-primary btn-product disabled"><span class="glyphicon glyphicon-star"></span> <spring:message code="showitem.btn.follow" /></a>
+										<a class="btn  btn-block btn-xs btn-primary btn-product btn-block disabled"><span class="glyphicon glyphicon-star"></span> <spring:message code="showitem.btn.follow" /></a>
 									</c:when>
 									<c:otherwise>
-										<a class="btn btn-xs btn-primary btn-product"><span class="glyphicon glyphicon-star-empty"></span> <spring:message code="showitem.btn.follow" /></a>
+										<a class="btn btn-xs btn-primary btn-product btn-block"><span class="glyphicon glyphicon-star-empty"></span> <spring:message code="showitem.btn.follow" /></a>
 									</c:otherwise>
 								</c:choose>
 							</div>
 							<div class="col-md-4" align="center">
-								<a href="#" class="btn btn-xs btn-primary btn-product"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
+								<a href="#" class="btn btn-xs btn-primary btn-product btn-block"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
 							</div>
 							<div class="col-md-4" align="center">
 								<c:choose>
 									<c:when test="${item.tradeedByCurrentUser eq true}">
-										<a href="#" class="btn btn-xs btn-success btn-product disabled"><span class="glyphicon glyphicon-usd"></span> <spring:message code="showitem.btn.trade" /></a>
+										<a href="#" class="btn btn-xs btn-success btn-product btn-block disabled"><span class="glyphicon glyphicon-usd"></span> <spring:message code="showitem.btn.trade" /></a>
 									</c:when>
 									<c:otherwise>
-										<a href="#" class="btn btn-xs btn-primary btn-product"><span class="glyphicon glyphicon-usd"></span> <spring:message code="showitem.btn.trade" /></a>
+										<a href="#" class="btn btn-xs btn-primary btn-product btn-block"><span class="glyphicon glyphicon-usd"></span> <spring:message code="showitem.btn.trade" /></a>
 									</c:otherwise>
 								</c:choose>
 							</div>
 						</security:authorize>
 						<security:authorize access="! isAuthenticated()">
 							<div class="col-md-12" align="center">
-								<a href="#" class="btn btn-sm btn-primary btn-product"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
+								<a href="#" class="btn btn-sm btn-primary btn-product btn-block"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
 							</div>
 						</security:authorize>
 						</p>
