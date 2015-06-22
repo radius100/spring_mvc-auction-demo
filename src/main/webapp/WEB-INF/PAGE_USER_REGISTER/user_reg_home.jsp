@@ -25,6 +25,10 @@ body {
 	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
+.tabscontent {
+	padding-top: 70px;
+}
+
 footer {
 	margin: 50px 0;
 
