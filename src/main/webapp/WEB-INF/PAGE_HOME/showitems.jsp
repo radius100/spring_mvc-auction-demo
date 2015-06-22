@@ -139,7 +139,7 @@
 								</c:choose>
 							</div>
 							<div class="col-md-4" align="center">
-								<a href="#" class="btn btn-xs btn-primary btn-product btn-block"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
+								<a href="/items/item-${item.id}.html" class="btn btn-xs btn-primary btn-product btn-block"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
 							</div>
 							<div class="col-md-4" align="center">
 								<c:choose>
@@ -154,7 +154,7 @@
 						</security:authorize>
 						<security:authorize access="! isAuthenticated()">
 							<div class="col-md-12" align="center">
-								<a href="#" class="btn btn-sm btn-primary btn-product btn-block"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
+								<a href="/items/item-${item.id}.html" class="btn btn-sm btn-primary btn-product btn-block"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
 							</div>
 						</security:authorize>
 						</p>

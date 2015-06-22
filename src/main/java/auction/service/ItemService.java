@@ -90,7 +90,7 @@ public class ItemService {
 	public Item getOne(String userName, int id) {
 		
 		Item item = itemRepository.findOne(id);
-		User user = userRepository.findOneByName("admin");
+		User user = userRepository.findOneByName(userName);
 		//if( null != userName ) User user = userRepository.findOneByName(userName);
 				
 		item=getOneCore(item, user);
@@ -112,10 +112,16 @@ public class ItemService {
 		return items;
 	}
 
-	public void save(Item item) {
+	public void save(Item item, User user) {
 
 		item.setActive(true);
-		itemRepository.save(item);		
+		itemRepository.save(item);
+		
+		UserItemDetail userItemDetail = new UserItemDetail();
+		userItemDetail.setItem(item);
+		userItemDetail.setUser(user);
+		userItemDetail.setPublish(true);
+		userItemDetailRepository.save(userItemDetail);		
 	}
 
 /*

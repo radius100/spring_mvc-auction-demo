@@ -48,25 +48,24 @@ public class ItemController {
 	@RequestMapping("/items/item-{id}")
 	public String showItemDetail(Principal principal, Model model, @PathVariable int id) {
 		
-		//model.addAttribute("item", itemService.getOne(principal.getName(),id));
-		model.addAttribute("item", itemService.getOne("admin",id));
+		model.addAttribute("item", itemService.getOne((null != principal)?principal.getName():"",id));
 		
 		return "item";
 	}
 
-	@RequestMapping("/itemregister")
+	@RequestMapping("/item/register")
 	public String showRegister(){
 		
 		return "item-register";
 	}
 
 	
-	@RequestMapping(value="/itemregister",method=RequestMethod.POST)
-	public String doRegister(@ModelAttribute("item") Item item){
+	@RequestMapping(value="/item/register",method=RequestMethod.POST)
+	public String doRegister(@ModelAttribute("item") Item item, Principal principal){
 		
-		itemService.save(item);
+		itemService.save(item,userService.getOne(principal.getName()));
 		
-		return "redirect:/itemregister.html?success=true";
+		return "redirect:/item/register.html?success=true";
 	}
 
 

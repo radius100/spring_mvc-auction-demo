@@ -27,7 +27,7 @@
 				<security:authorize access="hasRole('ROLE_ADMIN')">
 					<li class="${current=='users'?'active':''}"><a href="<spring:url value="/users.html" />"><spring:message code="menu.users" /></a></li>
 				</security:authorize>
-				<li class="${current=='register'?'active':''}"><a href="<spring:url value="/register.html" />"><spring:message code="menu.user-register" /></a></li>
+				<li class="${current=='register'?'active':''}"><a href="<spring:url value="/user/register.html" />"><spring:message code="menu.user-register" /></a></li>
 				<security:authorize access="! isAuthenticated()">
 					<li class="${current=='login'?'active':''}"><a href="<spring:url value="/login.html" />"><spring:message code="menu.login" /></a></li>
 				</security:authorize>

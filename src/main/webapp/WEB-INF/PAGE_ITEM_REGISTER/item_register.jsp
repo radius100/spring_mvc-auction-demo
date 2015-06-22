@@ -94,7 +94,14 @@
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel" class="tab-pane" id="description">123</div>
+			<div role="tabpanel" class="tab-pane" id="description">
+				<div class="form-group">
+					<label for="fullDescr" class="col-sm-2 control-label"><spring:message code="register.item.fullDescr" /></label>
+					<div class="col-sm-8">
+						<form:textarea path="fullDescr" class="custom-control form-control" rows="10" style="resize: none"></form:textarea>
+					</div>
+				</div>
+			</div>
 			<div role="tabpanel" class="tab-pane" id="images">444</div>
 		</div>
 

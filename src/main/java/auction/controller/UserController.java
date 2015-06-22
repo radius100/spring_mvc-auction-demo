@@ -49,23 +49,23 @@ public class UserController {
 		return "user-item-detail";
 	}
 	
-	@RequestMapping("/register")
+	@RequestMapping("/user/register")
 	public String showRegister(){
 		
 		return "user-register";
 	}
 	
-	@RequestMapping(value="/register",method=RequestMethod.POST)
+	@RequestMapping(value="/user/register",method=RequestMethod.POST)
 	public String doRegister(@ModelAttribute("user") User user){
 		
 		userService.save(user);
-		return "redirect:/register.html?success=true";
+		return "redirect:/user/register.html?success=true";
 	}
 
 	@RequestMapping(value="/account")
 	public String account(Model model, Principal principal){
 		
-		String name = principal.getName();
+		//String name = principal.getName();
 		//model.addAttribute("", arg1)
 		return "account";
 	}
