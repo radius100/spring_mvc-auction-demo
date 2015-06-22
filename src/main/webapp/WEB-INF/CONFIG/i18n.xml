@@ -7,10 +7,13 @@
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="classpath:messages" />
 		<property name="defaultEncoding" value="UTF-8" />
+	<!-- 	
+		<property name="fallbackToSystemLocale" value="false"/>
+	 -->
 	</bean>
 
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-		<property name="defaultLocale" value="en" />
+		<property name="defaultLocale" value="ru" />
 		<property name="cookieName" value="myAppLocaleCookie" />
 		<property name="cookieMaxAge" value="31104000" />
 	</bean>

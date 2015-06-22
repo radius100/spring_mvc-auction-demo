@@ -14,12 +14,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
+<spring:url value="/resources/jquery.bxslider.min.js" var="bxsliderJs" />
+<script src="${bxsliderJs}"></script>
+<spring:url value="/resources/jquery.bxslider.css" var="bxsliderCss" />
+<link href="${bxsliderCss}" rel="stylesheet" type="text/css" />
 
+<script type="text/javascript">
 
-<spring:url value="/resources/jquery.blueberry.js" var="blueberryJs" />
-<script src="${blueberryJs}"></script>
-<spring:url value="/resources/blueberry.css" var="blueberryCss" />
-<link href="${blueberryCss}" rel="stylesheet" type="text/css" />
+$(document).ready(function(){
+	  $('.bxslider').bxSlider({
+		  adaptiveHeight: true,
+		  mode: 'fade'
+	  });
+	});
+
+</script>
 
 
 <style>
