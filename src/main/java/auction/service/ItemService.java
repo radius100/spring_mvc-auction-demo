@@ -34,8 +34,7 @@ public class ItemService {
 
 	@Autowired
 	TradePoolService tradePoolService;
-	
-	
+
 	public Item getOneCore(Item item, User user) {
 
 		item.setFollowersCount(0);
@@ -60,53 +59,57 @@ public class ItemService {
 			item.setTradeedByCurrentUser(isTrade);
 
 		}
-		
-		item=DateTimeUtils.createItemDateMessage4IndexJsp(item);
+
+		item = DateTimeUtils.createItemDateMessage4IndexJsp(item);
 
 		return item;
 	}
 
-	
 	public Item getOneWithTradePoolAndUserItemDetailCore(Item item) {
 
 		List<TradePool> tradePools;
 		List<UserItemDetail> userItemDetails;
-		
-		tradePools=tradePoolRepository.findByItem(item);
-		userItemDetails=userItemDetailRepository.findByItem(item);
-		
-		for(TradePool tradePool : tradePools){
-			
+
+		tradePools = tradePoolRepository.findByItem(item);
+		userItemDetails = userItemDetailRepository.findByItem(item);
+
+		for (TradePool tradePool : tradePools) {
+
 			tradePool.setMessageDate(DateTimeUtils.getDateAsString(tradePool));
 			tradePool.setMessageTime(DateTimeUtils.getTimeAsString(tradePool));
 		}
-		
+
 		item.setTradePools(tradePools);
 		item.setUserItemDetails(userItemDetails);
-		
+
 		return item;
 	}
 
 	public Item getOne(String userName, int id) {
-		
+
 		Item item = itemRepository.findOne(id);
 		User user = null;
-		
-		if( null != userName ) 
+
+		if (null != userName)
 			user = userRepository.findOneByName(userName);
-				
-		item=getOneCore(item, user);
-		item=getOneWithTradePoolAndUserItemDetailCore(item);
-		
+
+		item = getOneCore(item, user);
+		item = getOneWithTradePoolAndUserItemDetailCore(item);
+
 		return item;
 	}
-	
+
+	public Item getOne(int id) {
+		
+		return itemRepository.findOne(id);
+	}
+
 	public List<Item> getAll(String name) {
 
 		User user = userRepository.findOneByName(name);
 
 		List<Item> items = itemRepository.findItemByActiveTrueAndSellFalseAndBlockFalse();
-		//List<Item> items = itemRepository.findItemBySellFalseAndBlockFalse();
+		// List<Item> items = itemRepository.findItemBySellFalseAndBlockFalse();
 
 		for (Item item : items)
 			item = getOneCore(item, user);
@@ -118,18 +121,18 @@ public class ItemService {
 
 		item.setActive(true);
 		itemRepository.save(item);
-		
+
 		UserItemDetail userItemDetail = new UserItemDetail();
 		userItemDetail.setItem(item);
 		userItemDetail.setUser(user);
 		userItemDetail.setPublish(true);
-		userItemDetailRepository.save(userItemDetail);		
+		userItemDetailRepository.save(userItemDetail);
 	}
 
 	public void update(Item itemToSave, int itemId) {
-		
+
 		Item item = itemRepository.findOne(itemId);
-		
+
 		item.setId(itemId);
 		item.setName(itemToSave.getName());
 		item.setDescr(itemToSave.getDescr());
@@ -138,14 +141,13 @@ public class ItemService {
 		item.setPublishDate(itemToSave.getPublishDate());
 		item.setStartDate(itemToSave.getStartDate());
 		item.setFinishDate(itemToSave.getFinishDate());
-		
+
 		itemRepository.save(item);
 	}
 
-/*
-	public List<Item> getAll() {
-
-		return itemRepository.findAll();
-	}
-*/	
+	/*
+	 * public List<Item> getAll() {
+	 * 
+	 * return itemRepository.findAll(); }
+	 */
 }

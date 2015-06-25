@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import auction.entity.Image;
+import auction.entity.Item;
 import auction.repository.ImageRepository;
 import auction.repository.ItemRepository;
 
@@ -18,11 +19,10 @@ public class ImageService {
 	@Autowired
 	ImageRepository imageRepository;
 	
-	public void save(Image image/*, Item item*/){
+	public void save(Image image, Item item){
 		
-		image.setItem(itemRepository.getOne(1));
-		image.setName("1.jpg");
-		
+		image.setItem(item);
+				
 		imageRepository.save(image);
 	}
 

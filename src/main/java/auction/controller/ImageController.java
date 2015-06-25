@@ -47,8 +47,8 @@ public class ImageController {
 			
 	}
 
-	@RequestMapping(value = "/images/add", method = RequestMethod.POST)
-	public void add(@RequestParam(value="file") MultipartFile file) throws IOException {
+	@RequestMapping(value = "/images/item-{id}/add", method = RequestMethod.POST)
+	public void add(@RequestParam(value="file") MultipartFile file, @PathVariable int id) throws IOException {
 		
 		//добавить обработку аватарки
 		//добавить поддержку *.png, *.bmp etc
@@ -64,7 +64,7 @@ public class ImageController {
 			image.setBody(file.getBytes());
 			//image.setSize(file.getSize());
 			image.setName(file.getName());
-			imageService.save(image);
+			imageService.save(image,itemService.getOne(id));
 		}
 
 	}
