@@ -130,6 +130,16 @@ footer {
 	<div class="container">
 		<tiles:insertAttribute name="menu" />
 	</div>
+	<img alt="aa" src="/images/1.jpg">
+	
+	<div class="container">
+    <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/images/add" method="post">
+        <div class="form-group"><h3>New photo</h3></div>
+        <div class="form-group">Photo: <input type="file" name="file"></div>
+        <div class="form-group"><input type="submit" class="btn btn-primary" value="Add"></div>
+    </form>
+</div>
+	
 	<!-- Page Content -->
 	<div class="container-fluid">
 		<div class="row">

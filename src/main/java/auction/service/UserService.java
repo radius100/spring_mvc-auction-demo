@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import auction.entity.Item;
 import auction.entity.Role;
 import auction.entity.User;
+import auction.entity.UserItemDetail;
+import auction.repository.ItemRepository;
 import auction.repository.RoleRepository;
+import auction.repository.UserItemDetailRepository;
 import auction.repository.UserRepository;
 
 @Service
@@ -20,6 +24,12 @@ public class UserService {
 
 	@Autowired
 	RoleRepository roleRepository;
+	
+	@Autowired
+	ItemRepository itemRepository;
+	
+	@Autowired
+	UserItemDetailRepository userItemDetailRepository;
 	
 	
 	public User getOne(int id) {
@@ -45,6 +55,19 @@ public class UserService {
 
 	public List<User> getAll() {
 		return userRepository.findAll();
+	}
+
+	public boolean isOwner(String userName, int itemId) {
+		
+		User user = userRepository.findOneByName(userName);
+		Item item = itemRepository.findOne(itemId);
+		
+		UserItemDetail userItemDetail = userItemDetailRepository.findOneByUserAndItemAndPublishTrue(user,item);
+	
+		if (null != userItemDetail)
+			return true; 
+		else
+			return false;
 	}
 
 }

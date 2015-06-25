@@ -15,6 +15,7 @@ import auction.service.ItemService;
 import auction.service.ItemUserDetailService;
 import auction.service.TradePoolService;
 import auction.service.UserService;
+import auction.utils.DateTimeUtils;
 
 @Controller
 public class ItemController {
@@ -68,7 +69,39 @@ public class ItemController {
 		return "redirect:/item/register.html?success=true";
 	}
 
+	@RequestMapping("/item-{id}/edit")
+	public String showEdit(Model model, Principal principal, @PathVariable int id){
+		
+				
+		if ( userService.isOwner(principal.getName(),id) ) {
+			
+			Item item = itemService.getOne(null, id);
+			
+			model.addAttribute("item", item);
+			model.addAttribute("isEdit", true);
+			model.addAttribute("formatPublishDate", DateTimeUtils.getDateAsStringFormat(item.getPublishDate()));
+			model.addAttribute("formatStartDate", DateTimeUtils.getDateAsStringFormat(item.getStartDate()));
+			model.addAttribute("formatFinishDate", DateTimeUtils.getDateAsStringFormat(item.getFinishDate()));
+			
+			return "item-edit";
+		}
+			
+		else 
+			return "redirect:/items/item-{id}.html";
+		
+	}
 
+	@RequestMapping(value="/item-{id}/edit",method=RequestMethod.POST)
+	public String doEdit(@ModelAttribute("item") Item item, Principal principal, @PathVariable int id){
+		
+		//itemService.save(item,userService.getOne(principal.getName()));
+		
+		itemService.update(item,id);
+		
+		return "redirect:/item-{id}/edit.html?success=true";
+	}
+
+	
 	
 	/*	
 	@RequestMapping(value="/register",method=RequestMethod.POST)

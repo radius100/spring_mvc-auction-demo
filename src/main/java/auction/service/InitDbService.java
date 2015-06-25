@@ -70,7 +70,6 @@ public class InitDbService {
 		User userTest = new User();
 		userTest.setName("test");
 		userTest.setPassword(encoder.encode("test"));
-		userTest.setPassword("test");
 		userTest.setEnabled(true);
 		roles.clear();
 		roles.add(roleUser);
@@ -79,6 +78,8 @@ public class InitDbService {
 
 		User userTest1 = new User();
 		userTest1.setName("test1");
+		userTest1.setPassword(encoder.encode("test1"));
+		userTest1.setEnabled(true);
 		roles.clear();
 		roles.add(roleUser);
 		userTest1.setRoles(roles);

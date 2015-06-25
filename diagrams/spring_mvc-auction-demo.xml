@@ -2,7 +2,7 @@
 	<entity>
 		<entity-name>auction.entity.TradePool</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>186</entity-height>
+		<entity-height>226</entity-height>
 		<entity-X-Coordinate>468</entity-X-Coordinate>
 		<entity-Y-Coordinate>275</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -35,7 +35,7 @@
 	<entity>
 		<entity-name>auction.entity.Image</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>148</entity-height>
+		<entity-height>226</entity-height>
 		<entity-X-Coordinate>840</entity-X-Coordinate>
 		<entity-Y-Coordinate>19</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>

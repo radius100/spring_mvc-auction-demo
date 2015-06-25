@@ -90,8 +90,10 @@ public class ItemService {
 	public Item getOne(String userName, int id) {
 		
 		Item item = itemRepository.findOne(id);
-		User user = userRepository.findOneByName(userName);
-		//if( null != userName ) User user = userRepository.findOneByName(userName);
+		User user = null;
+		
+		if( null != userName ) 
+			user = userRepository.findOneByName(userName);
 				
 		item=getOneCore(item, user);
 		item=getOneWithTradePoolAndUserItemDetailCore(item);
@@ -122,6 +124,22 @@ public class ItemService {
 		userItemDetail.setUser(user);
 		userItemDetail.setPublish(true);
 		userItemDetailRepository.save(userItemDetail);		
+	}
+
+	public void update(Item itemToSave, int itemId) {
+		
+		Item item = itemRepository.findOne(itemId);
+		
+		item.setId(itemId);
+		item.setName(itemToSave.getName());
+		item.setDescr(itemToSave.getDescr());
+		item.setFullDescr(itemToSave.getFullDescr());
+		item.setStartAmount(itemToSave.getStartAmount());
+		item.setPublishDate(itemToSave.getPublishDate());
+		item.setStartDate(itemToSave.getStartDate());
+		item.setFinishDate(itemToSave.getFinishDate());
+		
+		itemRepository.save(item);
 	}
 
 /*

@@ -1,7 +1,11 @@
 package auction.utils;
 
+import java.util.Date;
+
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import auction.entity.Item;
 import auction.entity.TradePool;
@@ -75,5 +79,14 @@ public class DateTimeUtils {
 		}
 		
 		return item;
+	}
+	
+	static public String getDateAsStringFormat(Date date){
+		
+		DateTime dateTime = new DateTime(date);
+		
+		DateTimeFormatter dtf = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm");
+		
+		return dtf.print(dateTime);
 	}
 }

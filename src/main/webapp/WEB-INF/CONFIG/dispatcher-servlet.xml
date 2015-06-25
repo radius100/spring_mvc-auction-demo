@@ -6,6 +6,14 @@
 
 	<context:component-scan base-package="auction.controller" />
 
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- max upload size in bytes -->
+		<property name="maxUploadSize" value="20971520" /> <!-- 20MB -->
+
+		<!-- max size of file in memory (in bytes) -->
+		<property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
+	</bean>
+
 	<mvc:annotation-driven />
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 
@@ -18,6 +26,7 @@
 				<value>/WEB-INF/DEFS/login.xml</value>
 				<value>/WEB-INF/DEFS/user-register.xml</value>
 				<value>/WEB-INF/DEFS/item-register.xml</value>
+				<value>/WEB-INF/DEFS/item-edit.xml</value>
 			</list>
 		</property>
 	</bean>

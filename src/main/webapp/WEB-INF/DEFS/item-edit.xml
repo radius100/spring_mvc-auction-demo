@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+ 	
+	<definition name="itemedittempl" template="/WEB-INF/PAGE_ITEM_EDIT/item_edit_home.jsp">
+		<put-attribute name="menu" value="/WEB-INF/LAYOUTS/menu.jsp" />
+		<put-attribute name="sidemenu" value="/WEB-INF/LAYOUTS/sidemenu.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/LAYOUTS/footer.jsp" />
+	
+	</definition>
+
+	<definition name="item-edit" extends="itemedittempl">
+		<put-attribute name="title" value="!!!" />
+		<put-attribute name="item_edit" value="/WEB-INF/PAGE_ITEM_EDIT/item_edit.jsp" />
+		
+		<put-attribute name="current" value="item_edit" />
+	</definition>
+
+</tiles-definitions>
