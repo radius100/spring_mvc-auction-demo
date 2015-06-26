@@ -3,12 +3,14 @@ package auction.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import auction.entity.Item;
 import auction.service.ItemService;
@@ -47,13 +49,26 @@ public class ItemController {
 	}
 
 	@RequestMapping("/items/item-{id}")
-	public String showItemDetail(Principal principal, Model model, @PathVariable int id) {
+	public String showItem(Principal principal, Model model, @PathVariable int id) {
 		
 		model.addAttribute("item", itemService.getOne((null != principal)?principal.getName():"",id));
+		model.addAttribute("itemJson", itemService.getTradePoolByItemJson(id));
 		
 		return "item";
 	}
 
+	@RequestMapping("/items/item-{id}/tradepool.json")
+	@ResponseBody
+	public ResponseEntity<?> showItemTradePool(@PathVariable int id) {
+		
+			
+		return ResponseEntity.ok()
+	            //.contentLength(image.getSize())
+	            //.body(new String("[ { 'id': 1, 'name': 'Item 3'}, { 'id': 11, 'name': 'Item 33' } ]"));
+				.body(itemService.getTradePoolByItemJson(id));
+	}
+	
+	
 	@RequestMapping("/item/register")
 	public String showRegister(){
 		

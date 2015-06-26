@@ -6,25 +6,24 @@
 		$('#pickerPublishDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
-			//viewDate : true
-			//defaultDate : '${formatPublishDate}'
-			//useCurrent : false
-			//maxDate : '${formatStartDate}'
+		//viewDate : true
+		//defaultDate : '${formatPublishDate}'
+		//useCurrent : false
+		//maxDate : '${formatStartDate}'
 		});
 		$('#pickerStartDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
-			//viewDate : true			
+		//viewDate : true			
 		});
 		$('#pickerFinishDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
-			//viewDate : true
+		//viewDate : true
 		});
 
 	});
-	
-	</script>
+</script>
 
 <c:if test="${param.success eq true }">
 	<div class="alert alert-success" align="center">
@@ -99,8 +98,7 @@
 						</div>
 					</div>
 				</div>
-				${item.finishDate}<br /> 
-				${formatFinishDate}
+				${item.finishDate}<br /> ${formatFinishDate}
 
 				<div class="form-group">
 					<label for="finishDate" class="col-sm-2 control-label"><spring:message code="register.item.finishDate" /></label>
@@ -120,7 +118,15 @@
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel" class="tab-pane" id="images">444</div>
+			<div role="tabpanel" class="tab-pane" id="images">
+			444
+			<!-- 	
+				<div class="col-sm-9">
+					<input id="input-1" type="file" class="file"><br />
+					<input id="input-1" type="file" class="file"><br />
+				</div>
+			 -->	
+			</div>
 		</div>
 
 	</form:form>

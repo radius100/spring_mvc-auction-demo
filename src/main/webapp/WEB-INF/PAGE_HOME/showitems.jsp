@@ -147,7 +147,12 @@
 										<a href="#" class="btn btn-xs btn-success btn-product btn-block disabled"><span class="glyphicon glyphicon-usd"></span> <spring:message code="showitem.btn.trade" /></a>
 									</c:when>
 									<c:otherwise>
+									<!--  
 										<a href="#" class="btn btn-xs btn-primary btn-product btn-block"><span class="glyphicon glyphicon-usd"></span> <spring:message code="showitem.btn.trade" /></a>
+										<span class="label label-success"><span class="glyphicon glyphicon-usd"></span>Success</span>
+									 -->
+									 
+									 <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-usd"></span>Success</div>
 									</c:otherwise>
 								</c:choose>
 							</div>

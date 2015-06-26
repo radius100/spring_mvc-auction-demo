@@ -1,50 +1,41 @@
 <%@ include file="../LAYOUTS/taglib.jsp"%>
-
 <!DOCTYPE html>
 <html>
 <head>
-<!-- Latest compiled and minified CSS -->
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/cosmo/bootstrap.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link type="text/css" rel="Stylesheet" href="/resources/bjqs/bjqs.css" />
+<link rel="stylesheet" href="/resources/bootstrap-table/bootstrap-table.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-<spring:url value="/resources/jquery.bxslider.min.js" var="bxsliderJs" />
-<script src="${bxsliderJs}"></script>
-<spring:url value="/resources/jquery.bxslider.css" var="bxsliderCss" />
-<link href="${bxsliderCss}" rel="stylesheet" type="text/css" />
+<script src="/resources/bjqs/bjqs-1.3.min.js"></script>
 
-<script type="text/javascript">
+<script src="/resources/bootstrap-table/bootstrap-table.js"></script>
 
-$(document).ready(function(){
-	  $('.bxslider').bxSlider({
-		  adaptiveHeight: true,
-		  mode: 'fade'
-	  });
-	});
+<style type="text/css">
+	body {
+		padding-top: 70px;
+		/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+	}
 
-</script>
-
-
-<style>
-body {
-	padding-top: 70px;
-	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-}
-
-footer {
-	margin: 50px 0;
-}
-
+	footer {
+		margin: 50px 0;
+	}
+	
+	.bodyh {
+		height: 600px;
+		
+	}
+	
 </style>
 
-<title><tiles:insertAttribute name="title" /></title>
-
+<title><tiles:getAsString name="title" /></title>
 </head>
 
 <body>
@@ -60,10 +51,11 @@ footer {
 				<br />
 				<tiles:insertAttribute name="sidemenu" />
 			</div>
-			<div class="col-md-9" align="center">
-				<tiles:insertAttribute name="carusel" />
+			
+			<div class="col-md-6">
 				<tiles:insertAttribute name="showitem" />
 			</div>
+			
 		</div>
 	</div>
 	<!-- Page footer -->

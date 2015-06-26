@@ -3,17 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- Latest compiled and minified CSS -->
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-<!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/cosmo/bootstrap.min.css">
-<!-- 
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
- -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-<!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -24,6 +19,10 @@
 <script src="${datetimepickerJs}"></script>
 <spring:url value="/resources/datetimepicker/bootstrap-datetimepicker.min.css" var="datetimepickerCss" />
 <link href="${datetimepickerCss}" rel="stylesheet" type="text/css" />
+
+<link href="/resources/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+<script src="/resources/fileinput/fileinput.min.js" type="text/javascript"></script>
+<script src="/resources/fileinput/fileinput_locale_ru.js"></script>
 
 
 <style type="text/css">

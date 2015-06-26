@@ -1,15 +1,21 @@
 package auction.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import auction.entity.Item;
 import auction.entity.TradePool;
 import auction.entity.User;
 import auction.entity.UserItemDetail;
+import auction.json.TradePoolByItemJson;
 import auction.repository.ItemRepository;
 import auction.repository.TradePoolRepository;
 import auction.repository.UserItemDetailRepository;
@@ -117,6 +123,17 @@ public class ItemService {
 		return items;
 	}
 
+	public List<Item> getAll() {
+
+		List<Item> items = itemRepository.findItemByActiveTrueAndSellFalseAndBlockFalse();
+		// List<Item> items = itemRepository.findItemBySellFalseAndBlockFalse();
+
+		for (Item item : items)
+			item = getOneCore(item, null);
+
+		return items;
+	}
+
 	public void save(Item item, User user) {
 
 		item.setActive(true);
@@ -145,9 +162,34 @@ public class ItemService {
 		itemRepository.save(item);
 	}
 
-	/*
-	 * public List<Item> getAll() {
-	 * 
-	 * return itemRepository.findAll(); }
-	 */
+	public String getTradePoolByItemJson(int id) {
+		
+
+		List<TradePoolByItemJson> tpJs = new ArrayList<TradePoolByItemJson>();
+		List<TradePool> tradePools = tradePoolRepository.findByItem(itemRepository.findOne(id));
+		
+		for(TradePool tradePool : tradePools){
+			
+			TradePoolByItemJson tpJ = new TradePoolByItemJson(
+							tradePool.getUser().getName(),
+							tradePool.getAmount(),
+							DateTimeUtils.getDateAsString(tradePool),
+							DateTimeUtils.getTimeAsString(tradePool)
+							);
+			
+			tpJs.add(tpJ);
+		}
+		
+
+		Gson gson = new GsonBuilder()
+        .disableHtmlEscaping()
+        .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+        .setPrettyPrinting()
+        .serializeNulls()
+        .create();
+		
+		return gson.toJson(tpJs);
+		//return gson.toJson(itemRepository.findItemByActiveTrueAndSellFalseAndBlockFalse());
+	}
+
 }

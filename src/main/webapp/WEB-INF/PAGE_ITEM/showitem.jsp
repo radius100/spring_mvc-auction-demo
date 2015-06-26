@@ -1,68 +1,71 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ include file="../LAYOUTS/taglib.jsp"%>
 
-<div class="col-md-9">
+${itemJson}
 
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Описание</a></li>
-    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Статус</a></li>
-    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Торги</a></li>
-    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Фото</a></li>
-  </ul>
+<div class="bodyh">
+	<br />
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Описание</a></li>
+		<li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Торги</a></li>
+		<li role="presentation"><a href="#images" aria-controls="images" role="tab" data-toggle="tab">Images</a></li>
+	</ul>
+	<!-- Tab panes -->
+	<br />
+	<div class="tab-content" id="tabscontent">
+		<div role="tabpanel" class="tab-pane active" id="home">
+			111
 
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="home">
-<br /><br />
-<div class="col-md-9">
+			<table data-url="data1.json" data-height="299" data-sort-name="name" data-sort-order="desc">
+				<thead>
+					<tr>
+						<th data-field="id" data-align="right" data-sortable="true">Item ID</th>
+						<th data-field="name" data-align="center" data-sortable="true">Item Name</th>
+						<th data-field="price" data-sortable="true">Item Price</th>
+					</tr>
+				</thead>
+			</table>
 
-	<div class="panel panel-default" align="left">
-		<div class="panel-heading">Лот 1</div>
-		<div class="panel-body">
-			<p>
-				Basic panel example <br />Basic panel example <br />Basic panel example
-			</p>
-			<hr>
-			<p>
-				Lot: ${item.name}<br>
-				<c:forEach items="${item.tradePools}" var="tp">
-					${tp.user.name} - ${tp.amount} - ${tp.messageDate} - ${tp.messageTime}<br>
-				</c:forEach>
-			</p>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="description">
+			222
+			<table data-toggle="table" data-url="item-${item.id}/tradpool.json" data-height="299">
+				<thead>
+					<tr>
+						<th data-field="id" data-halign="right" data-align="center">Item ID</th>
+						<th data-field="name" data-halign="center" data-align="left">Item Name</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="images">
+			<div id="banner-fade">
+				<div id="my-slideshow">
+					<ul class="bjqs">
+						<li><img src="/resources/1.jpg" /></li>
+						<li><img src="/resources/2.jpg" /></li>
+						<li><img src="/resources/3.jpg" /></li>
+					</ul>
+				</div>
+			</div>
+			<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					$('#banner-fade').bjqs({
+						animtype : 'slide',
+						'height' : 250,
+						'width' : 300,
+						'randomstart' : true,
+						'animspeed' : 7000,
+						'responsive' : true,
+						'nexttext' : '>>>',
+						'prevtext' : '<<<',
+						'showmarkers' : true
+					});
+				});
+			</script>
+
+
 		</div>
 	</div>
 </div>
-    
-    
-</div>
-    <div role="tabpanel" class="tab-pane" id="profile">...</div>
-    <div role="tabpanel" class="tab-pane" id="messages">...</div>
-    <div role="tabpanel" class="tab-pane" id="settings">...</div>
-  </div>
-
-</div>
-
-
-
-<!-- 
-<div class="col-md-6">
-
-	<div class="panel panel-default">
-		<div class="panel-heading">Лот 1</div>
-		<div class="panel-body">
-			<p>Basic panel example <br />Basic panel example <br />Basic panel example</p>
-			<hr>
-			<p>
-			See more snippets like these online store reviews at Bootsnipp - http://bootsnipp.com.
-
-Want to make these reviews work? Check out this building a review system tutorial over at maxoffsky.com!
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-			</p>
-			
-		</div>
-	</div>
-</div>
- -->

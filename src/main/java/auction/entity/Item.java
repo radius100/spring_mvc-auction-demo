@@ -3,9 +3,11 @@ package auction.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Transient;
 
 
@@ -18,7 +20,9 @@ public class Item {
 	private String name;
 
 	private String descr;
-
+	
+	@Lob
+	@Column(length=500)
 	private String fullDescr;
 
 	private Date publishDate;

@@ -43,12 +43,12 @@ public class ImageController {
 	            .contentType(MediaType.parseMediaType(image.getContentType()))
 	            .body(new InputStreamResource(new ByteArrayInputStream(image.getBody())));
 		else
-			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 			
 	}
 
 	@RequestMapping(value = "/images/item-{id}/add", method = RequestMethod.POST)
-	public void add(@RequestParam(value="file") MultipartFile file, @PathVariable int id) throws IOException {
+	public void doAddImage(@RequestParam(value="file") MultipartFile file, @PathVariable int id) throws IOException {
 		
 		//добавить обработку аватарки
 		//добавить поддержку *.png, *.bmp etc
