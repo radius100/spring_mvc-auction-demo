@@ -23,7 +23,8 @@ public class ItemUserDetailService {
 	@Autowired
 	UserRepository userRepository;
 
-	public User findItemUserPublish(Item item) {
+	//findItemUserPublish
+	public User getPublisherByItem(Item item) {
 
 		UserItemDetail userItemDetail = userItemDetailRepository.findByItemAndPublishTrue(item);
 
@@ -33,7 +34,8 @@ public class ItemUserDetailService {
 
 	}
 
-	public List<User> findItemUsersFollow(Item item) {
+	//findItemUsersFollow
+	public List<User> getFollowersByItem(Item item) {
 
 		List<UserItemDetail> userItemDetails = userItemDetailRepository.findByItemAndFollowTrue(item);
 

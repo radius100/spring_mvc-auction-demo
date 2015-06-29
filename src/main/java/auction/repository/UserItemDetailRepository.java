@@ -10,15 +10,9 @@ import auction.entity.UserItemDetail;
 
 public interface UserItemDetailRepository extends JpaRepository<UserItemDetail, Integer>{
 
-	public List<UserItemDetail> findItemsByUserAndPublishTrue(User user);
-
-	public List<UserItemDetail> findItemsByUserAndFollowTrue(User user);
-	
 	public UserItemDetail findByItemAndPublishTrue(Item item);
 	
 	public List<UserItemDetail> findByItemAndFollowTrue(Item item);
-	
-//	public UserItemDetail findOneByPublishTrueAndUserAndItem(User user, Item item);
 
 	public int countUserDistinctByItemAndFollowTrue(Item item);
 
@@ -27,4 +21,15 @@ public interface UserItemDetailRepository extends JpaRepository<UserItemDetail, 
 	public List<UserItemDetail> findByItem(Item item);
 
 	public UserItemDetail findOneByUserAndItemAndPublishTrue(User user, Item item);
+
+	public UserItemDetail findOneByPublishTrueAndUserAndItem(User user, Item item);
+
+	public UserItemDetail findOneByBuyTrueAndUserAndItem(User user, Item item);
+
+//	public List<User> findByItemAndFollowTrue(Item item);
+
+	//public User findUserByItemAndPublishTrue(Item item);
+	
+	public UserItemDetail findOneByItemAndPublishTrue(Item item);//findUserByItemAndPublishTrue(Item item);
+	
 }

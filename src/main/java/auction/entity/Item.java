@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
 
-
 @Entity
 public class Item {
 	@Id
@@ -20,17 +19,17 @@ public class Item {
 	private String name;
 
 	private String descr;
-	
+
 	@Lob
-	@Column(length=500)
+	@Column(length = 500)
 	private String fullDescr;
 
 	private Date publishDate;
-	
+
 	private Date startDate;
 
 	private Date finishDate;
-	
+
 	private Integer startAmount;
 
 	private boolean block;
@@ -51,28 +50,47 @@ public class Item {
 	private int tradersCount;
 
 	@Transient
-	private Boolean followedByCurrentUser = false;
+	private boolean followedByCurrentUser = false;
 
 	@Transient
-	private Boolean tradeedByCurrentUser = false;
+	private boolean publishedByCurrentUser = false;
+
+	@Transient
+	private boolean buyByCurrentUser = false;
+
+	@Transient
+	private boolean tradeedByCurrentUser = false;
 
 	@Transient
 	private int dateMessage;
-	
+
 	@Transient
 	private long dateValue;
 
 	@Transient
 	private List<TradePool> tradePools;
-	
-	@Transient
-	private List<UserItemDetail> userItemDetails;
 
-	
+	@Transient
+	private List<User> followers;
+
+	@Transient
+	private List<User> traders;
+
+	@Transient
+	private User publisher;
+
 	/*
 	 * public List<Image> getImages() { return images; }
 	 * 
 	 * public void setImages(List<Image> images) { this.images = images; }
+	 */
+
+	/*
+	 * public List<UserItemDetail> getUserItemDetails() { return
+	 * userItemDetails; }
+	 * 
+	 * public void setUserItemDetails(List<UserItemDetail> userItemDetails) {
+	 * this.userItemDetails = userItemDetails; }
 	 */
 
 	public Integer getId() {
@@ -137,22 +155,6 @@ public class Item {
 
 	public void setTradersCount(int tradersCount) {
 		this.tradersCount = tradersCount;
-	}
-
-	public Boolean getFollowedByCurrentUser() {
-		return followedByCurrentUser;
-	}
-
-	public void setFollowedByCurrentUser(Boolean followedByCurrentUser) {
-		this.followedByCurrentUser = followedByCurrentUser;
-	}
-
-	public Boolean getTradeedByCurrentUser() {
-		return tradeedByCurrentUser;
-	}
-
-	public void setTradeedByCurrentUser(Boolean tradeedByCurrentUser) {
-		this.tradeedByCurrentUser = tradeedByCurrentUser;
 	}
 
 	public boolean isBlock() {
@@ -235,12 +237,60 @@ public class Item {
 		this.tradePools = tradePools;
 	}
 
-	public List<UserItemDetail> getUserItemDetails() {
-		return userItemDetails;
+	public boolean isFollowedByCurrentUser() {
+		return followedByCurrentUser;
 	}
 
-	public void setUserItemDetails(List<UserItemDetail> userItemDetails) {
-		this.userItemDetails = userItemDetails;
+	public void setFollowedByCurrentUser(boolean followedByCurrentUser) {
+		this.followedByCurrentUser = followedByCurrentUser;
+	}
+
+	public boolean isPublishedByCurrentUser() {
+		return publishedByCurrentUser;
+	}
+
+	public void setPublishedByCurrentUser(boolean publishedByCurrentUser) {
+		this.publishedByCurrentUser = publishedByCurrentUser;
+	}
+
+	public boolean isBuyByCurrentUser() {
+		return buyByCurrentUser;
+	}
+
+	public void setBuyByCurrentUser(boolean buyByCurrentUser) {
+		this.buyByCurrentUser = buyByCurrentUser;
+	}
+
+	public boolean isTradeedByCurrentUser() {
+		return tradeedByCurrentUser;
+	}
+
+	public void setTradeedByCurrentUser(boolean tradeedByCurrentUser) {
+		this.tradeedByCurrentUser = tradeedByCurrentUser;
+	}
+
+	public List<User> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(List<User> followers) {
+		this.followers = followers;
+	}
+
+	public List<User> getTraders() {
+		return traders;
+	}
+
+	public void setTraders(List<User> traders) {
+		this.traders = traders;
+	}
+
+	public User getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(User publisher) {
+		this.publisher = publisher;
 	}
 
 }

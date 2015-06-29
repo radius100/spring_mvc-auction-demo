@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import auction.entity.Item;
+import auction.service.ItemDetailBuilder;
 import auction.service.ItemService;
 import auction.service.ItemUserDetailService;
 import auction.service.TradePoolService;
@@ -39,6 +40,8 @@ public class ItemController {
 	@Autowired
 	private ItemUserDetailService itemUserDetailService;
 
+	@Autowired
+	ItemDetailBuilder itemDetailBuilder;
 	
 	@RequestMapping("/items")
 	public String users(Model model) {
@@ -51,9 +54,17 @@ public class ItemController {
 	@RequestMapping("/items/item-{id}")
 	public String showItem(Principal principal, Model model, @PathVariable int id) {
 		
-		model.addAttribute("item", itemService.getOne((null != principal)?principal.getName():"",id));
+		Item item = itemDetailBuilder
+				.getOne(id)
+				.setPrincipal(principal)
+				.getFollowers()
+				.getTraders()
+				.getPublisher()
+				.build();
+
+		model.addAttribute("item", item);
 		model.addAttribute("itemJson", itemService.getTradePoolByItemJson(id));
-		
+
 		return "item";
 	}
 
@@ -90,13 +101,16 @@ public class ItemController {
 				
 		if ( userService.isOwner(principal.getName(),id) ) {
 			
-			Item item = itemService.getOne(null, id);
+			//Item item = itemService.getOne(null, id);
+			//ItemDetailBuilder itemDetailBuilder;
+			Item item = itemDetailBuilder.getOne(id).build();
 			
 			model.addAttribute("item", item);
+			//нужен ли isEdit??
 			model.addAttribute("isEdit", true);
-			model.addAttribute("formatPublishDate", DateTimeUtils.getDateAsStringFormat(item.getPublishDate()));
-			model.addAttribute("formatStartDate", DateTimeUtils.getDateAsStringFormat(item.getStartDate()));
-			model.addAttribute("formatFinishDate", DateTimeUtils.getDateAsStringFormat(item.getFinishDate()));
+			model.addAttribute("formatPublishDate", DateTimeUtils.getDateTimeAsString(item.getPublishDate()));
+			model.addAttribute("formatStartDate", DateTimeUtils.getDateTimeAsString(item.getStartDate()));
+			model.addAttribute("formatFinishDate", DateTimeUtils.getDateTimeAsString(item.getFinishDate()));
 			
 			return "item-edit";
 		}
@@ -109,37 +123,9 @@ public class ItemController {
 	@RequestMapping(value="/item-{id}/edit",method=RequestMethod.POST)
 	public String doEdit(@ModelAttribute("item") Item item, Principal principal, @PathVariable int id){
 		
-		//itemService.save(item,userService.getOne(principal.getName()));
-		
 		itemService.update(item,id);
 		
 		return "redirect:/item-{id}/edit.html?success=true";
 	}
 
-	
-	
-	/*	
-	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public String doRegister(@ModelAttribute("user") User user){
-		
-		userService.save(user);
-		return "redirect:/register.html?success=true";
-	}
-	
-	
-	/*
-	@RequestMapping("/items/item-{id}")
-	public String detail(Model model, @PathVariable int id) {
-
-		Item item = itemService.findOne(id);
-
-		model.addAttribute("item", item);
-		model.addAttribute("publish", itemUserDetailService.findItemUserPublish(item));
-		//publish-item-trade-detail
-		model.addAttribute("p", tradePoolService.findItemTradeDetail(item));		
-		model.addAttribute("follows", itemUserDetailService.findItemUsersFollow(item));
-
-		return "item-user-detail";
-	}
-	*/
 }

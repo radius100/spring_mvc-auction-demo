@@ -14,6 +14,8 @@ public interface TradePoolRepository extends JpaRepository<TradePool, Integer>{
 
 	public List<TradePool> findByItem(Item item);
 
+	public List<TradePool> findUserDistinctByItem(Item item);
+	
 	public int countDistinctUserByItem(Item item);
 
 	public int countByUserAndItem(User user, Item item);

@@ -8,31 +8,38 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import auction.entity.Item;
-import auction.entity.TradePool;
 
 public class DateTimeUtils {
 
-	static public String getDateAsString(TradePool tradePool){
-		
-		DateTime dateTime = new DateTime(tradePool.getDate());
-		
-		return Integer.toString(dateTime.getYear()) + "-" + 
-				Integer.toString(dateTime.getMonthOfYear()) + "-" +
-				Integer.toString(dateTime.getDayOfMonth());
-		
+	static public String getDateAsString(Date date) {
+
+		DateTime dateTime = new DateTime(date);
+
+		DateTimeFormatter dtf = DateTimeFormat.forPattern("dd-MMM-YYYY");
+
+		return dtf.print(dateTime);
 	}
-	
-	static public String getTimeAsString(TradePool tradePool){
-		
-		DateTime dateTime = new DateTime(tradePool.getDate());
-		
-		return Integer.toString(dateTime.getHourOfDay()) + ":" + 
-				Integer.toString(dateTime.getMinuteOfHour());
-		
+
+	static public String getTimeAsString(Date date) {
+
+		DateTime dateTime = new DateTime(date);
+
+		DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm");
+
+		return dtf.print(dateTime);
 	}
-	
+
+	static public String getDateTimeAsString(Date date) {
+
+		DateTime dateTime = new DateTime(date);
+
+		DateTimeFormatter dtf = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm");
+
+		return dtf.print(dateTime);
+	}
+
 	static public Item createItemDateMessage4IndexJsp(Item item) {
-		
+
 		DateTime dateStart = new DateTime(item.getStartDate());
 		DateTime dateFinish = new DateTime(item.getFinishDate());
 		DateTime dateCurrent = new DateTime();
@@ -77,16 +84,7 @@ public class DateTimeUtils {
 			else if (h2 < 1)
 				item.setDateMessage(6);
 		}
-		
+
 		return item;
-	}
-	
-	static public String getDateAsStringFormat(Date date){
-		
-		DateTime dateTime = new DateTime(date);
-		
-		DateTimeFormatter dtf = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm");
-		
-		return dtf.print(dateTime);
 	}
 }

@@ -8,35 +8,103 @@ ${itemJson}
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Описание</a></li>
-		<li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Торги</a></li>
+		<li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Торги online!</a></li>
 		<li role="presentation"><a href="#images" aria-controls="images" role="tab" data-toggle="tab">Images</a></li>
 	</ul>
 	<!-- Tab panes -->
 	<br />
 	<div class="tab-content" id="tabscontent">
 		<div role="tabpanel" class="tab-pane active" id="home">
-			111
-
-			<table data-url="data1.json" data-height="299" data-sort-name="name" data-sort-order="desc">
-				<thead>
+			<table class="table borderless">
+				<col width="3%">
+				<tbody>
 					<tr>
-						<th data-field="id" data-align="right" data-sortable="true">Item ID</th>
-						<th data-field="name" data-align="center" data-sortable="true">Item Name</th>
-						<th data-field="price" data-sortable="true">Item Price</th>
+						<td></td>
+						<td>
+							<h3>${item.name}</h3>
+							<p>${item.descr}</p>
+							<table class="table table-condensed">
+								<col width="30%">
+								<tbody>
+									<tr>
+										<td>Descr:</td>
+										<td align="justify">${item.fullDescr}</td>
+									</tr>
+									<tr class="active">
+										<td>Status:</td>
+										<td>Active</td>
+									</tr>
+									<tr>
+										<td>Start in:</td>
+										<td>20 min</td>
+									</tr>
+									<tr>
+										<td>Start amount:</td>
+										<td>$ ${item.startAmount}</td>
+									</tr>
+									<tr>
+										<td>Current amount:</td>
+										<td>$ 25</td>
+									</tr>
+								</tbody>
+							</table>
+							<h3>Follow by:</h3>
+							<table class="table borderless">
+								<col width="30%">
+								<tbody>
+									<c:forEach items="${item.followers}" var="follower">
+									<tr>
+										<td></td>
+										<td>${follower.name}</td>
+									</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+							<h3>Trade by:</h3>
+							<table class="table borderless">
+								<col width="30%">
+								<tbody>
+									<c:forEach items="${item.traders}" var="trader">
+									<tr>
+										<td></td>
+										<td>${trader.name}</td>
+									</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+							<h3>Publish by:</h3>
+							<table class="table borderless">
+								<col width="30%">
+								<tbody>
+									<tr>
+										<td></td>
+										<td><a href="#">${item.publisher.name}</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
 					</tr>
-				</thead>
+				</tbody>
 			</table>
-
 		</div>
 		<div role="tabpanel" class="tab-pane" id="description">
-			222
-			<table data-toggle="table" data-url="item-${item.id}/tradpool.json" data-height="299">
-				<thead>
+
+			<table class="table borderless">
+				<col width="3%">
+				<col width="50%">
+				<tbody>
 					<tr>
-						<th data-field="id" data-halign="right" data-align="center">Item ID</th>
-						<th data-field="name" data-halign="center" data-align="left">Item Name</th>
+						<td></td>
+						<td>
+						<span class="input-group-addon">$</span>
+						<input type="text" class="form-control amountInput" id="amount">	
+						<span class="input-group-addon">.00</span>
+						</td>
+						<td>
+						<input type="submit" class="btn btn-primary" id="doStake" value="Ваша ставка">
+						</td>
 					</tr>
-				</thead>
+				</tbody>
 			</table>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="images">

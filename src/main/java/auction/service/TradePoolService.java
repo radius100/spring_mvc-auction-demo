@@ -17,11 +17,13 @@ public class TradePoolService {
 	@Autowired
 	TradePoolRepository tradePoolRepository;
 	
+	//переименовать в getItemTradeDetail
 	public List<TradePool> findItemTradeDetail(Item item) {
 		
 		return tradePoolRepository.findByItemOrderByAmountDesc(item);
 	}
 
+	//удалить так как функионал в билдере есть
 	public int findCurrentAmount(Item item) {
 		
 		TradePool tradePool = tradePoolRepository.findFirstByItemOrderByAmountDesc(item);

@@ -19,20 +19,27 @@
 <script src="/resources/bootstrap-table/bootstrap-table.js"></script>
 
 <style type="text/css">
-	body {
-		padding-top: 70px;
-		/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-	}
+body {
+	padding-top: 70px;
+	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
 
-	footer {
-		margin: 50px 0;
-	}
-	
-	.bodyh {
-		height: 600px;
-		
-	}
-	
+footer {
+	margin: 50px 0;
+}
+
+.bodyh {
+	height: 900px;
+}
+
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th
+	{
+	border: none;
+}
+
+.amountInput {
+	text-align: right;
+}
 </style>
 
 <title><tiles:getAsString name="title" /></title>
@@ -51,11 +58,11 @@
 				<br />
 				<tiles:insertAttribute name="sidemenu" />
 			</div>
-			
+
 			<div class="col-md-6">
 				<tiles:insertAttribute name="showitem" />
 			</div>
-			
+
 		</div>
 	</div>
 	<!-- Page footer -->

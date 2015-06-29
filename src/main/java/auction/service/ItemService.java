@@ -40,6 +40,9 @@ public class ItemService {
 
 	@Autowired
 	TradePoolService tradePoolService;
+	
+	@Autowired
+	ItemDetailBuilder itemDetailBuilder;
 
 	public Item getOneCore(Item item, User user) {
 
@@ -81,19 +84,22 @@ public class ItemService {
 
 		for (TradePool tradePool : tradePools) {
 
-			tradePool.setMessageDate(DateTimeUtils.getDateAsString(tradePool));
-			tradePool.setMessageTime(DateTimeUtils.getTimeAsString(tradePool));
+			tradePool.setMessageDate(DateTimeUtils.getDateAsString(tradePool.getDate()));
+			tradePool.setMessageTime(DateTimeUtils.getTimeAsString(tradePool.getDate()));
 		}
 
 		item.setTradePools(tradePools);
-		item.setUserItemDetails(userItemDetails);
+		//item.setUserItemDetails(userItemDetails);
 
 		return item;
 	}
 
 	public Item getOne(String userName, int id) {
 
-		Item item = itemRepository.findOne(id);
+		//Item item = itemRepository.findOne(id);
+		
+		Item item = itemDetailBuilder.getOne(id).build();
+	
 		User user = null;
 
 		if (null != userName)
@@ -164,23 +170,21 @@ public class ItemService {
 
 	public String getTradePoolByItemJson(int id) {
 		
-
 		List<TradePoolByItemJson> tpJs = new ArrayList<TradePoolByItemJson>();
 		List<TradePool> tradePools = tradePoolRepository.findByItem(itemRepository.findOne(id));
 		
-		for(TradePool tradePool : tradePools){
+		for(TradePool tradePool : tradePools) {
 			
 			TradePoolByItemJson tpJ = new TradePoolByItemJson(
 							tradePool.getUser().getName(),
 							tradePool.getAmount(),
-							DateTimeUtils.getDateAsString(tradePool),
-							DateTimeUtils.getTimeAsString(tradePool)
+							DateTimeUtils.getDateAsString(tradePool.getDate()),
+							DateTimeUtils.getTimeAsString(tradePool.getDate())
 							);
 			
 			tpJs.add(tpJ);
 		}
 		
-
 		Gson gson = new GsonBuilder()
         .disableHtmlEscaping()
         .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
@@ -189,7 +193,6 @@ public class ItemService {
         .create();
 		
 		return gson.toJson(tpJs);
-		//return gson.toJson(itemRepository.findItemByActiveTrueAndSellFalseAndBlockFalse());
 	}
 
 }
