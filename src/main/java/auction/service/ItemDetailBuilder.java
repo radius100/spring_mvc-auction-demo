@@ -1,3 +1,25 @@
+
+/* Avaible builder methods:
+ 	 * 
+	 * getOne(int id)
+	 * getOne(Item item)
+	 * setPrincipal(Principal principal)
+	 * getFollowersCount()
+	 * getTradersCount()
+	 * getCurrentAmount()
+	 * getIsFollow()
+	 * getIsPublish()
+	 * getIsBuy()
+	 * getIsTrade()
+	 * getTradePool()
+	 * getTraders()
+	 * getFollowers()
+	 * getPublisher()
+	 * createItemDateMessage4IndexJsp()
+	 * 
+	 * build()
+*/
+
 package auction.service;
 
 import java.security.Principal;
@@ -38,25 +60,11 @@ public class ItemDetailBuilder {
 
 	private User user;
 
-	private List<Item> items;
-
-	private List<User> users;
-
-	
 	public Item build() {
 
 		return item;
 	}
 
-
-	//TO-DO
-	public ItemDetailBuilder getAll() {
-
-		
-		return this;
-	}
-
-	
 	public ItemDetailBuilder getOne(int id) {
 
 		item = itemRepository.findOne(id);
@@ -71,12 +79,12 @@ public class ItemDetailBuilder {
 
 	public ItemDetailBuilder setPrincipal(Principal principal) {
 
-		if(principal != null)
+		if (principal != null)
 			user = userRepository.findOneByName(principal.getName());
-		
+
 		return this;
 	}
-	
+
 	public ItemDetailBuilder getFollowersCount() {
 
 		item.setFollowersCount(userItemDetailRepository.countUserDistinctByItemAndFollowTrue(item));
@@ -171,7 +179,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	//переделать List в Set чтоб повторени€ исключить
+	// переделать List в Set чтоб повторени€ исключить
 	public ItemDetailBuilder getTraders() {
 
 		List<User> users = new ArrayList<User>();
@@ -181,12 +189,35 @@ public class ItemDetailBuilder {
 
 		for (TradePool tradePool : tradePools)
 			users.add(tradePool.getUser());
-		
+
 		item.setTraders(users);
 
 		return this;
 	}
 
+	public ItemDetailBuilder getFollowers() {
+
+		List<UserItemDetail> userItemDetails = userItemDetailRepository.findByItemAndFollowTrue(item);
+
+		List<User> users = new ArrayList<User>();
+		for (UserItemDetail userItemDetail : userItemDetails)
+			users.add(userItemDetail.getUser());
+
+		// item.setFollowers(userItemDetailRepository.findUserListByItemAndFollowTrue(item));
+		item.setFollowers(users);
+
+		return this;
+	}
+
+	// ѕочему сразу тип User не возвращает??
+	public ItemDetailBuilder getPublisher() {
+
+		UserItemDetail userItemDetail = userItemDetailRepository.findOneByItemAndPublishTrue(item);
+		// userItemDetailRepository.findUserByItemAndPublishTrue(item);
+
+		item.setPublisher(userItemDetail.getUser());
+		return this;
+	}
 	
 	public ItemDetailBuilder createItemDateMessage4IndexJsp() {
 
@@ -194,26 +225,4 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getFollowers() {
-
-		List<UserItemDetail> userItemDetails = userItemDetailRepository.findByItemAndFollowTrue(item);
-		
-		List <User> users = new ArrayList<User>();
-		for(UserItemDetail userItemDetail : userItemDetails)
-			users.add(userItemDetail.getUser());
-		
-		item.setFollowers(users);
-		
-		return this;
-	}
-
-	//ѕочему сразу тип User не возвращает??
-	public ItemDetailBuilder getPublisher() {
-
-		 UserItemDetail userItemDetail = userItemDetailRepository.findOneByItemAndPublishTrue(item);
-		// userItemDetailRepository.findUserByItemAndPublishTrue(item);
-		
-		item.setPublisher(userItemDetail.getUser());
-		return this;
-	}
 }

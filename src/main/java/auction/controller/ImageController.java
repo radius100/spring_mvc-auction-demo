@@ -18,13 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import auction.entity.Image;
 import auction.service.ImageService;
-import auction.service.ItemService;
+import auction.service.ItemDetailBuilder;
 
 @Controller
 public class ImageController {
 
 	@Autowired
-	private ItemService itemService;
+	private ItemDetailBuilder itemDetailBuilder;
 
 	@Autowired
 	private ImageService imageService;
@@ -64,7 +64,7 @@ public class ImageController {
 			image.setBody(file.getBytes());
 			//image.setSize(file.getSize());
 			image.setName(file.getName());
-			imageService.save(image,itemService.getOne(id));
+			imageService.save(image,itemDetailBuilder.getOne(id).build());
 		}
 
 	}

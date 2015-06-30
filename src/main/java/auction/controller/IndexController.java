@@ -9,24 +9,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import auction.service.ItemService;
+import auction.service.ItemAllDetailBuilder;
+
 
 @Controller
 public class IndexController {
 
 	@Autowired
-	private ItemService itemService;
+	private ItemAllDetailBuilder itemAllDetailBuilder;
+	
 
 	@RequestMapping("/index")
 	public String index(Model model, Principal principal) {
 
-		String name = null;
-		
-		if (principal != null)
-			name = principal.getName();
-				
-		model.addAttribute("items", itemService.getAll(name));
-
+		model.addAttribute("items", itemAllDetailBuilder.getAll(principal).buildAll());
 		return "index";
 	}
 

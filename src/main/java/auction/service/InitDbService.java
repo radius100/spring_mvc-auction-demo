@@ -146,13 +146,13 @@ public class InitDbService {
 		userItemDetail6.setItem(item3);
 		userItemDetail6.setFollow(true);
 		userItemDetailRepository.save(userItemDetail6);
-	
+/*	
 		UserItemDetail userItemDetail7 = new UserItemDetail();
 		userItemDetail7.setUser(userTest1);
 		userItemDetail7.setItem(item3);
 		userItemDetail7.setFollow(true);
 		userItemDetailRepository.save(userItemDetail7);		
-		
+*/		
 		TradePool tradePool1 = new TradePool();
 		tradePool1.setUser(userAdmin);
 		tradePool1.setAmount(100);
@@ -173,16 +173,12 @@ public class InitDbService {
 		tradePool3.setItem(item2);
 		tradePool3.setDate(new Date());
 		tradePoolRepository.save(tradePool3);
-
-		//Date dd = new Date();
-		
 		
 		TradePool tradePool4 = new TradePool();
 		tradePool4.setUser(userAdmin);
 		tradePool4.setAmount(300);
 		tradePool4.setItem(item3);
 		tradePool4.setDate(new Date());
-		
 		tradePoolRepository.save(tradePool4);		
 		
 		TradePool tradePool5 = new TradePool();
