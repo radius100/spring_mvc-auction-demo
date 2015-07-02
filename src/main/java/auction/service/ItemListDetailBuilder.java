@@ -13,7 +13,7 @@ import auction.repository.ItemRepository;
 
 @Service
 @Transactional
-public class ItemAllDetailBuilder {
+public class ItemListDetailBuilder {
 
 	@Autowired
 	ItemRepository itemRepository;
@@ -29,7 +29,7 @@ public class ItemAllDetailBuilder {
 		return items;
 	}
 
-	public ItemAllDetailBuilder getAll(Principal principal) {
+	public ItemListDetailBuilder getAll(Principal principal) {
 
 			items = itemRepository.findItemByActiveTrueAndSellFalseAndBlockFalse();
 				

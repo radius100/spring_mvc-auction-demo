@@ -9,20 +9,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import auction.service.ItemAllDetailBuilder;
+import auction.service.ItemListDetailBuilder;
 
 
 @Controller
 public class IndexController {
 
 	@Autowired
-	private ItemAllDetailBuilder itemAllDetailBuilder;
+	private ItemListDetailBuilder itemListDetailBuilder;
 	
 
 	@RequestMapping("/index")
 	public String index(Model model, Principal principal) {
 
-		model.addAttribute("items", itemAllDetailBuilder.getAll(principal).buildAll());
+		model.addAttribute("items", itemListDetailBuilder.getAll(principal).buildAll());
 		return "index";
 	}
 

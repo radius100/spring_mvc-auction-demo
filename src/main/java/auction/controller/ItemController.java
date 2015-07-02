@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import auction.entity.Item;
 import auction.service.ItemDetailBuilder;
 import auction.service.ItemService;
-import auction.service.ItemUserDetailService;
 import auction.service.TradePoolService;
+import auction.service.UserItemDetailService;
 import auction.service.UserService;
 import auction.utils.DateTimeUtils;
 
@@ -38,7 +38,7 @@ public class ItemController {
 	private TradePoolService tradePoolService;
 	
 	@Autowired
-	private ItemUserDetailService itemUserDetailService;
+	private UserItemDetailService userItemDetailService;
 
 	@Autowired
 	ItemDetailBuilder itemDetailBuilder;
@@ -60,6 +60,8 @@ public class ItemController {
 				.getFollowers()
 				.getTraders()
 				.getPublisher()
+				.getIsFollow()
+				.getTradePool() //убрать когда таблица по json обновляться будет
 				.build();
 
 		model.addAttribute("item", item);
@@ -67,7 +69,15 @@ public class ItemController {
 
 		return "item";
 	}
-
+	
+	@RequestMapping("/items/item-{id}/follow")
+	@ResponseBody
+	public String follow(Principal principal, @PathVariable int id) {
+		
+		return userItemDetailService.toggleFollow(principal, id);
+		
+	}
+	
 	@RequestMapping("/items/item-{id}/tradepool.json")
 	@ResponseBody
 	public ResponseEntity<?> showItemTradePool(@PathVariable int id) {
@@ -101,8 +111,6 @@ public class ItemController {
 				
 		if ( userService.isOwner(principal.getName(),id) ) {
 			
-			//Item item = itemService.getOne(null, id);
-			//ItemDetailBuilder itemDetailBuilder;
 			Item item = itemDetailBuilder.getOne(id).build();
 			
 			model.addAttribute("item", item);

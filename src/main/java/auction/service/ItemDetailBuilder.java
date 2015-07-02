@@ -24,7 +24,9 @@ package auction.service;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -164,9 +166,7 @@ public class ItemDetailBuilder {
 
 	public ItemDetailBuilder getTradePool() {
 
-		List<TradePool> tradePools;
-
-		tradePools = tradePoolRepository.findByItem(item);
+		List<TradePool> tradePools = tradePoolRepository.findByItem(item);
 
 		for (TradePool tradePool : tradePools) {
 
@@ -179,32 +179,32 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	// переделать List в Set чтоб повторения исключить
 	public ItemDetailBuilder getTraders() {
 
-		List<User> users = new ArrayList<User>();
-		List<TradePool> tradePools;
-
-		tradePools = tradePoolRepository.findUserDistinctByItem(item);
-
+		Set<User> setUsers = new HashSet<User>();
+		
+		List<TradePool> tradePools = tradePoolRepository.findByItem(item);
+				
 		for (TradePool tradePool : tradePools)
-			users.add(tradePool.getUser());
+			setUsers.add(tradePool.getUser());
 
-		item.setTraders(users);
+		List<User> listUsers = new ArrayList<User>(setUsers);
+		item.setTraders(listUsers);
 
 		return this;
 	}
 
 	public ItemDetailBuilder getFollowers() {
 
+		Set<User> setUsers = new HashSet<User>();
+		
 		List<UserItemDetail> userItemDetails = userItemDetailRepository.findByItemAndFollowTrue(item);
-
-		List<User> users = new ArrayList<User>();
+		
 		for (UserItemDetail userItemDetail : userItemDetails)
-			users.add(userItemDetail.getUser());
+			setUsers.add(userItemDetail.getUser());
 
-		// item.setFollowers(userItemDetailRepository.findUserListByItemAndFollowTrue(item));
-		item.setFollowers(users);
+		List<User> listUsers = new ArrayList<User>(setUsers);
+		item.setFollowers(listUsers);
 
 		return this;
 	}
@@ -213,8 +213,7 @@ public class ItemDetailBuilder {
 	public ItemDetailBuilder getPublisher() {
 
 		UserItemDetail userItemDetail = userItemDetailRepository.findOneByItemAndPublishTrue(item);
-		// userItemDetailRepository.findUserByItemAndPublishTrue(item);
-
+		
 		item.setPublisher(userItemDetail.getUser());
 		return this;
 	}
