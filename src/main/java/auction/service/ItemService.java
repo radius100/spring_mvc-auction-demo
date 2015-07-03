@@ -66,7 +66,7 @@ public class ItemService {
 	public String getTradePoolByItemJson(int id) {
 		
 		List<TradePoolByItemJson> tpJs = new ArrayList<TradePoolByItemJson>();
-		List<TradePool> tradePools = tradePoolRepository.findByItem(itemRepository.findOne(id));
+		List<TradePool> tradePools = tradePoolRepository.findByItemOrderByAmountDesc(itemRepository.findOne(id));
 		
 		for(TradePool tradePool : tradePools) {
 			

@@ -15,7 +15,18 @@ ${itemJson}
 	<br />
 	<div class="tab-content" id="tabscontent">
 		<div role="tabpanel" class="tab-pane active" id="home">
-			<input type="submit" class="btn btn-primary" id="doStake" value="Follow">
+			
+			<security:authorize access="isAuthenticated()">
+				<c:choose>
+					<c:when test="${item.followedByCurrentUser eq true}">
+						<td><button id="follow" class="btn btn-success">Follow</button></td>
+					</c:when>
+					<c:otherwise>
+						<td><button id="follow" class="btn btn-primary">Follow</button></td>
+					</c:otherwise>
+				</c:choose>
+			</security:authorize>
+			
 			<table class="table borderless">
 				<col width="3%">
 				<tbody>
@@ -115,44 +126,32 @@ ${itemJson}
 
 			<table class="table borderless">
 				<col width="3%">
-				<col width="50%">
+				
 				<tbody>
 					<tr>
-						<td></td>
-						<td><input type="text" class="form-control amountInput" id="amount">
-						<td><input type="submit" class="btn btn-primary" id="doStake" value="Ваша ставка"></td>
-						<security:authorize access="isAuthenticated()">
-							<c:choose>
-								<c:when test="${item.followedByCurrentUser eq true}">
-									<td><button id="follow" class="btn btn-success">Unfollow</button></td>
-								</c:when>
-								<c:otherwise>
-									<td><button id="follow" class="btn btn-primary">Follow</button></td>
-								</c:otherwise>
-							</c:choose>
+						<security:authorize access="isAuthenticated()">					
+							<td></td>
+							<td align="right">
+								<input type="text" class="form-control" id="amount">
+								<button id="doStake" class="btn btn-primary">Ставка</button>
+							</td>
 						</security:authorize>
 					</tr>
+					<tr><td> </td></tr>
 					<tr>
-						<table class="table borderless">
-							<thead>
-								<tr>
-									<th>Пользователь</th>
-									<th>Ставка</th>
-									<th>Дата</th>
-									<th>Время</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${item.tradePools}" var="tradepool">
-									<tr>
-										<td>${tradepool.user.name}</td>
-										<td>${tradepool.amount}</td>
-										<td>${tradepool.messageDate}</td>
-										<td>${tradepool.messageTime}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
+						<td></td>
+						<td>
+						<table id="dyntable" class="table borderless" data-toggle="table" data-url="/items/item-${item.id}/tradepool.json" data-cache="false">
+    						<thead>
+        						<tr>
+            						<th data-field="User">User</th>
+            						<th data-field="Amount">Amount</th>
+            						<th data-field="Date">Date</th>
+            						<th data-field="Time">Time</th>
+        						</tr>
+    						</thead>
 						</table>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -173,7 +172,8 @@ ${itemJson}
 </div>
 <script type="text/javascript">
 
-	jQuery(document).ready(function($) {
+jQuery(document).ready(function($) {
+	
 	$('#banner-fade').bjqs({
 		animtype : 'slide',
 		'height' : 250,
@@ -187,19 +187,39 @@ ${itemJson}
 	});
 	
 	$("#follow").click(function() { 
-		$.get("/items/item-3/follow.html",function(data,status) { 
-			if (data == 'Follow') { 
-				$('#follow').removeClass("btn-primary").addClass("btn-success").text("Unfollow");
-				//$("#follow").text("Unfollow");
-			}
+		$.get("/items/item-${item.id}/follow.html",function(data,status) { 
+			if (data == 'Follow')  
+				$('#follow').removeClass("btn-primary").removeClass("disabled").addClass("btn-success").text("Follow");
 			else if (data == 'Unfollow') 
-				$('#follow').removeClass("btn-success").addClass("btn-primary").text("Follow");
-				//$("#follow").text("Follow");
+				$('#follow').removeClass("btn-success").removeClass("disabled").addClass("btn-primary").text("Follow");
 			else if (data == 'Login first') 
-				$('#follow').hide();
+				$('#follow').removeClass("btn-success").addClass("btn-primary").addClass("disabled").text("Follow");
 			alert("Data: " + data + "\nStatus: " + status);  
-
 		});
 	});
-  });
+	
+	$("#doStake").click(function() {
+		
+		$.post("/items/item-${item.id}/rate.html",
+			{ amount: $('#amount').val() },
+			function(data,status){ 
+				//alert("Data: " + data + "\nStatus: " + status);
+		});
+		
+		$('#dyntable').bootstrapTable('refresh', {
+            url: '/items/item-${item.id}/tradepool.json'
+        });
+	
+	});
+	
+	$("#amount").ready(function() {
+		
+		$.get("/items/item-${item.id}/rate-adv.html",function(data,status) {
+			$('#amount').val(data);
+		});
+		
+	});
+	
+ });
+
 </script>

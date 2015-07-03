@@ -55,33 +55,4 @@ public class UserItemDetailService {
 		}
 		
 	}
-	
-	
-	
-	/*
-	public List<Item> findUserItemsPublish(User user) {
-
-		List<UserItemDetail> userItemDetails = userItemDetailRepository.findItemsByUserAndPublishTrue(user);
-
-		List<Item> items = new ArrayList<Item>();
-
-		for (UserItemDetail userItemDetail : userItemDetails) 
-			items.add(userItemDetail.getItem());
-		
-		return items;
-
-	}
-
-	public List<Item> findUserItemsFollow(User user) {
-
-		List<UserItemDetail> userItemDetails = userItemDetailRepository.findItemsByUserAndFollowTrue(user);
-
-		List<Item> items = new ArrayList<Item>();
-
-		for (UserItemDetail userItemDetail : userItemDetails) 
-			items.add(userItemDetail.getItem());
-		
-		return items;
-
-	}*/
 }

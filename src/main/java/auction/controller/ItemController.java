@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import auction.entity.Item;
@@ -24,10 +25,10 @@ import auction.utils.DateTimeUtils;
 public class ItemController {
 
 	@ModelAttribute("item")
-	public Item constract(){
+	public Item constract() {
 		return new Item();
 	}
-	
+
 	@Autowired
 	private ItemService itemService;
 
@@ -36,32 +37,29 @@ public class ItemController {
 
 	@Autowired
 	private TradePoolService tradePoolService;
-	
+
 	@Autowired
 	private UserItemDetailService userItemDetailService;
 
 	@Autowired
 	ItemDetailBuilder itemDetailBuilder;
-	
+
 	@RequestMapping("/items")
 	public String users(Model model) {
-
-		//model.addAttribute("items", itemService.findAll());
 
 		return "items";
 	}
 
 	@RequestMapping("/items/item-{id}")
 	public String showItem(Principal principal, Model model, @PathVariable int id) {
-		
+
 		Item item = itemDetailBuilder
 				.getOne(id)
 				.setPrincipal(principal)
-				.getFollowers()
-				.getTraders()
+				.getFollowers().getTraders()
 				.getPublisher()
 				.getIsFollow()
-				.getTradePool() //убрать когда таблица по json обновляться будет
+				//.getTradePool() // убрать
 				.build();
 
 		model.addAttribute("item", item);
@@ -69,70 +67,78 @@ public class ItemController {
 
 		return "item";
 	}
-	
+
 	@RequestMapping("/items/item-{id}/follow")
 	@ResponseBody
-	public String follow(Principal principal, @PathVariable int id) {
-		
+	public String getFollow(Principal principal, @PathVariable int id) {
+
 		return userItemDetailService.toggleFollow(principal, id);
-		
+
 	}
-	
-	@RequestMapping("/items/item-{id}/tradepool.json")
+
 	@ResponseBody
+	@RequestMapping("/items/item-{id}/rate-adv")
+	public String getRateAdvs(Principal principal, @PathVariable int id) {
+
+		return "555";
+	}
+
+	//сделать нормальный http.response
+	@ResponseBody
+	@RequestMapping(value="/items/item-{id}/rate", method=RequestMethod.POST)
+	public String doRate(Principal principal, @PathVariable int id, @RequestParam String amount) {
+	
+		return tradePoolService.save(principal,id,amount);
+	}
+
+	@ResponseBody
+	@RequestMapping("/items/item-{id}/tradepool")
 	public ResponseEntity<?> showItemTradePool(@PathVariable int id) {
 		
-			
-		return ResponseEntity.ok()
-	            //.contentLength(image.getSize())
-	            //.body(new String("[ { 'id': 1, 'name': 'Item 3'}, { 'id': 11, 'name': 'Item 33' } ]"));
-				.body(itemService.getTradePoolByItemJson(id));
+		return ResponseEntity.ok().body(itemService.getTradePoolByItemJson(id));
 	}
-	
-	
+
 	@RequestMapping("/item/register")
-	public String showRegister(){
-		
+	public String showRegister() {
+
 		return "item-register";
 	}
 
-	
-	@RequestMapping(value="/item/register",method=RequestMethod.POST)
-	public String doRegister(@ModelAttribute("item") Item item, Principal principal){
-		
-		itemService.save(item,userService.getOne(principal.getName()));
-		
+	@RequestMapping(value = "/item/register", method = RequestMethod.POST)
+	public String doRegister(@ModelAttribute("item") Item item, Principal principal) {
+
+		itemService.save(item, userService.getOne(principal.getName()));
+
 		return "redirect:/item/register.html?success=true";
 	}
 
 	@RequestMapping("/item-{id}/edit")
-	public String showEdit(Model model, Principal principal, @PathVariable int id){
-		
-				
-		if ( userService.isOwner(principal.getName(),id) ) {
-			
+	public String showEdit(Model model, Principal principal, @PathVariable int id) {
+
+		if (userService.isOwner(principal.getName(), id)) {
+
 			Item item = itemDetailBuilder.getOne(id).build();
-			
+
 			model.addAttribute("item", item);
-			//нужен ли isEdit??
+			// нужен ли isEdit??
 			model.addAttribute("isEdit", true);
 			model.addAttribute("formatPublishDate", DateTimeUtils.getDateTimeAsString(item.getPublishDate()));
 			model.addAttribute("formatStartDate", DateTimeUtils.getDateTimeAsString(item.getStartDate()));
 			model.addAttribute("formatFinishDate", DateTimeUtils.getDateTimeAsString(item.getFinishDate()));
-			
+
 			return "item-edit";
 		}
-			
-		else 
+
+		else
 			return "redirect:/items/item-{id}.html";
-		
+
 	}
 
-	@RequestMapping(value="/item-{id}/edit",method=RequestMethod.POST)
-	public String doEdit(@ModelAttribute("item") Item item, Principal principal, @PathVariable int id){
-		
-		itemService.update(item,id);
-		
+	@RequestMapping(value = "/item-{id}/edit", method = RequestMethod.POST)
+	public String doEdit(@ModelAttribute("item") Item item, Principal principal, @PathVariable int id) {
+
+		itemService.update(item, id);
+
 		return "redirect:/item-{id}/edit.html?success=true";
 	}
 
