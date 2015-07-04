@@ -63,7 +63,7 @@ public class ItemController {
 				.build();
 
 		model.addAttribute("item", item);
-		model.addAttribute("itemJson", itemService.getTradePoolByItemJson(id));
+		//model.addAttribute("itemJson", itemService.getTradePoolByItemJson(id));
 
 		return "item";
 	}
@@ -80,10 +80,9 @@ public class ItemController {
 	@RequestMapping("/items/item-{id}/rate-adv")
 	public String getRateAdvs(Principal principal, @PathVariable int id) {
 
-		return "555";
+		return tradePoolService.getRateAdvs(id);
 	}
 
-	//сделать нормальный http.response
 	@ResponseBody
 	@RequestMapping(value="/items/item-{id}/rate", method=RequestMethod.POST)
 	public String doRate(Principal principal, @PathVariable int id, @RequestParam String amount) {
@@ -95,7 +94,9 @@ public class ItemController {
 	@RequestMapping("/items/item-{id}/tradepool")
 	public ResponseEntity<?> showItemTradePool(@PathVariable int id) {
 		
-		return ResponseEntity.ok().body(itemService.getTradePoolByItemJson(id));
+		return ResponseEntity
+				.ok()
+				.body(itemService.getTradePoolByItemJson(id));
 	}
 
 	@RequestMapping("/item/register")

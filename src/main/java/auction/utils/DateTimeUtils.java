@@ -24,7 +24,7 @@ public class DateTimeUtils {
 
 		DateTime dateTime = new DateTime(date);
 
-		DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm");
+		DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm:ss");
 
 		return dtf.print(dateTime);
 	}

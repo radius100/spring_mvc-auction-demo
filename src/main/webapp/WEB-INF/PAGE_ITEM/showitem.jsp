@@ -132,6 +132,7 @@ ${itemJson}
 						<security:authorize access="isAuthenticated()">					
 							<td></td>
 							<td align="right">
+								<label>Минимальная ставка</label>
 								<input type="text" class="form-control" id="amount">
 								<button id="doStake" class="btn btn-primary">Ставка</button>
 							</td>
@@ -198,28 +199,35 @@ jQuery(document).ready(function($) {
 		});
 	});
 	
+	setInterval(UpdateTable, 45000);
+
+	function UpdateTable(){
+		$('#dyntable').bootstrapTable('refresh', {
+	    	url: '/items/item-${item.id}/tradepool.json'
+		});
+	}
+
+	function RateAdvs() {
+		$.get("/items/item-${item.id}/rate-adv.html",function(data,status) {
+			$('#amount').val(data);
+		});
+	}
+	
 	$("#doStake").click(function() {
 		
 		$.post("/items/item-${item.id}/rate.html",
 			{ amount: $('#amount').val() },
 			function(data,status){ 
 				//alert("Data: " + data + "\nStatus: " + status);
+				if( data.localeCompare("ok") == 0 ) {
+					UpdateTable();
+					RateAdvs();
+				}
 		});
-		
-		$('#dyntable').bootstrapTable('refresh', {
-            url: '/items/item-${item.id}/tradepool.json'
-        });
-	
 	});
-	
-	$("#amount").ready(function() {
 		
-		$.get("/items/item-${item.id}/rate-adv.html",function(data,status) {
-			$('#amount').val(data);
-		});
-		
-	});
-	
+	$("#amount").ready(RateAdvs);
+
  });
 
 </script>

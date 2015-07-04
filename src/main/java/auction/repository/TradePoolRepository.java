@@ -20,4 +20,6 @@ public interface TradePoolRepository extends JpaRepository<TradePool, Integer>{
 
 	public TradePool findFirstByItemOrderByAmountDesc(Item item);
 	
+	public TradePool findLastByItemOrderByAmountDesc(Item item);
+	
 }
