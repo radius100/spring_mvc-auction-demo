@@ -30,7 +30,7 @@ public class UserItemDetailService {
 	public String toggleFollow(Principal principal, int id) {
 		
 		if(principal == null)
-			return "Login first";
+			return "fail_login";
 		
 		Item item = itemRepository.findOne(id);
 		User user = userRepository.findOneByName(principal.getName());
@@ -45,13 +45,13 @@ public class UserItemDetailService {
 			uID.setFollow(true);
 			userItemDetailRepository.save(uID);
 
-			return "Follow";
+			return "follow";
 		}
 		else{
 			
 			userItemDetailRepository.delete(userItemDetail);
 			
-			return "Unfollow";
+			return "unfollow";
 		}
 		
 	}

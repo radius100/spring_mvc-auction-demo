@@ -139,20 +139,20 @@
 								</c:choose>
 							</div>
 							<div class="col-md-4" align="center">
-								<a href="/items/item-${item.id}.html" class="btn btn-xs btn-primary btn-product btn-block"><span class="glyphicon glyphicon-search"></span> <spring:message code="showitem.btn.detail" /></a>
+								<a href="/items/item-${item.id}.html" class="btn btn-xs btn-primary btn-product btn-block"><span class="glyphicon glyphicon-search"></span><spring:message code="showitem.btn.detail" /></a>
 							</div>
 							<div class="col-md-4" align="center">
 								<c:choose>
 									<c:when test="${item.tradeedByCurrentUser eq true}">
-										<a href="#" class="btn btn-xs btn-success btn-product btn-block disabled"><span class="glyphicon glyphicon-usd"></span> <spring:message code="showitem.btn.trade" /></a>
+										<a href="/items/item-${item.id}.html#trade" class="btn btn-xs btn-success btn-product btn-block disabled"><span class="glyphicon glyphicon-usd"></span> <spring:message code="showitem.btn.trade" /></a>
 									</c:when>
 									<c:otherwise>
-									<!--  
-										<a href="#" class="btn btn-xs btn-primary btn-product btn-block"><span class="glyphicon glyphicon-usd"></span> <spring:message code="showitem.btn.trade" /></a>
-										<span class="label label-success"><span class="glyphicon glyphicon-usd"></span>Success</span>
-									 -->
-									 
+										<a href="/items/item-${item.id}.html#trade" class="btn btn-xs btn-primary btn-product btn-block"><span class="glyphicon glyphicon-usd"></span> <spring:message code="showitem.btn.trade" /></a>
+										
+								<!-- 	 
+									 <span class="label label-success"><span class="glyphicon glyphicon-usd"></span>Success</span>
 									 <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-usd"></span>Success</div>
+								 -->
 									</c:otherwise>
 								</c:choose>
 							</div>

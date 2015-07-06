@@ -2,20 +2,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- 
+<link rel="stylesheet" href="/resources/bootstrap/bootstrap.min.css">
+ -->
+<link rel="stylesheet" href="/resources/bootstrap/cosmo/bootstrap.min.css">
+<script src="/resources/bootstrap/jquery.min.js"></script>
+<script src="/resources/bootstrap/bootstrap.min.js"></script> 
+<script src="/resources/jquery-cookie/jquery.cookie.min.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/cosmo/bootstrap.min.css">
-<link type="text/css" rel="Stylesheet" href="/resources/bjqs/bjqs.css" />
-<link rel="stylesheet" href="/resources/bootstrap-table/bootstrap-table.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<link href="/resources/bjqs/bjqs.css" type="text/css" rel="Stylesheet" />
+<link href="/resources/bootstrap-table/bootstrap-table.css" rel="stylesheet">
 
 <script src="/resources/bjqs/bjqs-1.3.min.js"></script>
-
 <script src="/resources/bootstrap-table/bootstrap-table.js"></script>
 
 <style type="text/css">

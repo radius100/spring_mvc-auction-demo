@@ -68,8 +68,8 @@ public class ItemController {
 		return "item";
 	}
 
-	@RequestMapping("/items/item-{id}/follow")
 	@ResponseBody
+	@RequestMapping("/items/item-{id}/follow")
 	public String getFollow(Principal principal, @PathVariable int id) {
 
 		return userItemDetailService.toggleFollow(principal, id);
@@ -80,7 +80,7 @@ public class ItemController {
 	@RequestMapping("/items/item-{id}/rate-adv")
 	public String getRateAdvs(Principal principal, @PathVariable int id) {
 
-		return tradePoolService.getRateAdvs(id);
+		return tradePoolService.getRateAdvs(principal, id);
 	}
 
 	@ResponseBody
@@ -92,11 +92,11 @@ public class ItemController {
 
 	@ResponseBody
 	@RequestMapping("/items/item-{id}/tradepool")
-	public ResponseEntity<?> showItemTradePool(@PathVariable int id) {
+	public ResponseEntity<?> showItemTradePool(Principal principal, @PathVariable int id) {
 		
 		return ResponseEntity
 				.ok()
-				.body(itemService.getTradePoolByItemJson(id));
+				.body(itemService.getTradePoolByItemJson(principal, id));
 	}
 
 	@RequestMapping("/item/register")
@@ -118,7 +118,9 @@ public class ItemController {
 
 		if (userService.isOwner(principal.getName(), id)) {
 
-			Item item = itemDetailBuilder.getOne(id).build();
+			Item item = itemDetailBuilder
+					.getOne(id)
+					.build();
 
 			model.addAttribute("item", item);
 			// нужен ли isEdit??

@@ -48,7 +48,7 @@ public class TradePoolService {
 	public String save(Principal principal, int id, String amount) {
 
 		if(principal == null)
-			return "fail";
+			return "fail_login";
 		
 		int intAmount = 0;
 
@@ -82,8 +82,11 @@ public class TradePoolService {
 			return "fail";
 	}
 
-	public String getRateAdvs(int id) {
+	public String getRateAdvs(Principal principal, int id) {
 			
+		if(principal == null)
+			return "fail_login";
+		
 		Item item = itemRepository.findOne(id);
 		TradePool tradePool = tradePoolRepository.findFirstByItemOrderByAmountDesc(item);
 		

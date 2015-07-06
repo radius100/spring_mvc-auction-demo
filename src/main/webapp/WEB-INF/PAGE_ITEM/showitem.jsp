@@ -8,7 +8,7 @@ ${itemJson}
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Описание</a></li>
-		<li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Торги online!</a></li>
+		<li role="presentation"><a href="#trade" aria-controls="trade" role="tab" data-toggle="tab">Торги online!</a></li>
 		<li role="presentation"><a href="#images" aria-controls="images" role="tab" data-toggle="tab">Images</a></li>
 	</ul>
 	<!-- Tab panes -->
@@ -121,7 +121,7 @@ ${itemJson}
 				</tbody>
 			</table>
 		</div>
-		<div role="tabpanel" class="tab-pane" id="description">
+		<div role="tabpanel" class="tab-pane" id="trade">
 			<br /> <br />
 
 			<table class="table borderless">
@@ -134,7 +134,7 @@ ${itemJson}
 							<td align="right">
 								<label>Минимальная ставка</label>
 								<input type="text" class="form-control" id="amount">
-								<button id="doStake" class="btn btn-primary">Ставка</button>
+								<button id="btnRate" class="btn btn-primary">Ставка</button>
 							</td>
 						</security:authorize>
 					</tr>
@@ -187,20 +187,24 @@ jQuery(document).ready(function($) {
 		'showmarkers' : true
 	});
 	
+	//допилить когда сервер перегружается, а пользователь был залогинин
+	var login_ok=false;
+	
+	
 	$("#follow").click(function() { 
 		$.get("/items/item-${item.id}/follow.html",function(data,status) { 
-			if (data == 'Follow')  
+			if (data == 'follow')  
 				$('#follow').removeClass("btn-primary").removeClass("disabled").addClass("btn-success").text("Follow");
-			else if (data == 'Unfollow') 
+			else if (data == 'unfollow') 
 				$('#follow').removeClass("btn-success").removeClass("disabled").addClass("btn-primary").text("Follow");
-			else if (data == 'Login first') 
-				$('#follow').removeClass("btn-success").addClass("btn-primary").addClass("disabled").text("Follow");
+			else if (data == 'fail_login') 
+				OnFailLogin();
 			alert("Data: " + data + "\nStatus: " + status);  
 		});
 	});
 	
-	setInterval(UpdateTable, 45000);
-
+	setInterval(UpdateTableAndRate, 10000);
+	
 	function UpdateTable(){
 		$('#dyntable').bootstrapTable('refresh', {
 	    	url: '/items/item-${item.id}/tradepool.json'
@@ -209,20 +213,47 @@ jQuery(document).ready(function($) {
 
 	function RateAdvs() {
 		$.get("/items/item-${item.id}/rate-adv.html",function(data,status) {
-			$('#amount').val(data);
+			if( data.localeCompare("fail_login") == 0 ) {
+				OnServerFall();
+			}
+			else {
+				$('#amount').val(data);
+				login_ok=true;
+			}
+				
 		});
 	}
 	
-	$("#doStake").click(function() {
+	function UpdateTableAndRate(){
+		UpdateTable();
+		if(login_ok == true)
+			RateAdvs();
+	}
+		
+	function OnFailLogin(){
+		if(login_ok == true){
+			$('#btnRate').hide();
+			$('#amount').hide();
+			$('#follow').removeClass("btn-success").addClass("btn-primary").addClass("disabled").text("Follow");
+			login_ok=false;	
+		}
+	}
+	
+	$("#btnRate").click(function() {
 		
 		$.post("/items/item-${item.id}/rate.html",
-			{ amount: $('#amount').val() },
+			{ 
+				amount: $('#amount').val() 
+			},
 			function(data,status){ 
-				//alert("Data: " + data + "\nStatus: " + status);
-				if( data.localeCompare("ok") == 0 ) {
-					UpdateTable();
-					RateAdvs();
+				if( data.localeCompare("ok") == 0 ){
+					login_ok=true;
+					UpdateTableAndRate();
 				}
+				else if(data.localeCompare("fail_login") == 0)
+					OnServerFall();
+				else if(data.localeCompare("fail") == 0)
+					RateAdvs();
 		});
 	});
 		

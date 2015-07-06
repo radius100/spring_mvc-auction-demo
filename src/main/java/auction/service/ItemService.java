@@ -1,5 +1,6 @@
 package auction.service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import auction.json.TradePoolByItemJson;
 import auction.repository.ItemRepository;
 import auction.repository.TradePoolRepository;
 import auction.repository.UserItemDetailRepository;
+import auction.repository.UserRepository;
 import auction.utils.DateTimeUtils;
 
 @Service
@@ -29,11 +31,13 @@ public class ItemService {
 	ItemRepository itemRepository;
 
 	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
 	UserItemDetailRepository userItemDetailRepository;
 
 	@Autowired
 	TradePoolRepository tradePoolRepository;
-
 
 	public void save(Item item, User user) {
 
@@ -63,31 +67,27 @@ public class ItemService {
 		itemRepository.save(item);
 	}
 
-	public String getTradePoolByItemJson(int id) {
-		
+	public String getTradePoolByItemJson(Principal principal, int id) {
+
+				
 		List<TradePoolByItemJson> tpJs = new ArrayList<TradePoolByItemJson>();
 		List<TradePool> tradePools = tradePoolRepository.findByItemOrderByAmountDesc(itemRepository.findOne(id));
-		
-		for(TradePool tradePool : tradePools) {
-			
-			TradePoolByItemJson tpJ = new TradePoolByItemJson(
-							tradePool.getUser().getName(),
-							tradePool.getAmount(),
-							DateTimeUtils.getDateAsString(tradePool.getDate()),
-							DateTimeUtils.getTimeAsString(tradePool.getDate())
-							);
-			
+
+		for (TradePool tradePool : tradePools) {
+
+			TradePoolByItemJson tpJ = new TradePoolByItemJson(tradePool.getUser().getName(), tradePool.getAmount(), DateTimeUtils.getDateAsString(tradePool.getDate()),
+					DateTimeUtils.getTimeAsString(tradePool.getDate()));
+
 			tpJs.add(tpJ);
 		}
-		
+
 		Gson gson = new GsonBuilder()
-        .disableHtmlEscaping()
-        .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-        .setPrettyPrinting()
-        .serializeNulls()
-        .create();
+			.disableHtmlEscaping()
+			.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+			.setPrettyPrinting()
+			.serializeNulls()
+			.create();
 		
 		return gson.toJson(tpJs);
 	}
-
 }
