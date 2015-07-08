@@ -85,14 +85,6 @@ public class Item {
 	 * public void setImages(List<Image> images) { this.images = images; }
 	 */
 
-	/*
-	 * public List<UserItemDetail> getUserItemDetails() { return
-	 * userItemDetails; }
-	 * 
-	 * public void setUserItemDetails(List<UserItemDetail> userItemDetails) {
-	 * this.userItemDetails = userItemDetails; }
-	 */
-
 	public Integer getId() {
 		return id;
 	}

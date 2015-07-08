@@ -2,59 +2,95 @@
 
 <%@ include file="../LAYOUTS/taglib.jsp"%>
 
-<button id="btnRate" class="btn btn-primary">Ставка</button>
+${accountJson}
 
-<div id="check">
+<button id="btnRemove" class="btn btn-primary">Remove</button>
+<button id="btnRate3" class="btn btn-primary">3</button>
+<button id="btnRate2" class="btn btn-primary">2</button>
 
-</div>
+<table class="table table-bordered table-striped table-condensed">
+	<tr id="item-3">
+		<th width="25%">User</th>
+		<th width="25%">Amount</th>
+		<th width="25%">Date</th>
+		<th width="25%">Time</th>
+	</tr>
 
-<input type="text" class="form-control" id="amount">
-
-!!!!
-<span>
-!!!!
-<!-- 
-<table><thead><th>User</th><th>Amount</th><th>Date</th><th>Time</th></thead><tbody>
-    <tr>
-    	<td>Row 1: Col 1</td>
-    	<td>Row 1: Col 2</td>
-    </tr>
-  </tbody>
 </table>
- -->
+ 
+<table class="table table-bordered table-striped table-condensed">
+	<tr id="item-2">
+		<th width="25%">User</th>
+		<th width="25%">Amount</th>
+		<th width="25%">Date</th>
+		<th width="25%">Time</th>
+	</tr>
+
+</table>
+
+//$("[id*='item-']")
 
 <script type="text/javascript">
 
 jQuery(document).ready(function($) {
-	
-	
-	//попробовать $.load()
-	
-	$.getJSON("/items/item-3/tradepool.json", function(json){
-	
-		if(json != null){
-				          
-			var output="<table><thead><th>User</th><th>Amount</th><th>Date</th><th>Time</th></thead><tbody>";
-			var output2="";
-			$.each(json, function(i,item){
-				
-				output+="<tr>"+"<td>"+item.User+"</td>"
-							+"<td>"+item.Amount+"</td>"
-							+"<td>"+item.Date+"</td>"
-							+"<td>"+item.Time+"</td>"
-				
-			});
 
-			output+="</tr></tbody></table>";
-			$('table').addClass("table");
-			
-			$(output).appendTo("#check");
-		 
-			// $('#amount').val(output);
 	
-		}
-	});
+	
+	$('#btnRate3').click(function(){
 		
+		$.getJSON("/items/item-3/tradepool.json", function(json){
+			
+			if(json != null){
+				var output="";
+		
+				$.each(json, function(i,item){
+					
+					output+="<tr class=\"removable\">"+"<td>"+item.User+"</td>"
+								+"<td>"+item.Amount+"</td>"
+								+"<td>"+item.Date+"</td>"
+								+"<td>"+item.Time+"</td>"+"</tr>"
+					
+				});
+
+				$("#item-3").after(output);
+				
+			}
+		})
+
+		
+	});
+
+	$('#btnRemove').click(function(){
+		
+		$(".removable").remove();
+		
+	});
+	
+	$('#btnRate2').click(function(){
+		
+		$.getJSON("/items/item-2/tradepool.json", function(json){
+			
+			if(json != null){
+				var output="";
+		
+				$.each(json, function(i,item){
+					
+					output+="<tr class=\"removable\">"+"<td>"+item.User+"</td>"
+								+"<td>"+item.Amount+"</td>"
+								+"<td>"+item.Date+"</td>"
+								+"<td>"+item.Time+"</td>"+"</tr>"
+					
+				});
+
+				$("#item-2").after(output);
+				
+			}
+		})
+
+		
+	});
+
+
 });
 
 

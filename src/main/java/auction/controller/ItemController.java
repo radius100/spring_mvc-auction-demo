@@ -63,7 +63,7 @@ public class ItemController {
 				.build();
 
 		model.addAttribute("item", item);
-		//model.addAttribute("itemJson", itemService.getTradePoolByItemJson(id));
+		//model.addAttribute("itemJson", itemService.getTradePoolByItemJson(principal,id));
 
 		return "item";
 	}
