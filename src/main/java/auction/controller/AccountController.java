@@ -25,7 +25,7 @@ public class AccountController {
 	@RequestMapping(value="/account")
 	public String account(Model model, Principal principal){
 		
-		model.addAttribute("accountJson", accountService.getTradePoolAndFollowByAccountJson(principal));
+		model.addAttribute("tables", accountService.getTradePoolAndFollowByAccount(principal));
 		
 		return "account";
 	}
@@ -44,7 +44,7 @@ public class AccountController {
 
 		return ResponseEntity
 				.ok()
-				.body("");
+				.body(accountService.getTradePoolAndFollowByAccountJson(principal));
 	}
 
 }

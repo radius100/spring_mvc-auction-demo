@@ -42,11 +42,13 @@ public class AccountService {
 
 	static final Logger logger = Logger.getLogger(AccountService.class);
 	
-	public String getTradePoolAndFollowByAccountJson(Principal principal) {
+	public List<TradePoolAndFollowByAccountJson> getTradePoolAndFollowByAccount(Principal principal) {
 
 		BasicConfigurator.configure();
 		logger.info("!!!!");
 		
+		if(principal == null)
+			return null;
 
 		User user = userRepository.findOneByName(principal.getName());
 		Item item;
@@ -69,8 +71,7 @@ public class AccountService {
 				
 				itemsTp.add(item);
 				
-				tpFoAccJs.add(new TradePoolAndFollowByAccountJson("Trade",sBuilder.append("item-").append(item.getId()).toString()));
-				
+				tpFoAccJs.add(new TradePoolAndFollowByAccountJson("Trade", item.getName(), sBuilder.append("item-").append(item.getId()).toString()));
 			}
 			
 		}
@@ -86,18 +87,27 @@ public class AccountService {
 				
 				sBuilder.setLength(0);
 				
-				tpFoAccJs.add(new TradePoolAndFollowByAccountJson("Follow",sBuilder.append("item-").append(item.getId()).toString()));
+				tpFoAccJs.add(new TradePoolAndFollowByAccountJson("Follow", item.getName(), sBuilder.append("item-").append(item.getId()).toString()));
 			}
 				
 		}
 
+		return tpFoAccJs;
+
+	}
+
+	public String getTradePoolAndFollowByAccountJson(Principal principal) {
+
+		
 		Gson gson = new GsonBuilder()
 			.disableHtmlEscaping()
+			.excludeFieldsWithoutExposeAnnotation()
 			.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
 			.setPrettyPrinting()
 			.serializeNulls()
 			.create();
 
-		return gson.toJson(tpFoAccJs);
+		return gson.toJson(getTradePoolAndFollowByAccount(principal));
 	}
+
 }

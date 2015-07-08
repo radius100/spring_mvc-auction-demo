@@ -2,12 +2,12 @@
 
 <script>
 	$(document).ready(function() {
-		var test = $.cookie('myAppLocaleCookie');
+		var lang = $.cookie('myAppLocaleCookie');
 
-		if (test == 'en') {
-			$("#en").remove();
+		if (lang == 'en') {
+			$("#ru").show();
 		} else {
-			$("#ru").remove();
+			$("#en").show();
 		}
 	});
 </script>
@@ -40,8 +40,8 @@
 				<security:authorize access="isAuthenticated()">
 					<li class="${current=='account'?'active':''}"><a href="<spring:url value="/account.html" />"><spring:message code="menu.account" /></a></li>
 				</security:authorize>
-				<li id="en"><a href="?lang=en"><spring:message code="lang.en" /></a></li>
-				<li id="ru"><a href="?lang=ru"><spring:message code="lang.ru" /></a></li>
+				<li id="en" style="display:none"><a href="?lang=en"><spring:message code="lang.en" /></a></li>
+				<li id="ru" style="display:none"><a href="?lang=ru"><spring:message code="lang.ru" /></a></li>
 			</ul>
 		</div>
 		<!--/.nav-collapse -->
