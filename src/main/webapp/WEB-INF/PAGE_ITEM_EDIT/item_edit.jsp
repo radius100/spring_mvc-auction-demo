@@ -2,24 +2,24 @@
 <%@ include file="../LAYOUTS/taglib.jsp"%>
 
 <script type="text/javascript">
-	$(function() {
+	//$(function() {
+	jQuery(document).ready(function($) {		
+		
+		//var date = new Date();
+		
+		
 		$('#pickerPublishDate').datetimepicker({
 			viewMode : 'days',
-			format : 'DD-MMM-YYYY HH:mm',
-		//viewDate : true
-		//defaultDate : '${formatPublishDate}'
-		//useCurrent : false
-		//maxDate : '${formatStartDate}'
+			format : 'DD-MMM-YYYY HH:mm Z',
+			//defaultDate : date,
 		});
 		$('#pickerStartDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
-		//viewDate : true			
 		});
 		$('#pickerFinishDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
-		//viewDate : true
 		});
 
 	});

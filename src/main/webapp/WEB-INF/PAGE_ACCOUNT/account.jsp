@@ -8,9 +8,9 @@
 <h2>Trade pools:</h2>
 <c:forEach items="${tables}" var="table">
 	<c:if test="${table.type eq 'Trade' }">
-		<a href="/items/${table.itemId}.html">${table.name}</a>
+		<a href="/items/${table.itemId}.html#trade">${table.name}</a>
 		<br />
-		<table class="table table-bordered table-striped table-condensed">
+		<table class="table table-bordered table-striped table-condensed" style="display: none">
 			<tr id="${table.itemId}">
 				<th width="25%">User</th>
 				<th width="25%">Amount</th>
@@ -28,7 +28,7 @@
 	<c:if test="${table.type eq 'Follow' }">
 		<a href="/items/${table.itemId}.html">${table.name}</a>
 		<br />
-		<table class="table table-bordered table-striped table-condensed">
+		<table class="table table-bordered table-striped table-condensed" style="display: none">
 			<tr id="${table.itemId}">
 				<th width="25%">User</th>
 				<th width="25%">Amount</th>
@@ -52,6 +52,7 @@ jQuery(document).ready(function($) {
 		
 			if(listItems != null){
 
+				$('table').fadeOut("fast");
 				$(".removable").remove();
 			
 				$.each(listItems, function(i,itemInfo){
@@ -73,6 +74,7 @@ jQuery(document).ready(function($) {
 
 							$("#"+itemInfo.Id).after(output);
 							$(".removable").fadeIn("slow");
+							$('table').fadeIn("slow");
 						
 						}
 					});
@@ -86,12 +88,6 @@ jQuery(document).ready(function($) {
 	$('#btnUpdate').click(function(){
 		
 		UpdateTables();
-	});
-
-	$('#btnRemove').click(function(){
-		
-		$(".removable").remove();
-		
 	});
 	
 });

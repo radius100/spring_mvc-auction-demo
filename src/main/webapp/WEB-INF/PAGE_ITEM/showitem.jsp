@@ -6,7 +6,7 @@ ${itemJson}
 <div class="bodyh">
 	<br />
 	<!-- Nav tabs -->
-	<ul class="nav nav-tabs" role="tablist">
+	<ul class="nav nav-tabs" role="tablist" id="myTabs">
 		<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Описание</a></li>
 		<li role="presentation"><a href="#trade" aria-controls="trade" role="tab" data-toggle="tab">Торги online!</a></li>
 		<li role="presentation"><a href="#images" aria-controls="images" role="tab" data-toggle="tab">Images</a></li>
@@ -258,7 +258,10 @@ jQuery(document).ready(function($) {
 	});
 		
 	$("#amount").ready(RateAdvs);
-
+	
+	//$('#myTabs a[href="#home"]').tab('show') // Select tab by name
+	//$('#myTabs a[href="#trade"]').tab('show') // Select tab by name
+	//$('#myTabs a[href="#images"]').tab('show') // Select tab by name
  });
 
 </script>

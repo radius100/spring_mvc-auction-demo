@@ -19,7 +19,7 @@ import auction.service.ItemService;
 import auction.service.TradePoolService;
 import auction.service.UserItemDetailService;
 import auction.service.UserService;
-import auction.utils.DateTimeUtils;
+
 
 @Controller
 public class ItemController {
@@ -56,14 +56,13 @@ public class ItemController {
 		Item item = itemDetailBuilder
 				.getOne(id)
 				.setPrincipal(principal)
-				.getFollowers().getTraders()
+				.getFollowers()
+				.getTraders()
 				.getPublisher()
 				.getIsFollow()
-				//.getTradePool() // убрать
 				.build();
 
 		model.addAttribute("item", item);
-		//model.addAttribute("itemJson", itemService.getTradePoolByItemJson(principal,id));
 
 		return "item";
 	}
@@ -123,11 +122,10 @@ public class ItemController {
 					.build();
 
 			model.addAttribute("item", item);
-			// нужен ли isEdit??
-			model.addAttribute("isEdit", true);
-			model.addAttribute("formatPublishDate", DateTimeUtils.getDateTimeAsString(item.getPublishDate()));
-			model.addAttribute("formatStartDate", DateTimeUtils.getDateTimeAsString(item.getStartDate()));
-			model.addAttribute("formatFinishDate", DateTimeUtils.getDateTimeAsString(item.getFinishDate()));
+			
+			model.addAttribute("formatPublishDate", item.getPublishDatetoGMTString());
+			model.addAttribute("formatStartDate", item.getStartDatetoGMTString());
+			model.addAttribute("formatFinishDate", item.getFinishDatetoGMTString());
 
 			return "item-edit";
 		}
@@ -140,9 +138,16 @@ public class ItemController {
 	@RequestMapping(value = "/item-{id}/edit", method = RequestMethod.POST)
 	public String doEdit(@ModelAttribute("item") Item item, Principal principal, @PathVariable int id) {
 
-		itemService.update(item, id);
+		if (userService.isOwner(principal.getName(), id)) {
 
-		return "redirect:/item-{id}/edit.html?success=true";
+			itemService.update(item, id);
+
+			return "redirect:/item-{id}/edit.html?success=true";
+		}
+		
+		else
+			return "redirect:/items/item-{id}.html";
+		
 	}
 
 }

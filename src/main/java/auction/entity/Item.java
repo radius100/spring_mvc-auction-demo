@@ -1,5 +1,6 @@
 package auction.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -121,6 +122,14 @@ public class Item {
 		return startDate;
 	}
 
+	public String getStartDatetoGMTString() {
+		
+		if(startDate != null)
+			return startDate.toGMTString();
+		
+		return "";
+	}
+	
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
@@ -129,6 +138,14 @@ public class Item {
 		return finishDate;
 	}
 
+	public String getFinishDatetoGMTString() {
+		
+		if(finishDate != null)
+			return finishDate.toGMTString();
+		
+		return "";
+	}
+	
 	public void setFinishDate(Date finishDate) {
 		this.finishDate = finishDate;
 	}
@@ -192,7 +209,35 @@ public class Item {
 	public Date getPublishDate() {
 		return publishDate;
 	}
-
+	
+	public String getPublishDatetoGMTString() {
+		
+		if(publishDate != null){
+		
+			SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss Z");
+					//new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+			/*
+			 *работает
+			 * 14 Jul 2015 12:56:32 GMT
+			 * yyyy.MM.dd G 'at' HH:mm:ss z
+			 * 
+			 * d MMM yyyy HH:mm:ss
+			 */
+			return dateFormat.format( publishDate );
+			//return publishDate.toGMTString();
+		}
+		return "";
+	}
+/*
+	public String getPublishDatetoGMTString() {
+		
+		if(publishDate != null)
+			return publishDate.;
+		
+		return "";
+	}
+*/
+	
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
 	}
