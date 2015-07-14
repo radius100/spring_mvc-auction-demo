@@ -1,8 +1,10 @@
 package auction.controller;
 
 import java.security.Principal;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -123,9 +125,11 @@ public class ItemController {
 
 			model.addAttribute("item", item);
 			
-			model.addAttribute("formatPublishDate", item.getPublishDatetoGMTString());
-			model.addAttribute("formatStartDate", item.getStartDatetoGMTString());
-			model.addAttribute("formatFinishDate", item.getFinishDatetoGMTString());
+			Locale locale = LocaleContextHolder.getLocale();
+			
+			model.addAttribute("formatPublishDate", item.getPublishDateToLocaleString(locale));
+			model.addAttribute("formatStartDate", item.getStartDateToLocaleString(locale));
+			model.addAttribute("formatFinishDate", item.getFinishDateToLocaleString(locale));
 
 			return "item-edit";
 		}

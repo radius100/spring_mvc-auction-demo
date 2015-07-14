@@ -1,8 +1,8 @@
 package auction.entity;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
+
+import org.joda.time.DateTime;
 
 @Entity
 public class Item {
@@ -122,11 +124,15 @@ public class Item {
 		return startDate;
 	}
 
-	public String getStartDatetoGMTString() {
+	public String getStartDateToLocaleString(Locale locale) {
 		
-		if(startDate != null)
-			return startDate.toGMTString();
-		
+		if(startDate != null){
+			
+			DateTime dt = new DateTime(startDate);
+			
+			return dt.toString("d MMM yyyy HH:mm", locale);
+			
+		}
 		return "";
 	}
 	
@@ -138,11 +144,15 @@ public class Item {
 		return finishDate;
 	}
 
-	public String getFinishDatetoGMTString() {
+	public String getFinishDateToLocaleString(Locale locale) {
 		
-		if(finishDate != null)
-			return finishDate.toGMTString();
-		
+		if(finishDate != null){
+			
+			DateTime dt = new DateTime(finishDate);
+			
+			return dt.toString("d MMM yyyy HH:mm", locale);
+			
+		}
 		return "";
 	}
 	
@@ -210,33 +220,17 @@ public class Item {
 		return publishDate;
 	}
 	
-	public String getPublishDatetoGMTString() {
+	public String getPublishDateToLocaleString(Locale locale) {
 		
 		if(publishDate != null){
-		
-			SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss Z");
-					//new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
-			/*
-			 *работает
-			 * 14 Jul 2015 12:56:32 GMT
-			 * yyyy.MM.dd G 'at' HH:mm:ss z
-			 * 
-			 * d MMM yyyy HH:mm:ss
-			 */
-			return dateFormat.format( publishDate );
-			//return publishDate.toGMTString();
+			
+			DateTime dt = new DateTime(publishDate);
+			
+			return dt.toString("d MMM yyyy HH:mm", locale);
+			
 		}
 		return "";
 	}
-/*
-	public String getPublishDatetoGMTString() {
-		
-		if(publishDate != null)
-			return publishDate.;
-		
-		return "";
-	}
-*/
 	
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;

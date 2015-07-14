@@ -2,13 +2,18 @@
 
 <script>
 	$(document).ready(function() {
-		var lang = $.cookie('myAppLocaleCookie');
 
+		var lang = $.cookie('myAppLocaleCookie');
+	
+		//alert(lang);
 		if (lang == 'en') {
 			$("#ru").show();
-		} else {
+			lang='ru'
+		} else if (lang == 'ru'){
 			$("#en").show();
 		}
+		
+		
 	});
 </script>
 

@@ -5,24 +5,31 @@
 	//$(function() {
 	jQuery(document).ready(function($) {		
 		
-		//var date = new Date();
+		/*
+		 * Добавить чтение локали из кук
+		 */
+		var loc = 'en';
 		
 		
 		$('#pickerPublishDate').datetimepicker({
 			viewMode : 'days',
-			format : 'DD-MMM-YYYY HH:mm Z',
-			//defaultDate : date,
+			format: 'DD-MMM-YYYY HH:mm',
+			locale: loc
 		});
 		$('#pickerStartDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
+			locale: loc
+			
 		});
 		$('#pickerFinishDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
+			locale: loc
 		});
 
 	});
+
 </script>
 
 <c:if test="${param.success eq true }">
@@ -75,7 +82,6 @@
 						<hr>
 					</div>
 				</div>
-				${formatPublishDate}
 				<div class="form-group">
 					<label for="publishDate" class="col-sm-2 control-label"><spring:message code="register.item.publishDate" /></label>
 					<div class="col-sm-4">
@@ -88,18 +94,15 @@
 						</div>
 					</div>
 				</div>
-				${item.startDate}<br /> ${formatStartDate}
 				<div class="form-group">
 					<label for="startDate" class="col-sm-2 control-label"><spring:message code="register.item.startDate" /></label>
 					<div class="col-sm-4">
 						<div class="input-group" id="pickerStartDate">
-							<form:input type="text" path="startDate" class="form-control" value="${formatStartDate}" />
+							<form:input type="text" path="startDate" class="form-control" value="" />
 							<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
 						</div>
 					</div>
 				</div>
-				${item.finishDate}<br /> ${formatFinishDate}
-
 				<div class="form-group">
 					<label for="finishDate" class="col-sm-2 control-label"><spring:message code="register.item.finishDate" /></label>
 					<div class="col-sm-4">
