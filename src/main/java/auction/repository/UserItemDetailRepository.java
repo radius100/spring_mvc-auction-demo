@@ -39,6 +39,14 @@ public interface UserItemDetailRepository extends JpaRepository<UserItemDetail, 
 
 	public List<UserItemDetail> findByUserAndFollowTrue(User user);
 
+	public UserItemDetail findByUserAndItemAndHideTrue(User user, Item item);
+
+	public List<UserItemDetail> findByUserAndHideTrue(User user);
+
+	public List<UserItemDetail> findByUserAndExpandTrue(User user);
+
+	public UserItemDetail findByUserAndItemAndExpandTrue(User user, Item item);
+
 	//public UserItemDetail findByItemAndUserAndPublishTrue(Item item, User user);
 	
 }

@@ -30,6 +30,10 @@ public class UserItemDetail {
 	private boolean follow;
 	
 	private boolean buy;
+	
+	private boolean hide;
+	
+	private boolean expand;
 
 
 	public Integer getId() {
@@ -78,6 +82,22 @@ public class UserItemDetail {
 
 	public void setBuy(boolean buy) {
 		this.buy = buy;
+	}
+
+	public boolean isHide() {
+		return hide;
+	}
+
+	public void setHide(boolean hide) {
+		this.hide = hide;
+	}
+
+		public boolean isExpand() {
+		return expand;
+	}
+
+	public void setExpand(boolean expand) {
+		this.expand = expand;
 	}
 
 }

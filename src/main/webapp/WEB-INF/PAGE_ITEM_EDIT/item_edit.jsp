@@ -2,11 +2,20 @@
 <%@ include file="../LAYOUTS/taglib.jsp"%>
 
 <script type="text/javascript">
-	//$(function() {
+	
 	jQuery(document).ready(function($) {		
 		
 		/*
 		 * Добавить чтение локали из кук
+		 *
+		 *	
+		 * Проверки:
+		 *	Заполненные поля являются датами и временем 
+		 *  PublisDate >= now, можно менять пока не опубликовано.. т.е. Прошел срок указанной PublishDate 
+		 *  неделя >= (StartDate - PublishDate) >= 1 час
+		 *	(FinishDate - StartDate) <= 30 дней
+		 *
+		 *
 		 */
 		var loc = 'en';
 		
@@ -98,7 +107,7 @@
 					<label for="startDate" class="col-sm-2 control-label"><spring:message code="register.item.startDate" /></label>
 					<div class="col-sm-4">
 						<div class="input-group" id="pickerStartDate">
-							<form:input type="text" path="startDate" class="form-control" value="" />
+							<form:input type="text" path="startDate" class="form-control" value="${formatStartDate}" />
 							<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
 						</div>
 					</div>

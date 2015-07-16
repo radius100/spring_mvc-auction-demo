@@ -119,7 +119,13 @@ public class InitDbService {
 		userItemDetail1.setItem(item1);
 		userItemDetail1.setPublish(true);
 		userItemDetailRepository.save(userItemDetail1);
-		
+		/*
+		UserItemDetail userItemDetail0 = new UserItemDetail();
+		userItemDetail0.setUser(userTest1);
+		userItemDetail0.setItem(item1);
+		userItemDetail0.setHide(true);
+		userItemDetailRepository.save(userItemDetail0);
+		*/
 		UserItemDetail userItemDetail3 = new UserItemDetail();
 		userItemDetail3.setUser(userAdmin);
 		userItemDetail3.setItem(item2);

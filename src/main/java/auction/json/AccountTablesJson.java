@@ -3,7 +3,7 @@ package auction.json;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TradePoolAndFollowByAccountJson {
+public class AccountTablesJson {
 
 	@Expose
 	@SerializedName("Type")
@@ -13,14 +13,17 @@ public class TradePoolAndFollowByAccountJson {
 	@SerializedName("Id")
 	private String itemId;
 	
+	private boolean expand;
+	
 	private String name;
 	
 	
-	public TradePoolAndFollowByAccountJson(String type, String name, String itemId) {
+	public AccountTablesJson(String type, String name, String itemId, boolean expand) {
 		
 		this.type = type;
 		this.itemId = itemId;
 		this.name = name;
+		this.expand=expand;
 	}
 
 
@@ -48,6 +51,16 @@ public class TradePoolAndFollowByAccountJson {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	
+	public boolean isExpand() {
+		return expand;
+	}
+
+
+	public void setExpand(boolean expand) {
+		this.expand = expand;
 	}
 		
 }

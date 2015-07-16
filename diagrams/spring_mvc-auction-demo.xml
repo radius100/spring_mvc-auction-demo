@@ -36,8 +36,8 @@
 		<entity-name>auction.entity.User</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>206</entity-height>
-		<entity-X-Coordinate>210</entity-X-Coordinate>
-		<entity-Y-Coordinate>196</entity-Y-Coordinate>
+		<entity-X-Coordinate>198</entity-X-Coordinate>
+		<entity-Y-Coordinate>189</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -68,7 +68,7 @@
 	<entity>
 		<entity-name>auction.entity.UserItemDetail</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>206</entity-height>
+		<entity-height>246</entity-height>
 		<entity-X-Coordinate>400</entity-X-Coordinate>
 		<entity-Y-Coordinate>20</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
