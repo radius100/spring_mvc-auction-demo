@@ -29,11 +29,11 @@
 					<button id="btnUpdate_${table.itemId}" class="btn btn-xs btn-primary">Refresh</button>
 					<!-- collapse -->
 					<c:choose>
-						<c:when test="${table.collapse eq true}">
-							<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _expand">Expand</button>
+						<c:when test="${table.collapsed eq true}">
+							<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _collapsed">Expand</button>
 						</c:when>
 						<c:otherwise>
-							<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _collapse">Collapse</button>
+							<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _expanded">Collapse</button>
 						</c:otherwise>
 					</c:choose>							
 					<button id="btnHide_${table.itemId}" class="btn btn-xs btn-primary">Hide</button>
@@ -106,25 +106,15 @@ jQuery(document).ready(function($) {
 							});
 
 							$("#table_head_"+itemInfo.Id).after(output);
-							//alert("#table_head_"+itemInfo.Id);
-							$('.all_'+itemInfo.Id).fadeIn("fast");
-							//alert('.all_'+itemInfo.Id);
-							if(itemInfo.Collapse == true){
-								
-								//убрать лишние строки				
-								$(".collapse_line_"+itemInfo.Id).fadeOut("fast");
-								//проверить можно ли убрать???
-								$("#btnCollapse_"+itemInfo.Id).html('Expand');
-				
+
+							if(itemInfo.Collapsed == true){
+								//показать только первую строку				
+								$(".first_line_"+itemInfo.Id).fadeIn("fast");
 							}
 								
 							else{
-
 								//показать все строки				
-								$(".collapse_line_"+itemInfo.Id).fadeIn("fast");
-								//проверить можно ли убрать???
-								$("#btnCollapse_"+itemInfo.Id).html('Collapse');
-								
+								$(".all_"+itemInfo.Id).fadeIn("fast");
 							}	
 							
 							$('table').fadeIn("slow");
@@ -174,18 +164,14 @@ jQuery(document).ready(function($) {
 				});
 
 				$("#table_head_"+str).after(output);
-				$(".all_"+str).fadeIn("fast");
-				$(".collapse_line_"+str).fadeIn("fast");
-				
-				if ( $("#btnCollapse_"+str).hasClass('_collapse') == true ){
-	
-					//убрать лишние строки				
-					$(".collapse_line_"+str).fadeIn("fast");
+
+				if ( $("#btnCollapse_"+str).hasClass('_collapsed') == true ){
+					//показать только первую строку
+					$(".first_line_"+str).fadeIn("fast");
 				}
-				else if ( $("#btnCollapse_"+str).hasClass('_expand') == true ){
-				
-					//показать все строки				
-					$(".collapse_line_"+str).fadeOut("fast");
+				else if ( $("#btnCollapse_"+str).hasClass('_expanded') == true ){
+					//показать все строки
+					$(".all_"+str).fadeIn("fast");
 				}
 			
 			}
@@ -218,25 +204,27 @@ jQuery(document).ready(function($) {
 		
 		$.get("/account/"+str+"/collapse.html",function(data,status) {
 			
-			if(data == 'setCollapse'){
+			if(data == 'Collapsed'){
 
-				//показать все строки				
-				$(".collapse_line_"+str).fadeIn("fast");
+				//скрыть все кроме первой строки
+				$(".collapse_line_"+str).fadeOut("fast");
+				//показать только первую строку				
+				$(".first_line_"+str).fadeIn("fast");
 				
-				$("#"+button_id).html('Collapse');
-				$("#"+button_id).addClass('_collapse');
-				$("#"+button_id).removeClass('_expand');
+				$("#"+button_id).html('Expand');
+				$("#"+button_id).addClass('_collapsed');
+				$("#"+button_id).removeClass('_expanded');
 			}
 				
-			else if(data == 'setExpand'){
+			else if(data == 'Expanded'){
 				
-				//убрать лишние строки				
-				$(".collapse_line_"+str).fadeOut("fast");
+				//показать все строки				
+				$(".all_"+str).fadeIn("fast");
 
-				$("#"+button_id).html('Expand');
-				$("#"+button_id).addClass('_expand');
-				$("#"+button_id).removeClass('_collapse');
-
+				$("#"+button_id).html('Collapse');
+				$("#"+button_id).addClass('_expanded');
+				$("#"+button_id).removeClass('_collapsed');
+				
 			}
 							
 		});

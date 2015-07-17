@@ -71,14 +71,16 @@ public class AccountService {
 			uIDetail.setCollapse(true);
 			userItemDetailRepository.save(uIDetail);
 			
-			return "setExpand";
+			//return "setExpand";
+			return "Collapsed";
 			
 		}
 		else {
 			
 			userItemDetailRepository.delete(userItemDetail);
 			
-			return "setCollapse";
+			//return "setCollapse";
+			return "Expanded";
 		}
 			
 		

@@ -14,20 +14,19 @@ public class AccountTablesJson {
 	private String itemId;
 	
 	@Expose
-	@SerializedName("Collapse")
-	private boolean collapse;
+	@SerializedName("Collapsed")
+	private boolean collapsed;
 	
 	private String name;
 	
 	
-	public AccountTablesJson(String type, String name, String itemId, boolean collapse) {
+	public AccountTablesJson(String type, String name, String itemId, boolean collapsed) {
 		
 		this.type = type;
-		this.itemId = itemId;
 		this.name = name;
-		this.collapse=collapse;
+		this.itemId = itemId;
+		this.collapsed=collapsed;
 	}
-
 
 	public String getType() {
 		return type;
@@ -55,14 +54,13 @@ public class AccountTablesJson {
 		this.name = name;
 	}
 
-	
-	public boolean iscollapse() {
-		return collapse;
+	public boolean isCollapsed() {
+		return collapsed;
 	}
 
-
-	public void setcollapse(boolean collapse) {
-		this.collapse = collapse;
+	public void setCollapsed(boolean collapsed) {
+		this.collapsed = collapsed;
 	}
+
 		
 }

@@ -50,11 +50,13 @@ public class AccountTablesBuilder {
 	private List<TradePool> tradePools;
 	private List<Item> itemsTp;
 	private List<Item> hideItems;
-	private List<Item> expandItems;
+	private List<Item> collapseItems;
 	private List<UserItemDetail> hidesUID;
 	private List<UserItemDetail> collapsesUID;
 	private List<UserItemDetail> followersUID;
 	
+	
+	//проверить на анонима!!!
 	boolean err_flag=false;
 	
 	public AccountTablesBuilder init(Principal principal){
@@ -85,9 +87,9 @@ public class AccountTablesBuilder {
 		for(UserItemDetail uIDetail : hidesUID)
 			hideItems.add(uIDetail.getItem());
 	
-		expandItems = new ArrayList<Item>();
+		collapseItems = new ArrayList<Item>();
 		for(UserItemDetail uIDetail : collapsesUID)
-			expandItems.add(uIDetail.getItem());
+			collapseItems.add(uIDetail.getItem());
 	
 		
 		return this;
@@ -113,7 +115,7 @@ public class AccountTablesBuilder {
 				
 				itemsTp.add(item);
 				
-				if(expandItems.contains(item) == true)
+				if(collapseItems.contains(item) == true)
 					expandBool=true;
 				else
 					expandBool=false;
@@ -142,7 +144,7 @@ public class AccountTablesBuilder {
 				
 				sBuilder.setLength(0);
 				
-				if(expandItems.contains(item) == true)
+				if(collapseItems.contains(item) == true)
 					expandBool=true;
 				else
 					expandBool=false;
@@ -160,7 +162,9 @@ public class AccountTablesBuilder {
 	
 	
 	public List<AccountTablesJson> build() {
-
+		
+		//if(err_flag)
+		//	return null;
 		return accountTables;
 
 	}
