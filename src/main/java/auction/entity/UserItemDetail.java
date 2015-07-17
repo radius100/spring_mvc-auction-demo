@@ -33,7 +33,7 @@ public class UserItemDetail {
 	
 	private boolean hide;
 	
-	private boolean expand;
+	private boolean collapse;
 
 
 	public Integer getId() {
@@ -92,12 +92,12 @@ public class UserItemDetail {
 		this.hide = hide;
 	}
 
-		public boolean isExpand() {
-		return expand;
+	public boolean isCollapse() {
+		return collapse;
 	}
 
-	public void setExpand(boolean expand) {
-		this.expand = expand;
+	public void setCollapse(boolean collapse) {
+		this.collapse = collapse;
 	}
 
 }

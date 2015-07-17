@@ -52,7 +52,7 @@ public class AccountTablesBuilder {
 	private List<Item> hideItems;
 	private List<Item> expandItems;
 	private List<UserItemDetail> hidesUID;
-	private List<UserItemDetail> expandsUID;
+	private List<UserItemDetail> collapsesUID;
 	private List<UserItemDetail> followersUID;
 	
 	boolean err_flag=false;
@@ -72,7 +72,7 @@ public class AccountTablesBuilder {
 		tradePools = tradePoolRepository.findByUser(user);
 		
 		hidesUID = userItemDetailRepository.findByUserAndHideTrue(user);
-		expandsUID = userItemDetailRepository.findByUserAndExpandTrue(user);
+		collapsesUID = userItemDetailRepository.findByUserAndCollapseTrue(user);
 		followersUID = userItemDetailRepository.findByUserAndFollowTrue(user);
 		
 		sBuilder = new StringBuilder();
@@ -86,7 +86,7 @@ public class AccountTablesBuilder {
 			hideItems.add(uIDetail.getItem());
 	
 		expandItems = new ArrayList<Item>();
-		for(UserItemDetail uIDetail : expandsUID)
+		for(UserItemDetail uIDetail : collapsesUID)
 			expandItems.add(uIDetail.getItem());
 	
 		

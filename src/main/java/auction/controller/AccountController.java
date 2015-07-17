@@ -36,7 +36,6 @@ public class AccountController {
 				.getTradePools()
 				.getFollowers()
 				.build());
-		//model.addAttribute("tables", accountService.getAccountTablesSkretch(principal));
 		
 		return "account";
 	}
@@ -62,10 +61,10 @@ public class AccountController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/account/item-{id}/expand")
-	public String doToggleExpand(Principal principal, @PathVariable int id) {
+	@RequestMapping("/account/item-{id}/collapse")
+	public String doToggleCollapse(Principal principal, @PathVariable int id) {
 	
-		return accountService.toggleExpand(principal,id);
+		return accountService.toggleCollapse(principal,id);
 	}
 	
 }

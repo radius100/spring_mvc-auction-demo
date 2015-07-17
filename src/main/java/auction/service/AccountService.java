@@ -54,31 +54,31 @@ public class AccountService {
 			
 	}
 
-	public String toggleExpand(Principal principal, int id) {
+	public String toggleCollapse(Principal principal, int id) {
 		
 		if( principal == null )
 			return "fail";
 		
 		User user = userRepository.findOneByName(principal.getName());
 		Item item = itemRepository.findOne(id);
-		UserItemDetail userItemDetail = userItemDetailRepository.findByUserAndItemAndExpandTrue(user,item); 
+		UserItemDetail userItemDetail = userItemDetailRepository.findByUserAndItemAndCollapseTrue(user,item); 
 		
 		if( userItemDetail == null ){
 			
 			UserItemDetail uIDetail = new UserItemDetail();
 			uIDetail.setItem(item);
 			uIDetail.setUser(user);
-			uIDetail.setExpand(true);
+			uIDetail.setCollapse(true);
 			userItemDetailRepository.save(uIDetail);
 			
-			return "collapse";
+			return "setExpand";
 			
 		}
 		else {
 			
 			userItemDetailRepository.delete(userItemDetail);
 			
-			return "expand";
+			return "setCollapse";
 		}
 			
 		

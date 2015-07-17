@@ -13,17 +13,19 @@ public class AccountTablesJson {
 	@SerializedName("Id")
 	private String itemId;
 	
-	private boolean expand;
+	@Expose
+	@SerializedName("Collapse")
+	private boolean collapse;
 	
 	private String name;
 	
 	
-	public AccountTablesJson(String type, String name, String itemId, boolean expand) {
+	public AccountTablesJson(String type, String name, String itemId, boolean collapse) {
 		
 		this.type = type;
 		this.itemId = itemId;
 		this.name = name;
-		this.expand=expand;
+		this.collapse=collapse;
 	}
 
 
@@ -54,13 +56,13 @@ public class AccountTablesJson {
 	}
 
 	
-	public boolean isExpand() {
-		return expand;
+	public boolean iscollapse() {
+		return collapse;
 	}
 
 
-	public void setExpand(boolean expand) {
-		this.expand = expand;
+	public void setcollapse(boolean collapse) {
+		this.collapse = collapse;
 	}
 		
 }

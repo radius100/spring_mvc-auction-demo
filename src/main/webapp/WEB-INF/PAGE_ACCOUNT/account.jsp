@@ -15,7 +15,7 @@
 					<a href="/items/${table.itemId}.html#trade">${table.name}</a>
 					<br>
 					<table id="table_${table.itemId}" class="table table-bordered table-striped table-condensed" style="display: none">
-						<tr id="${table.itemId}">
+						<tr id="table_head_${table.itemId}">
 							<th width="25%">User</th>
 							<th width="25%">Amount</th>
 							<th width="25%">Date</th>
@@ -28,7 +28,14 @@
 				<div class="col-md-3">
 					<button id="btnUpdate_${table.itemId}" class="btn btn-xs btn-primary">Refresh</button>
 					<!-- collapse -->
-					<button id="btnExpand_${table.itemId}" class="btn btn-xs btn-primary">Expand</button>
+					<c:choose>
+						<c:when test="${table.collapse eq true}">
+							<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _expand">Expand</button>
+						</c:when>
+						<c:otherwise>
+							<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _collapse">Collapse</button>
+						</c:otherwise>
+					</c:choose>							
 					<button id="btnHide_${table.itemId}" class="btn btn-xs btn-primary">Hide</button>
 				</div>
 			</div>
@@ -62,8 +69,6 @@
 
 jQuery(document).ready(function($) {
 
-	var TurnOn = true;
-	
 	UpdateTables();
 	
 	function UpdateTables() {
@@ -73,32 +78,56 @@ jQuery(document).ready(function($) {
 			if(listItems != null){
 
 				$('table').fadeOut("fast");
-				$(".remove_all").remove();
+				
+				$(".all").remove();
 			
 				$.each(listItems, function(i,itemInfo){
 				
 					$.getJSON("/items/"+itemInfo.Id+"/tradepool.json", function(json){
 					
-						if(json != null){
+						if( json != null ){
 						
 							var output="";
+							collapse_line = "first_line_"+itemInfo.Id;
 				
 							$.each(json, function(i,item){
 							
-								output+="<tr class=\"remove_all "+itemInfo.Id
-											+" \" style=\"display:none\">"
+								if( i == 1 )
+									collapse_line = "collapse_line_"+itemInfo.Id; 
+								
+								output+="<tr class=\"all all_"+itemInfo.Id
+										+" "+collapse_line+"\" style=\"display:none\">"
 										+"<td>"+item.User+"</td>"
 										+"<td>"+item.Amount+"</td>"
 										+"<td>"+item.Date+"</td>"
 										+"<td>"+item.Time+"</td>"
 										+"</tr>"
-							
+
 							});
 
-							$("#"+itemInfo.Id).after(output);
-							$(".remove_all").fadeIn("slow");
+							$("#table_head_"+itemInfo.Id).after(output);
+							//alert("#table_head_"+itemInfo.Id);
+							$('.all_'+itemInfo.Id).fadeIn("fast");
+							//alert('.all_'+itemInfo.Id);
+							if(itemInfo.Collapse == true){
+								
+								//убрать лишние строки				
+								$(".collapse_line_"+itemInfo.Id).fadeOut("fast");
+								//проверить можно ли убрать???
+								$("#btnCollapse_"+itemInfo.Id).html('Expand');
+				
+							}
+								
+							else{
+
+								//показать все строки				
+								$(".collapse_line_"+itemInfo.Id).fadeIn("fast");
+								//проверить можно ли убрать???
+								$("#btnCollapse_"+itemInfo.Id).html('Collapse');
+								
+							}	
+							
 							$('table').fadeIn("slow");
-						
 						}
 					});
 				});
@@ -120,22 +149,22 @@ jQuery(document).ready(function($) {
 		var str = $(this).attr('id');
 		str = str.slice(10);
 		
-		$("."+str).remove();
+		$(".all_"+str).remove();
 		
 		$.getJSON("/items/"+str+"/tradepool.json", function(json){
 			
-			if(json != null){
+			if( json != null ){
 			
-				var output="";
-				var class_visible="";
-	
-				$.each(json, function(i,item){
+				var output = "";
+				var collapse_line = "first_line_"+str;
 				
-					if( i > 0 )
-						class_hide = "";
+				$.each(json, function(i,item){
 					
-					output+="<tr class=\"remove_all "+str
-								+" \" style=\"display:none\">"
+					if( i == 1 )
+						collapse_line = "collapse_line_"+str; 
+					
+					output+="<tr class=\"all all_"+str+" "
+							+collapse_line+" \" style=\"display:none\">"
 							+"<td>"+item.User+"</td>"
 							+"<td>"+item.Amount+"</td>"
 							+"<td>"+item.Date+"</td>"
@@ -144,8 +173,20 @@ jQuery(document).ready(function($) {
 				
 				});
 
-				$("#"+str).after(output);
-				$("."+str).fadeIn("slow");
+				$("#table_head_"+str).after(output);
+				$(".all_"+str).fadeIn("fast");
+				$(".collapse_line_"+str).fadeIn("fast");
+				
+				if ( $("#btnCollapse_"+str).hasClass('_collapse') == true ){
+	
+					//убрать лишние строки				
+					$(".collapse_line_"+str).fadeIn("fast");
+				}
+				else if ( $("#btnCollapse_"+str).hasClass('_expand') == true ){
+				
+					//показать все строки				
+					$(".collapse_line_"+str).fadeOut("fast");
+				}
 			
 			}
 		});
@@ -168,31 +209,39 @@ jQuery(document).ready(function($) {
 	});
 
 	
-	$("button[id*='btnExpand_']").click(function(){
+	$("button[id*='btnCollapse_']").click(function(){
 		
 		var str = $(this).attr('id');
-		str = str.slice(10);
+		str = str.slice(12);
 		
-		var id = $(this).attr("id");
+		var button_id = $(this).attr("id");
 		
-		$.get("/account/"+str+"/expand.html",function(data,status) {
+		$.get("/account/"+str+"/collapse.html",function(data,status) {
 			
-			if(data == 'expand'){
+			if(data == 'setCollapse'){
 
-				$("#"+id).html('Collapse');
+				//показать все строки				
+				$(".collapse_line_"+str).fadeIn("fast");
+				
+				$("#"+button_id).html('Collapse');
+				$("#"+button_id).addClass('_collapse');
+				$("#"+button_id).removeClass('_expand');
 			}
 				
-			else if(data == 'collapse'){
+			else if(data == 'setExpand'){
 				
-				$("#"+id).html('Expand');
+				//убрать лишние строки				
+				$(".collapse_line_"+str).fadeOut("fast");
+
+				$("#"+button_id).html('Expand');
+				$("#"+button_id).addClass('_expand');
+				$("#"+button_id).removeClass('_collapse');
+
 			}
-			
 							
 		});
 		
 	});
-
-	
 	
 });
 
