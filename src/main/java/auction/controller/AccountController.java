@@ -41,7 +41,7 @@ public class AccountController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/aaccount")
+	@RequestMapping("/account-info")
 	public ResponseEntity<?> showItemTradePool(Principal principal) {
 
 		return ResponseEntity

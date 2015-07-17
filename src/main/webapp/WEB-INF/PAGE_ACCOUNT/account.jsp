@@ -73,7 +73,7 @@ jQuery(document).ready(function($) {
 	
 	function UpdateTables() {
 		
-		$.getJSON("/aaccount.json", function(listItems){
+		$.getJSON("/account-info.json", function(listItems){
 		
 			if(listItems != null){
 
