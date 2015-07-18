@@ -46,7 +46,7 @@ public class AccountService {
 			userItemDetail.setHide(true);
 			userItemDetailRepository.save(userItemDetail);
 			
-			return "ok";
+			return "hidden";
 			
 		}
 		else

@@ -9,6 +9,7 @@
 		<intercept-url pattern="/users**" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/users/**" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/account**" access="hasRole('USER')" />
+		<intercept-url pattern="/account/**" access="hasRole('USER')" />
 		<intercept-url pattern="/item/register**" access="hasRole('USER')" />
 		<intercept-url pattern="/**/edit**" access="hasRole('USER')" />
 		<form-login login-page="/login.html" default-target-url="/index.html" authentication-failure-url="/login.jsp?error=true" />

@@ -29,7 +29,13 @@ public class AccountController {
 	
 	
 	@RequestMapping(value="/account")
-	public String account(Model model, Principal principal){
+	public String account(Principal principal){
+		
+		return "account";
+	}
+	
+	@RequestMapping(value="/account/trading-monitor")
+	public String trading_monitor(Model model, Principal principal){
 		
 		model.addAttribute("tables", accountTablesBuilder
 				.init(principal)
@@ -37,9 +43,21 @@ public class AccountController {
 				.getFollowers()
 				.build());
 		
-		return "account";
+		return "monitor";
 	}
 	
+	@RequestMapping(value="/account/my-items")
+	public String myItems(Model model, Principal principal){
+		
+		model.addAttribute("tables", accountTablesBuilder
+				.init(principal)
+				.getTradePools()
+				.getFollowers()
+				.build());
+		
+		return "my-items";
+	}
+
 	@ResponseBody
 	@RequestMapping("/account-info")
 	public ResponseEntity<?> showItemTradePool(Principal principal) {

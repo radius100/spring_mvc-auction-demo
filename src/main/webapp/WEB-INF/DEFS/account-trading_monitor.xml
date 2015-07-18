@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="accounttradingmonitortempl" template="/WEB-INF/PAGE_ACCOUNT_TRADING_MONITOR/account_trading_monitor_home.jsp">
+		<put-attribute name="menu" value="/WEB-INF/LAYOUTS/menu.jsp" />
+		<put-attribute name="sidemenu" value="/WEB-INF/LAYOUTS/sidemenu.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/LAYOUTS/footer.jsp" />
+
+	</definition>
+
+	<definition name="monitor" extends="accounttradingmonitortempl">
+		<put-attribute name="title" value="!!!" />
+		<put-attribute name="account_trading_monitor" value="/WEB-INF/PAGE_ACCOUNT_TRADING_MONITOR/account_trading_monitor.jsp" />
+		
+		<put-attribute name="current" value="account" />
+	</definition>
+
+</tiles-definitions>

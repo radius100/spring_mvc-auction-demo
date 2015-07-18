@@ -114,18 +114,26 @@ public class InitDbService {
 		item3.setBlock(false);
 		itemRepository.save(item3);
 		
+		Item item4 = new Item();
+		item4.setName("тел LG G4");
+		item4.setStartAmount(200);
+		item4.setDescr("крутой тел как у китаезов!");
+		item4.setFullDescr("LG G4 Ц обновленна€ модель нашумевшего смартфона. ”стройство получило увеличенный, обновленный экран, а также возросшую автономность. ѕервое, что бросаетс€ в глаза при взгл€де на LG G4 Ц минимальные боковые рамки диспле€, благодар€ чему девайс отлично лежит в руке. –азрешение IPS матрицы составл€ет 1920х1152 точки, что обеспечивает потр€сающую четкость изображени€.");
+		item4.setPublishDate(new Date());
+		item4.setStartDate(new Date());
+		item4.setFinishDate(new Date());
+		item4.setActive(true);
+		item4.setSell(false);
+		item4.setBlock(false);
+		itemRepository.save(item4);
+
+		
 		UserItemDetail userItemDetail1 = new UserItemDetail();
 		userItemDetail1.setUser(userAdmin);
 		userItemDetail1.setItem(item1);
 		userItemDetail1.setPublish(true);
 		userItemDetailRepository.save(userItemDetail1);
-		/*
-		UserItemDetail userItemDetail0 = new UserItemDetail();
-		userItemDetail0.setUser(userTest1);
-		userItemDetail0.setItem(item1);
-		userItemDetail0.setHide(true);
-		userItemDetailRepository.save(userItemDetail0);
-		*/
+		
 		UserItemDetail userItemDetail3 = new UserItemDetail();
 		userItemDetail3.setUser(userAdmin);
 		userItemDetail3.setItem(item2);
@@ -152,15 +160,28 @@ public class InitDbService {
 		
 		UserItemDetail userItemDetail6 = new UserItemDetail();
 		userItemDetail6.setUser(userAdmin);
-		userItemDetail6.setItem(item3);
+		userItemDetail6.setItem(item4);
 		userItemDetail6.setFollow(true);
 		userItemDetailRepository.save(userItemDetail6);
-	
+		
+		UserItemDetail userItemDetail8 = new UserItemDetail();
+		userItemDetail8.setUser(userTest);
+		userItemDetail8.setItem(item4);
+		userItemDetail8.setPublish(true);
+		userItemDetailRepository.save(userItemDetail8);
+
 		UserItemDetail userItemDetail7 = new UserItemDetail();
-		userItemDetail7.setUser(userTest);
-		userItemDetail7.setItem(item3);
+		userItemDetail7.setUser(userAdmin);
+		userItemDetail7.setItem(item4);
 		userItemDetail7.setFollow(true);
 		userItemDetailRepository.save(userItemDetail7);		
+		
+		UserItemDetail userItemDetail9 = new UserItemDetail();
+		userItemDetail9.setUser(userTest1);
+		userItemDetail9.setItem(item4);
+		userItemDetail9.setFollow(true);
+		userItemDetailRepository.save(userItemDetail9);
+		
 		
 		TradePool tradePool1 = new TradePool();
 		tradePool1.setUser(userAdmin);
@@ -198,5 +219,28 @@ public class InitDbService {
 		tradePool5.setMessageDate(tradePool5.getDate().toString());
 		tradePoolRepository.save(tradePool5);		
 
+		TradePool tradePool6 = new TradePool();
+		tradePool6.setUser(userAdmin);
+		tradePool6.setAmount(200);
+		tradePool6.setItem(item4);
+		tradePool6.setDate(new Date());
+		tradePoolRepository.save(tradePool6);
+		
+		TradePool tradePool7 = new TradePool();
+		tradePool7.setUser(userAdmin);
+		tradePool7.setAmount(300);
+		tradePool7.setItem(item4);
+		tradePool7.setDate(new Date());
+		tradePoolRepository.save(tradePool7);		
+		
+		TradePool tradePool8 = new TradePool();
+		tradePool8.setUser(userAdmin);
+		tradePool8.setAmount(500);
+		tradePool8.setItem(item3);
+		tradePool8.setDate(new Date());
+		tradePool8.setMessageDate(tradePool8.getDate().toString());
+		tradePoolRepository.save(tradePool8);		
+
+		
 	}
 }
