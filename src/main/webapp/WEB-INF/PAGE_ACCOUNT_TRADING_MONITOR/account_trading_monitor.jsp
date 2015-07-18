@@ -94,7 +94,7 @@ jQuery(document).ready(function($) {
 	
 	function UpdateTables() {
 		
-		$.getJSON("/account-info.json", function(listItems){
+		$.getJSON("/account-info-monitor.json", function(listItems){
 		
 			if(listItems != null){
 

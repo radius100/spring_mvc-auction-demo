@@ -60,8 +60,9 @@ public class ItemController {
 				.setPrincipal(principal)
 				.getFollowers()
 				.getTraders()
+				.getIsPublishByPrincipal() 
 				.getPublisher()
-				.getIsFollow()
+				.getIsFollowByPrincipal()
 				.build();
 
 		model.addAttribute("item", item);

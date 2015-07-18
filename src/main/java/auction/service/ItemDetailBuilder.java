@@ -7,10 +7,10 @@
 	 * getFollowersCount()
 	 * getTradersCount()
 	 * getCurrentAmount()
-	 * getIsFollow()
-	 * getIsPublish()
-	 * getIsBuy()
-	 * getIsTrade()
+	 * getIsFollowByPrincipal()
+	 * getIsPublishByPrincipal()
+	 * getIsBuyByPrincipal()
+	 * getIsTradeByPrincipal()
 	 * getTradePool()
 	 * getTraders()
 	 * getFollowers()
@@ -86,7 +86,7 @@ public class ItemDetailBuilder {
 
 		return this;
 	}
-
+	
 	public ItemDetailBuilder getFollowersCount() {
 
 		item.setFollowersCount(userItemDetailRepository.countUserDistinctByItemAndFollowTrue(item));
@@ -111,7 +111,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getIsFollow() {
+	public ItemDetailBuilder getIsFollowByPrincipal() {
 
 		if (user != null) {
 
@@ -125,22 +125,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getIsPublish() {
-
-		if (user != null) {
-
-			UserItemDetail userItemDetail = userItemDetailRepository.findOneByPublishTrueAndUserAndItem(user, item);
-
-			if (userItemDetail != null)
-				item.setPublishedByCurrentUser(true);
-			else
-				item.setPublishedByCurrentUser(false);
-
-		}
-		return this;
-	}
-
-	public ItemDetailBuilder getIsBuy() {
+	public ItemDetailBuilder getIsBuyByPrincipal() {
 
 		if (user != null) {
 
@@ -155,7 +140,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getIsTrade() {
+	public ItemDetailBuilder getIsTradeByPrincipal() {
 
 		if (tradePoolRepository.countByUserAndItem(user, item) > 0)
 			item.setTradeedByCurrentUser(true);
@@ -164,6 +149,30 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
+	public ItemDetailBuilder getIsPublishByPrincipal() {
+
+		if (user != null) {
+
+			UserItemDetail userItemDetail = userItemDetailRepository.findOneByPublishTrueAndUserAndItem(user, item);
+
+			if (userItemDetail != null)
+				item.setPublishedByCurrentUser(true);
+			else
+				item.setPublishedByCurrentUser(false);
+
+		}
+		return this;
+	}
+
+	// Почему сразу тип User не возвращает??
+	public ItemDetailBuilder getPublisher() {
+
+		UserItemDetail userItemDetail = userItemDetailRepository.findOneByItemAndPublishTrue(item);
+		
+		item.setPublisher(userItemDetail.getUser());
+		return this;
+	}
+	
 	public ItemDetailBuilder getTradePool() {
 
 		List<TradePool> tradePools = tradePoolRepository.findByItem(item);
@@ -209,15 +218,6 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	// Почему сразу тип User не возвращает??
-	public ItemDetailBuilder getPublisher() {
-
-		UserItemDetail userItemDetail = userItemDetailRepository.findOneByItemAndPublishTrue(item);
-		
-		item.setPublisher(userItemDetail.getUser());
-		return this;
-	}
-	
 	public ItemDetailBuilder createItemDateMessage4IndexJsp() {
 
 		DateTimeUtils.createItemDateMessage4IndexJsp(item);

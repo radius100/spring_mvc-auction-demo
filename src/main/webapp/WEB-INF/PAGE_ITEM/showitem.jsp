@@ -16,17 +16,18 @@ ${itemJson}
 	<div class="tab-content" id="tabscontent">
 		<div role="tabpanel" class="tab-pane active" id="home">
 			
-			<security:authorize access="isAuthenticated()">
-				<c:choose>
-					<c:when test="${item.followedByCurrentUser eq true}">
-						<td><button id="follow" class="btn btn-success">Follow</button></td>
-					</c:when>
-					<c:otherwise>
-						<td><button id="follow" class="btn btn-primary">Follow</button></td>
-					</c:otherwise>
-				</c:choose>
-			</security:authorize>
-			
+			<c:if test="${item.publishedByCurrentUser eq false}">
+				<security:authorize access="isAuthenticated()">
+					<c:choose>
+						<c:when test="${item.followedByCurrentUser eq true}">
+							<td><button id="follow" class="btn btn-success">Follow</button></td>
+						</c:when>
+						<c:otherwise>
+							<td><button id="follow" class="btn btn-primary">Follow</button></td>
+						</c:otherwise>
+					</c:choose>
+				</security:authorize>
+			</c:if>
 			<table class="table borderless">
 				<col width="3%">
 				<tbody>
@@ -128,16 +129,19 @@ ${itemJson}
 				<col width="3%">
 				
 				<tbody>
-					<tr>
-						<security:authorize access="isAuthenticated()">					
-							<td></td>
-							<td align="right">
-								<label>Минимальная ставка</label>
-								<input type="text" class="form-control" id="amount">
-								<button id="btnRate" class="btn btn-primary">Ставка</button>
-							</td>
-						</security:authorize>
-					</tr>
+					<c:if test="${item.publishedByCurrentUser eq false}">
+						<tr>
+							<security:authorize access="isAuthenticated()">					
+								<td></td>
+								<td align="right">
+									<label>Минимальная ставка</label>
+									<input type="text" class="form-control" id="amount">
+									<button id="btnRate" class="btn btn-primary">Ставка</button>
+								</td>
+							</security:authorize>
+						</tr>
+					</c:if>
+					
 					<tr><td> </td></tr>
 					<tr>
 						<td></td>

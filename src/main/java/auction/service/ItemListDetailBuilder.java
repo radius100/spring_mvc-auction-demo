@@ -41,8 +41,8 @@ public class ItemListDetailBuilder {
 						.getFollowersCount()
 						.getTradersCount()
 						.getCurrentAmount()
-						.getIsFollow()
-						.getIsPublish()
+						.getIsFollowByPrincipal()
+						.getIsPublishByPrincipal()
 						.build();
 
 			}

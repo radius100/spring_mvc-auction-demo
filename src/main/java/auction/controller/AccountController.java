@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import auction.service.AccountMonitorTablesBuilder;
+import auction.service.AccountMyItemsTablesBuilder;
 import auction.service.AccountService;
-import auction.service.AccountTablesBuilder;
 import auction.service.UserService;
 
 
@@ -25,7 +26,10 @@ public class AccountController {
 	private AccountService accountService;
 	
 	@Autowired
-	private AccountTablesBuilder accountTablesBuilder;
+	private AccountMonitorTablesBuilder accountMonitorTablesBuilder;
+	
+	@Autowired
+	private AccountMyItemsTablesBuilder accountMyItemsTablesBuilder;
 	
 	
 	@RequestMapping(value="/account")
@@ -37,7 +41,7 @@ public class AccountController {
 	@RequestMapping(value="/account/trading-monitor")
 	public String trading_monitor(Model model, Principal principal){
 		
-		model.addAttribute("tables", accountTablesBuilder
+		model.addAttribute("tables", accountMonitorTablesBuilder
 				.init(principal)
 				.getTradePools()
 				.getFollowers()
@@ -49,22 +53,33 @@ public class AccountController {
 	@RequestMapping(value="/account/my-items")
 	public String myItems(Model model, Principal principal){
 		
-		model.addAttribute("tables", accountTablesBuilder
+		model.addAttribute("tables", accountMyItemsTablesBuilder
 				.init(principal)
-				.getTradePools()
-				.getFollowers()
+				.getTradePoolsActive()
 				.build());
 		
 		return "my-items";
 	}
 
 	@ResponseBody
-	@RequestMapping("/account-info")
-	public ResponseEntity<?> showItemTradePool(Principal principal) {
+	@RequestMapping("/account-info-my-items")
+	public ResponseEntity<?> showMyItemsTradePool(Principal principal) {
 
 		return ResponseEntity
 				.ok()
-				.body(accountTablesBuilder
+				.body(accountMyItemsTablesBuilder
+						.init(principal)
+						.getTradePoolsActive()
+						.buildJSON());
+	}
+
+	@ResponseBody
+	@RequestMapping("/account-info-monitor")
+	public ResponseEntity<?> showMonitorTradePool(Principal principal) {
+
+		return ResponseEntity
+				.ok()
+				.body(accountMonitorTablesBuilder
 						.init(principal)
 						.getTradePools()
 						.getFollowers()

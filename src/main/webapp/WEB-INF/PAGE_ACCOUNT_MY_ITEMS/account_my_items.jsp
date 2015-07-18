@@ -4,50 +4,10 @@
 <button id="btnUpdateAll" class="btn btn-primary btn-sm">Refresh All</button>
 <br>
 <br>
-<h1>Online trading monitor:</h1>
+<h1>My publishes:</h1>
 <br>
-<br>
-<h2>Trade pools:</h2>
 <c:forEach items="${tables}" var="table">
 	<c:if test="${table.type eq 'Trade' }">
-		<div id="block_${table.itemId}">
-			<div class="row">
-				<div class="col-md-10">	
-					<a href="/items/${table.itemId}.html#trade">${table.name}</a>
-					<br>
-					<table id="table_${table.itemId}" class="table table-bordered table-striped table-condensed" style="display: none">
-						<tr id="table_head_${table.itemId}">
-							<th width="25%">User</th>
-							<th width="25%">Amount</th>
-							<th width="25%">Date</th>
-							<th width="25%">Time</th>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-3">
-					<button id="btnUpdate_${table.itemId}" class="btn btn-xs btn-primary">Refresh</button>
-					<!-- collapse -->
-					<c:choose>
-						<c:when test="${table.collapsed eq true}">
-							<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _collapsed">Expand</button>
-						</c:when>
-						<c:otherwise>
-							<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _expanded">Collapse</button>
-						</c:otherwise>
-					</c:choose>							
-					<button id="btnHide_${table.itemId}" class="btn btn-xs btn-primary">Hide</button>
-				</div>
-			</div>
-			<br>
-			<br>
-		</div>
-	</c:if>
-</c:forEach>
-<h2>Follows:</h2>
-<c:forEach items="${tables}" var="table">
-	<c:if test="${table.type eq 'Follow' }">
 		<div id="block_${table.itemId}">
 			<div class="row">
 				<div class="col-md-10">	
@@ -94,7 +54,7 @@ jQuery(document).ready(function($) {
 	
 	function UpdateTables() {
 		
-		$.getJSON("/account-info.json", function(listItems){
+		$.getJSON("/account-info-my-items.json", function(listItems){
 		
 			if(listItems != null){
 

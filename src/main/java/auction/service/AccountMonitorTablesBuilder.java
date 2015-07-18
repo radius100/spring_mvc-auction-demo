@@ -26,7 +26,7 @@ import auction.repository.UserRepository;
 
 @Service
 @Transactional
-public class AccountTablesBuilder {
+public class AccountMonitorTablesBuilder {
 
 	@Autowired
 	ItemRepository itemRepository;
@@ -55,11 +55,25 @@ public class AccountTablesBuilder {
 	private List<UserItemDetail> collapsesUID;
 	private List<UserItemDetail> followersUID;
 	
-	
 	//проверить на анонима!!!
 	boolean err_flag=false;
+
+	/*
+	 * 1. «апрет на ставки по своим лотам
+	 * 2. ѕолучить List<Item> items по всем лотам published principal
+	 * 3. 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	
-	public AccountTablesBuilder init(Principal principal){
+	
+	
+	
+	public AccountMonitorTablesBuilder init(Principal principal){
 		
 		//BasicConfigurator.configure();
 		//logger.info("!!!!");
@@ -95,7 +109,7 @@ public class AccountTablesBuilder {
 		return this;
 	}
 	
-	public AccountTablesBuilder getTradePools(){
+	public AccountMonitorTablesBuilder getTradePools(){
 
 		boolean expandBool;
 
@@ -132,7 +146,7 @@ public class AccountTablesBuilder {
 		return this;
 	}
 
-	public AccountTablesBuilder getFollowers(){
+	public AccountMonitorTablesBuilder getFollowers(){
 	
 		boolean expandBool;
 		

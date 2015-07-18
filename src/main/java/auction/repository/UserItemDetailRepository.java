@@ -46,5 +46,7 @@ public interface UserItemDetailRepository extends JpaRepository<UserItemDetail, 
 	public UserItemDetail findByUserAndItemAndCollapseTrue(User user, Item item);
 
 	public List<UserItemDetail> findByUserAndCollapseTrue(User user);
+
+	public List<UserItemDetail> findByUserAndPublishTrue(User user);
 	
 }

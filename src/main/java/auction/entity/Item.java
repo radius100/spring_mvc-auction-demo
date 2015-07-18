@@ -81,7 +81,7 @@ public class Item {
 
 	@Transient
 	private User publisher;
-
+	
 	/*
 	 * public List<Image> getImages() { return images; }
 	 * 

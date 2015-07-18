@@ -145,6 +145,13 @@ public class InitDbService {
 		userItemDetail5.setItem(item3);
 		userItemDetail5.setPublish(true);
 		userItemDetailRepository.save(userItemDetail5);
+
+		UserItemDetail userItemDetail8 = new UserItemDetail();
+		userItemDetail8.setUser(userTest);
+		userItemDetail8.setItem(item4);
+		userItemDetail8.setPublish(true);
+		userItemDetailRepository.save(userItemDetail8);
+
 		
 		UserItemDetail userItemDetail2 = new UserItemDetail();
 		userItemDetail2.setUser(userTest1);
@@ -164,15 +171,10 @@ public class InitDbService {
 		userItemDetail6.setFollow(true);
 		userItemDetailRepository.save(userItemDetail6);
 		
-		UserItemDetail userItemDetail8 = new UserItemDetail();
-		userItemDetail8.setUser(userTest);
-		userItemDetail8.setItem(item4);
-		userItemDetail8.setPublish(true);
-		userItemDetailRepository.save(userItemDetail8);
 
 		UserItemDetail userItemDetail7 = new UserItemDetail();
 		userItemDetail7.setUser(userAdmin);
-		userItemDetail7.setItem(item4);
+		userItemDetail7.setItem(item3);
 		userItemDetail7.setFollow(true);
 		userItemDetailRepository.save(userItemDetail7);		
 		
@@ -186,26 +188,26 @@ public class InitDbService {
 		TradePool tradePool1 = new TradePool();
 		tradePool1.setUser(userAdmin);
 		tradePool1.setAmount(100);
-		tradePool1.setItem(item1);
+		tradePool1.setItem(item3);
 		tradePool1.setDate(new Date());
 		tradePoolRepository.save(tradePool1);
 		
 		TradePool tradePool2 = new TradePool();
-		tradePool2.setUser(userTest1);
+		tradePool2.setUser(userAdmin);
 		tradePool2.setAmount(150);
-		tradePool2.setItem(item1);
+		tradePool2.setItem(item4);
 		tradePool2.setDate(new Date());
 		tradePoolRepository.save(tradePool2);
 		
 		TradePool tradePool3 = new TradePool();
 		tradePool3.setUser(userTest1);
 		tradePool3.setAmount(200);
-		tradePool3.setItem(item2);
+		tradePool3.setItem(item1);
 		tradePool3.setDate(new Date());
 		tradePoolRepository.save(tradePool3);
 		
 		TradePool tradePool4 = new TradePool();
-		tradePool4.setUser(userAdmin);
+		tradePool4.setUser(userTest);
 		tradePool4.setAmount(300);
 		tradePool4.setItem(item3);
 		tradePool4.setDate(new Date());
@@ -221,14 +223,14 @@ public class InitDbService {
 
 		TradePool tradePool6 = new TradePool();
 		tradePool6.setUser(userAdmin);
-		tradePool6.setAmount(200);
+		tradePool6.setAmount(300);
 		tradePool6.setItem(item4);
 		tradePool6.setDate(new Date());
 		tradePoolRepository.save(tradePool6);
 		
 		TradePool tradePool7 = new TradePool();
 		tradePool7.setUser(userAdmin);
-		tradePool7.setAmount(300);
+		tradePool7.setAmount(400);
 		tradePool7.setItem(item4);
 		tradePool7.setDate(new Date());
 		tradePoolRepository.save(tradePool7);		

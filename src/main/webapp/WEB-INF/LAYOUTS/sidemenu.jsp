@@ -11,7 +11,7 @@
 		<a href="#" class="list-group-item"><spring:message code="sidemenu.im_following" /></a> 
 		<a href="#" class="list-group-item"><spring:message code="sidemenu.my_rates" /></a>
  -->
-		<a href="#" class="list-group-item">Profile</a> 
+		<a href=""<spring:url value="/account.html" />" class="list-group-item">Profile</a> 
 		<a href="<spring:url value="/account/my-items.html" />" class="list-group-item">My items</a> 
 		<a href="<spring:url value="/account/trading-monitor.html" />" class="list-group-item">Trading monitor</a> 
 		<a href="#" class="list-group-item">Stats</a>
