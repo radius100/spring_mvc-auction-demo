@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="../LAYOUTS/taglib.jsp"%>
+<div class="page-header">
+	<h1>Online trading monitor:</h1>
+</div>
 <button id="btnUpdateAll" class="btn btn-primary btn-sm">Refresh All</button>
-<br>
-<br>
-<h1>Online trading monitor:</h1>
 <br>
 <br>
 <h2>Trade pools:</h2>
@@ -205,7 +205,7 @@ jQuery(document).ready(function($) {
 		
 		$.get("/account/"+str+"/hide.html",function(data,status) {
 			
-			if(data == 'hidden')
+			if(data == 'Hidden')
 				$('#block_'+str).hide();
 							
 		});

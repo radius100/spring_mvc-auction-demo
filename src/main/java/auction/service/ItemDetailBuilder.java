@@ -4,6 +4,7 @@
 	 * getOne(int id)
 	 * getOne(Item item)
 	 * setPrincipal(Principal principal)
+	 * setPrincipal(User user)
 	 * getFollowersCount()
 	 * getTradersCount()
 	 * getCurrentAmount()
@@ -11,6 +12,8 @@
 	 * getIsPublishByPrincipal()
 	 * getIsBuyByPrincipal()
 	 * getIsTradeByPrincipal()
+	 * getIsHide()
+	 * getIsCollapse
 	 * getTradePool()
 	 * getTraders()
 	 * getFollowers()
@@ -86,6 +89,13 @@ public class ItemDetailBuilder {
 
 		return this;
 	}
+
+	public ItemDetailBuilder setPrincipal(User user) {
+
+		this.user = user;
+		return this;
+	}
+
 	
 	public ItemDetailBuilder getFollowersCount() {
 
@@ -144,8 +154,36 @@ public class ItemDetailBuilder {
 
 		if (tradePoolRepository.countByUserAndItem(user, item) > 0)
 			item.setTradeedByCurrentUser(true);
-		item.setTradeedByCurrentUser(false);
+		else
+			item.setTradeedByCurrentUser(false);
 
+		return this;
+	}
+	
+	public ItemDetailBuilder getIsHide() {
+
+		if (user != null) {
+
+			if (userItemDetailRepository.findByItemAndUserAndHideTrue(item,user) != null)
+				item.setHide(true);
+			else 
+				item.setHide(false);
+		}
+		
+		return this;
+	}
+
+	public ItemDetailBuilder getIsCollapse() {
+		
+		if (user != null) {
+
+			if (userItemDetailRepository.findByUserAndItemAndCollapseTrue(user,item) != null)
+				item.setCollapse(true);
+			else 
+				item.setCollapse(false);
+
+		}
+	
 		return this;
 	}
 
@@ -161,6 +199,7 @@ public class ItemDetailBuilder {
 				item.setPublishedByCurrentUser(false);
 
 		}
+		
 		return this;
 	}
 

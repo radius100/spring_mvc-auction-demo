@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="../LAYOUTS/taglib.jsp"%>
+
+<div class="page-header">
+	<h1>My publishes:</h1>
+</div>
 <button id="btnUpdateAll" class="btn btn-primary btn-sm">Refresh All</button>
 <br>
 <br>
-<h1>My publishes:</h1>
 <br>
 <c:forEach items="${tables}" var="table">
 	<c:if test="${table.type eq 'Trade' }">

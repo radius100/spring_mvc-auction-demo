@@ -82,6 +82,13 @@ public class Item {
 	@Transient
 	private User publisher;
 	
+	@Transient
+	private boolean hide;
+
+	@Transient
+	private boolean collapse;
+
+
 	/*
 	 * public List<Image> getImages() { return images; }
 	 * 
@@ -322,6 +329,22 @@ public class Item {
 
 	public void setPublisher(User publisher) {
 		this.publisher = publisher;
+	}
+
+	public boolean isHide() {
+		return hide;
+	}
+
+	public void setHide(boolean hide) {
+		this.hide = hide;
+	}
+
+	public boolean isCollapse() {
+		return collapse;
+	}
+
+	public void setCollapse(boolean collapse) {
+		this.collapse = collapse;
 	}
 
 }

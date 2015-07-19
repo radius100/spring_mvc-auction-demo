@@ -160,7 +160,7 @@ public class InitDbService {
 		userItemDetailRepository.save(userItemDetail2);
 		
 		UserItemDetail userItemDetail4 = new UserItemDetail();
-		userItemDetail4.setUser(userTest1);
+		userItemDetail4.setUser(userTest);
 		userItemDetail4.setItem(item2);
 		userItemDetail4.setFollow(true);
 		userItemDetailRepository.save(userItemDetail4);

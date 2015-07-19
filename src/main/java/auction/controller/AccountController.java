@@ -30,12 +30,16 @@ public class AccountController {
 	
 	@Autowired
 	private AccountMyItemsTablesBuilder accountMyItemsTablesBuilder;
+
 	
 	
 	@RequestMapping(value="/account")
-	public String account(Principal principal){
+	public String accountProfile(Model model, Principal principal){
 		
-		return "account";
+		model.addAttribute("myItems", accountService.getMyItemSettings(principal));
+		model.addAttribute("monitoringItems", accountService.getTradingMonitorSettings(principal));
+
+		return "account-profile";
 	}
 	
 	@RequestMapping(value="/account/trading-monitor")
@@ -88,9 +92,9 @@ public class AccountController {
 
 	@ResponseBody
 	@RequestMapping("/account/item-{id}/hide")
-	public String doHide(Principal principal, @PathVariable int id) {
+	public String doToggleHide(Principal principal, @PathVariable int id) {
 	
-		return accountService.setHide(principal,id);
+		return accountService.toggleHide(principal,id);
 	}
 	
 	@ResponseBody
