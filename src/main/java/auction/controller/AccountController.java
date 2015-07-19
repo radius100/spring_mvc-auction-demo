@@ -6,21 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import auction.entity.UserDetail;
 import auction.service.AccountMonitorTablesBuilder;
 import auction.service.AccountMyItemsTablesBuilder;
 import auction.service.AccountService;
+import auction.service.UserDetailService;
 import auction.service.UserService;
 
 
 @Controller
 public class AccountController {
 
+	@ModelAttribute("userdetail")
+	public UserDetail constract() {
+		return new UserDetail();
+	}
+	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserDetailService userDetailService;
 	
 	@Autowired
 	private AccountService accountService;
@@ -33,9 +45,21 @@ public class AccountController {
 
 	
 	
+	@RequestMapping(value = "/account", method = RequestMethod.POST)
+	public String doRegister(@ModelAttribute("userdetail") UserDetail userDetail, Principal principal) {
+
+		if ( (userDetailService.save(userDetail, principal)) == true )
+			return "redirect:/account.html?success=true";
+		else
+			return "redirect:/account.html?success=fail";
+		
+	}
+
 	@RequestMapping(value="/account")
 	public String accountProfile(Model model, Principal principal){
 		
+		model.addAttribute("principal",principal.getName());
+		model.addAttribute("userdetail",userDetailService.getOne(principal));
 		model.addAttribute("myItems", accountService.getMyItemSettings(principal));
 		model.addAttribute("monitoringItems", accountService.getTradingMonitorSettings(principal));
 
@@ -102,6 +126,15 @@ public class AccountController {
 	public String doToggleCollapse(Principal principal, @PathVariable int id) {
 	
 		return accountService.toggleCollapse(principal,id);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/account/new-item")
+	public String addNewItem() {
+	
+		//Сделать поддержку языков
+		
+		return "";
 	}
 	
 }

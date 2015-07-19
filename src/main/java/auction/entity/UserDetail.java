@@ -7,11 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-//@Table(name ="user_detail")
 public class UserDetail {
 
 	@Id
-//	@GeneratedValue
 	private Integer id;
 	
 	private String firstName;
@@ -30,15 +28,6 @@ public class UserDetail {
 	
 	private Date regDate;
 
-	/*
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-*/
 	
 	public String getFirstName() {
 		return firstName;

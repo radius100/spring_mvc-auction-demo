@@ -18,7 +18,6 @@ body {
 footer {
 	margin: 50px 0;
 }
-
 </style>
 
 <title><tiles:insertAttribute name="title" /></title>

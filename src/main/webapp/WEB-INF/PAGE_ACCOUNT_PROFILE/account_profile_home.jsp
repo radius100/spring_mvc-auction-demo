@@ -19,6 +19,13 @@ footer {
 	margin: 50px 0;
 }
 
+.blockPointer:hover {
+    cursor: pointer;
+}
+#pageH {
+    min-height: 600px;
+}
+
 </style>
 
 <title><tiles:insertAttribute name="title" /></title>

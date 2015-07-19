@@ -6,22 +6,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import auction.entity.Item;
 import auction.entity.Role;
 import auction.entity.User;
+import auction.entity.UserDetail;
 import auction.entity.UserItemDetail;
 import auction.repository.ItemRepository;
 import auction.repository.RoleRepository;
+import auction.repository.UserDetailRepository;
 import auction.repository.UserItemDetailRepository;
 import auction.repository.UserRepository;
 
 @Service
+@Transactional
 public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	UserDetailRepository userDetailRepository;
+	
 	@Autowired
 	RoleRepository roleRepository;
 	
@@ -51,6 +58,12 @@ public class UserService {
 		user.setRoles(roles);
 		
 		userRepository.save(user);
+		
+		UserDetail userDetail = new UserDetail();
+		User tempUser = userRepository.findOneByName(user.getName());
+		userDetail.setId(tempUser.getId());
+		
+		userDetailRepository.save(userDetail);
 	}
 
 	public List<User> getAll() {

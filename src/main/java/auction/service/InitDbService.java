@@ -15,6 +15,7 @@ import auction.entity.Item;
 import auction.entity.Role;
 import auction.entity.TradePool;
 import auction.entity.User;
+import auction.entity.UserDetail;
 import auction.entity.UserItemDetail;
 import auction.repository.ItemRepository;
 import auction.repository.RoleRepository;
@@ -66,7 +67,7 @@ public class InitDbService {
 		roles.add(roleUser);
 		userAdmin.setRoles(roles);
 		userRepository.save(userAdmin);
-		
+
 		User userTest = new User();
 		userTest.setName("test");
 		userTest.setPassword(encoder.encode("test"));
@@ -85,6 +86,20 @@ public class InitDbService {
 		userTest1.setRoles(roles);
 		userRepository.save(userTest1);
 
+		UserDetail userDetail = new UserDetail();
+		userDetail.setId(userAdmin.getId());
+		userDetail.setFirstName("Admin4ik");
+		userDetailRepository.save(userDetail);
+		
+		UserDetail userDetail1 = new UserDetail();
+		userDetail1.setId(userTest1.getId());
+		userDetailRepository.save(userDetail1);
+		
+		UserDetail userDetail2 = new UserDetail();
+		userDetail2.setId(userTest.getId());
+		userDetailRepository.save(userDetail2);
+
+		
 		Item item1 = new Item();
 		item1.setName("Ëîò 1");
 		item1.setStartAmount(10);
