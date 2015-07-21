@@ -35,15 +35,6 @@ public class TradePoolService {
 		return tradePoolRepository.findByItemOrderByAmountDesc(item);
 	}
 
-/*
-	// удалить так как функионал в билдере есть
-	public int findCurrentAmount(Item item) {
-
-		TradePool tradePool = tradePoolRepository.findFirstByItemOrderByAmountDesc(item);
-
-		return (null != tradePool) ? tradePool.getAmount() : -1;
-	}
-*/
 
 	public String save(Principal principal, int id, String amount) {
 

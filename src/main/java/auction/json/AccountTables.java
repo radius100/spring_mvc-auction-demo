@@ -3,7 +3,7 @@ package auction.json;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AccountTablesJson {
+public class AccountTables {
 
 	@Expose
 	@SerializedName("Type")
@@ -17,15 +17,20 @@ public class AccountTablesJson {
 	@SerializedName("Collapsed")
 	private boolean collapsed;
 	
+	@Expose
+	@SerializedName("Hidden")
+	private boolean hidden;
+	
 	private String name;
 	
 	
-	public AccountTablesJson(String type, String name, String itemId, boolean collapsed) {
+	public AccountTables(String type, String name, String itemId, boolean collapsed, boolean hidden) {
 		
 		this.type = type;
 		this.name = name;
 		this.itemId = itemId;
 		this.collapsed=collapsed;
+		this.hidden=hidden;
 	}
 
 	public String getType() {
@@ -44,11 +49,9 @@ public class AccountTablesJson {
 		this.itemId = itemId;
 	}
 
-
 	public String getName() {
 		return name;
 	}
-
 
 	public void setName(String name) {
 		this.name = name;
@@ -60,6 +63,14 @@ public class AccountTablesJson {
 
 	public void setCollapsed(boolean collapsed) {
 		this.collapsed = collapsed;
+	}
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
 
 		

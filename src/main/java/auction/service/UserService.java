@@ -1,5 +1,6 @@
 package auction.service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,12 +71,12 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-	public boolean isOwner(String userName, int itemId) {
+	public boolean isOwner(Principal principal, int itemId) {
 		
-		User user = userRepository.findOneByName(userName);
+		User user = userRepository.findOneByName(principal.getName());
 		Item item = itemRepository.findOne(itemId);
 		
-		UserItemDetail userItemDetail = userItemDetailRepository.findOneByUserAndItemAndPublishTrue(user,item);
+		UserItemDetail userItemDetail = userItemDetailRepository.findByUserAndItemAndPublishTrue(user,item);
 	
 		if (null != userItemDetail)
 			return true; 

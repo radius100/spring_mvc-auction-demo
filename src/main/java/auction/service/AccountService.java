@@ -1,7 +1,6 @@
 package auction.service;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import auction.builder.AccountMonitorTablesBuilder;
+import auction.builder.AccountMyItemsTablesBuilder;
+import auction.builder.TradePoolBuilder;
+import auction.builder.UserItemDetailBuilder;
 import auction.entity.Item;
-import auction.entity.TradePool;
 import auction.entity.User;
-import auction.entity.UserItemDetail;
-import auction.repository.ItemRepository;
-import auction.repository.TradePoolRepository;
-import auction.repository.UserItemDetailRepository;
+import auction.json.AccountTables;
 import auction.repository.UserRepository;
 
 @Service
@@ -24,101 +23,43 @@ import auction.repository.UserRepository;
 public class AccountService {
 
 	@Autowired
-	ItemRepository itemRepository;
-
-	@Autowired
 	UserRepository userRepository;
 
 	@Autowired
-	UserItemDetailRepository userItemDetailRepository;
-
-	@Autowired
-	TradePoolRepository tradePoolRepository;
+	TradePoolBuilder tradePoolBuilder;
 
 	@Autowired
 	ItemDetailBuilder itemDetailBuilder;
 
+	@Autowired
+	UserItemDetailBuilder userItemDetailBuilder;
 	
-	public String toggleHide(Principal principal, int id) {
-		
-		if(principal == null)
-			return "fail";
-		
-		User user = userRepository.findOneByName(principal.getName());
-		Item item = itemRepository.findOne(id);
-		UserItemDetail userItemDetail = userItemDetailRepository.findByUserAndItemAndHideTrue(user,item);
-		
-		
-		if( userItemDetail == null){
-			
-			UserItemDetail uIDetail = new UserItemDetail();
-			uIDetail.setItem(item);
-			uIDetail.setUser(user);
-			uIDetail.setHide(true);
-			userItemDetailRepository.save(uIDetail);
-			
-			return "Hidden";
-			
-		}
-		else {
-			
-			userItemDetailRepository.delete(userItemDetail);
-			
-			return "Show";
-		}
-			
-	}
+	@Autowired
+	private AccountMonitorTablesBuilder accountMonitorTablesBuilder;
+	
+	@Autowired
+	private AccountMyItemsTablesBuilder accountMyItemsTablesBuilder;
 
-	public String toggleCollapse(Principal principal, int id) {
-		
-		if( principal == null )
-			return "fail";
-		
-		User user = userRepository.findOneByName(principal.getName());
-		Item item = itemRepository.findOne(id);
-		UserItemDetail userItemDetail = userItemDetailRepository.findByUserAndItemAndCollapseTrue(user,item); 
-		
-		if( userItemDetail == null ){
-			
-			UserItemDetail uIDetail = new UserItemDetail();
-			uIDetail.setItem(item);
-			uIDetail.setUser(user);
-			uIDetail.setCollapse(true);
-			userItemDetailRepository.save(uIDetail);
-			
-			return "Collapsed";
-			
-		}
-		else {
-
-			userItemDetailRepository.delete(userItemDetail);
-			
-			return "Expanded";
-		}
-		
-	}
-
+	
 	public List<Item> getMyItemSettings(Principal principal) {
 		
 		User user = userRepository.findOneByName(principal.getName());
-		List<Item> items = new ArrayList<Item>();
-		Item item;
+	
+		List<Item> items = 
+				userItemDetailBuilder
+		    		.setUser(user)
+		    		.setFindByUserAndPublishTrue()
+		    		.getItemList();
+	
 		
-		List<UserItemDetail> userItemDetails = userItemDetailRepository.findByUserAndPublishTrue(user);
-		
-		for(UserItemDetail userItemDetail : userItemDetails){
-			
-			item = userItemDetail.getItem();
-			
-			item = itemDetailBuilder
+		for( Item item : items )
+			item = 
+				itemDetailBuilder
 					.getOne(item)
-					.setPrincipal(principal)
+					.setPrincipal(user) 
 					.getIsHide()
 					.getIsCollapse()
 					.build();
-			
-			items.add(item);
-		}
 		
 		return items;
 	}
@@ -127,14 +68,21 @@ public class AccountService {
 		
 		User user = userRepository.findOneByName(principal.getName());
 		Set<Item> items = new HashSet<Item>();
-		List<TradePool> tradePools = tradePoolRepository.findByUser(user);
-		List<UserItemDetail> userItemDetails = userItemDetailRepository.findByUserAndFollowTrue(user);
-		
-		for(TradePool tradePool : tradePools)
-			items.add(tradePool.getItem());
 
-		for(UserItemDetail userItemDetail : userItemDetails)
-			items.add(userItemDetail.getItem());
+		
+		items.addAll( tradePoolBuilder
+		 				.setUser(user)
+		 				.setFindByUser()
+		 				.getItemList()
+				    );
+		  
+		
+		items.addAll( userItemDetailBuilder
+				    	.setUser(user)
+				    	.setFindByUserAndFollowTrue()
+				    	.getItemList()
+				 	);
+				  
 		
 		for(Item item : items)
 			item = itemDetailBuilder
@@ -147,5 +95,44 @@ public class AccountService {
 			
 		return items;
 	}
+	
+	public List<AccountTables> getAccountMonitorTables(Principal principal){
+		
+		return accountMonitorTablesBuilder
+					.init(principal)
+					.getTradePools()
+					.getFollowers()
+					.build();
+		
+	}
+	
+	public List<AccountTables> getAccountMyItemsTables(Principal principal){
+		
+		return accountMyItemsTablesBuilder
+					.init(principal)
+					.getTradePoolsActive()
+					.build();
+		
+	}
+	
+	public String getAccountMonitorTablesJSON(Principal principal){
+		
+		return accountMonitorTablesBuilder
+					.init(principal)
+					.getTradePools()
+					.getFollowers()
+					.buildJSON();
+		
+	}
+	
+	public String getAccountMyItemsTablesJSON(Principal principal){
+		
+		return accountMyItemsTablesBuilder
+					.init(principal)
+					.getTradePoolsActive()
+					.buildJSON();
+		
+	}
+	
 
 }

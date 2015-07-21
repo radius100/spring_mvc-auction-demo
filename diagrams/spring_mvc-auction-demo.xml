@@ -3,8 +3,8 @@
 		<entity-name>auction.entity.TradePool</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>226</entity-height>
-		<entity-X-Coordinate>468</entity-X-Coordinate>
-		<entity-Y-Coordinate>275</entity-Y-Coordinate>
+		<entity-X-Coordinate>498</entity-X-Coordinate>
+		<entity-Y-Coordinate>310</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -25,8 +25,8 @@
 		<entity-name>auction.entity.User</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>206</entity-height>
-		<entity-X-Coordinate>198</entity-X-Coordinate>
-		<entity-Y-Coordinate>189</entity-Y-Coordinate>
+		<entity-X-Coordinate>195</entity-X-Coordinate>
+		<entity-Y-Coordinate>220</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -57,9 +57,9 @@
 	<entity>
 		<entity-name>auction.entity.UserItemDetail</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>246</entity-height>
-		<entity-X-Coordinate>400</entity-X-Coordinate>
-		<entity-Y-Coordinate>20</entity-Y-Coordinate>
+		<entity-height>266</entity-height>
+		<entity-X-Coordinate>357</entity-X-Coordinate>
+		<entity-Y-Coordinate>19</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>

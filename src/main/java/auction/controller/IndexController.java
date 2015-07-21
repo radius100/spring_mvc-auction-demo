@@ -2,8 +2,6 @@ package auction.controller;
 
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +18,9 @@ public class IndexController {
 	
 
 	@RequestMapping("/index")
-	public String index(Model model, Principal principal) {
+	public String index(Model model) {
 
-		model.addAttribute("items", itemListDetailBuilder.getAll(principal).buildAll());
+		model.addAttribute("items", itemListDetailBuilder.getAll().buildAll());
 		return "index";
 	}
 

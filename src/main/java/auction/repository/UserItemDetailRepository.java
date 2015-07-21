@@ -10,45 +10,36 @@ import auction.entity.UserItemDetail;
 
 public interface UserItemDetailRepository extends JpaRepository<UserItemDetail, Integer>{
 
+	
 	public UserItemDetail findByItemAndPublishTrue(Item item);
-	
-	public List<UserItemDetail> findByItemAndFollowTrue(Item item);
-
-	public int countUserDistinctByItemAndFollowTrue(Item item);
-
-	public UserItemDetail findOneByFollowTrueAndUserAndItem(User user, Item item);
-
-	public List<UserItemDetail> findByItem(Item item);
-
-	public UserItemDetail findOneByUserAndItemAndPublishTrue(User user, Item item);
-
-	public UserItemDetail findOneByPublishTrueAndUserAndItem(User user, Item item);
-
-	public UserItemDetail findOneByBuyTrueAndUserAndItem(User user, Item item);
-
-	//не работает
-	public List<User> findUserListByItemAndFollowTrue(Item item);
-	
-	public List<UserItemDetail> findItemsByUserAndPublishTrue(User user);
-	
-	public List<UserItemDetail> findItemsByUserAndFollowTrue(User user);
-	
-	public UserItemDetail findOneByItemAndPublishTrue(Item item);
-
-	public UserItemDetail findByItemAndUserAndFollowTrue(Item item, User user);
-
-	public List<UserItemDetail> findByUserAndFollowTrue(User user);
 
 	public UserItemDetail findByUserAndItemAndHideTrue(User user, Item item);
 
-	public List<UserItemDetail> findByUserAndHideTrue(User user);
+	public UserItemDetail findByUserAndItemAndFollowTrue(User user, Item item);
+
+	public UserItemDetail findByUserAndItemAndPublishTrue(User user, Item item);
+	
+	public UserItemDetail findByUserAndItemAndBuyTrue(User user, Item item);
+	
+	public UserItemDetail findByUserAndItemAndPreActiveTrue(User user, Item item);
 
 	public UserItemDetail findByUserAndItemAndCollapseTrue(User user, Item item);
+
+
+	public int countUserDistinctByItemAndFollowTrue(Item item);
+
+	
+	public List<UserItemDetail> findByItemAndFollowTrue(Item item);
+
+	public List<UserItemDetail> findByItem(Item item);
+
+	
+	public List<UserItemDetail> findByUserAndFollowTrue(User user);
+
+	public List<UserItemDetail> findByUserAndHideTrue(User user);
 
 	public List<UserItemDetail> findByUserAndCollapseTrue(User user);
 
 	public List<UserItemDetail> findByUserAndPublishTrue(User user);
 
-	public UserItemDetail findByItemAndUserAndHideTrue(Item item, User user);
-	
 }

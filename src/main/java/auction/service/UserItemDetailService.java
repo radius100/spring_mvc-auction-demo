@@ -6,53 +6,80 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import auction.entity.Item;
-import auction.entity.User;
-import auction.entity.UserItemDetail;
-import auction.repository.ItemRepository;
-import auction.repository.UserItemDetailRepository;
-import auction.repository.UserRepository;
+import auction.builder.UserItemDetailBuilder;
+
 
 @Transactional
 @Service
 public class UserItemDetailService {
 
 	@Autowired
-	UserItemDetailRepository userItemDetailRepository;
-
-	@Autowired
-	ItemRepository itemRepository;
-	
-	@Autowired
-	UserRepository userRepository;
+	UserItemDetailBuilder userItemDetailBuilder;
 
 	
-	public String toggleFollow(Principal principal, int id) {
+	public String toggleHide(Principal principal, int id) {
 		
 		if(principal == null)
-			return "fail_login";
-		
-		Item item = itemRepository.findOne(id);
-		User user = userRepository.findOneByName(principal.getName());
-		
-		UserItemDetail userItemDetail = userItemDetailRepository.findByItemAndUserAndFollowTrue(item,user);
-		
-		if(userItemDetail == null){
-			
-			UserItemDetail uID = new UserItemDetail();
-			uID.setUser(user);
-			uID.setItem(item);
-			uID.setFollow(true);
-			userItemDetailRepository.save(uID);
+			return "fail";
 
-			return "follow";
-		}
-		else{
-			
-			userItemDetailRepository.delete(userItemDetail);
-			
-			return "unfollow";
-		}
+	 	boolean hideBool =
+	 			
+	 			userItemDetailBuilder
+	 				.setUser(principal)
+		   			.setItem(id)
+		   			.setFindByUserAndItemAndHideTrue()
+		   			.toggleHide()
+		   			.getHide();
+
+	 	
+		if( hideBool == true )
+			return "Hidden";
+		else
+			return "Show";
+
+	}
+
+	public String toggleCollapse(Principal principal, int id) {
 		
+		if( principal == null )
+			return "fail";
+		
+	 	boolean collapseBool = 
+
+	 			userItemDetailBuilder
+		    		.setUser(principal)
+		    		.setItem(id)
+		    		.setFindByUserAndItemAndCollapseTrue()
+		    		.toggleCollapse()
+		    		.getCollapse();
+	
+	 	
+	 	if( collapseBool )
+	  		return "Collapsed";
+	  	else
+	  		return "Expanded";
+	 
+	}
+	
+	public String toggleFollow(Principal principal, int id) {
+	
+		if( principal == null )
+			return "fail";
+	
+		boolean followBool = 
+				
+ 			userItemDetailBuilder
+	    		.setUser(principal)
+	    		.setItem(id)
+	    		.setFindByUserAndItemAndFollowTrue()
+	    		.toggleFollow()
+	    		.getFollow();
+
+ 	
+		if( followBool )
+			return "follow";
+		else
+			return "unfollow";
+
 	}
 }

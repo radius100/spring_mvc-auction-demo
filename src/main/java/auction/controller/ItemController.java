@@ -46,12 +46,14 @@ public class ItemController {
 	@Autowired
 	ItemDetailBuilder itemDetailBuilder;
 
+	
 	@RequestMapping("/items")
 	public String users(Model model) {
 
 		return "items";
 	}
 
+	
 	@RequestMapping("/items/item-{id}")
 	public String showItem(Principal principal, Model model, @PathVariable int id) {
 
@@ -70,55 +72,11 @@ public class ItemController {
 		return "item";
 	}
 
-	@ResponseBody
-	@RequestMapping("/items/item-{id}/follow")
-	public String getFollow(Principal principal, @PathVariable int id) {
-
-		return userItemDetailService.toggleFollow(principal, id);
-
-	}
-
-	@ResponseBody
-	@RequestMapping("/items/item-{id}/rate-adv")
-	public String getRateAdvs(Principal principal, @PathVariable int id) {
-
-		return tradePoolService.getRateAdvs(principal, id);
-	}
-
-	@ResponseBody
-	@RequestMapping(value="/items/item-{id}/rate", method=RequestMethod.POST)
-	public String doRate(Principal principal, @PathVariable int id, @RequestParam String amount) {
 	
-		return tradePoolService.save(principal,id,amount);
-	}
-
-	@ResponseBody
-	@RequestMapping("/items/item-{id}/tradepool")
-	public ResponseEntity<?> showItemTradePool(Principal principal, @PathVariable int id) {
-		
-		return ResponseEntity
-				.ok()
-				.body(itemService.getTradePoolByItemJson(principal, id));
-	}
-
-	@RequestMapping("/item/register")
-	public String showRegister() {
-
-		return "item-register";
-	}
-
-	@RequestMapping(value = "/item/register", method = RequestMethod.POST)
-	public String doRegister(@ModelAttribute("item") Item item, Principal principal) {
-
-		itemService.save(item, userService.getOne(principal.getName()));
-
-		return "redirect:/item/register.html?success=true";
-	}
-
 	@RequestMapping("/item-{id}/edit")
 	public String showEdit(Model model, Principal principal, @PathVariable int id) {
 
-		if (userService.isOwner(principal.getName(), id)) {
+		if (userService.isOwner(principal, id)) {
 
 			Item item = itemDetailBuilder
 					.getOne(id)
@@ -140,19 +98,64 @@ public class ItemController {
 
 	}
 
+	
 	@RequestMapping(value = "/item-{id}/edit", method = RequestMethod.POST)
 	public String doEdit(@ModelAttribute("item") Item item, Principal principal, @PathVariable int id) {
 
-		if (userService.isOwner(principal.getName(), id)) {
+		if (userService.isOwner(principal, id)) {
 
 			itemService.update(item, id);
-
 			return "redirect:/item-{id}/edit.html?success=true";
 		}
 		
 		else
 			return "redirect:/items/item-{id}.html";
 		
+	}
+
+	
+	@RequestMapping("/item/register")
+	public String showRegister() {
+
+		return "item-register";
+	}
+
+	
+	@RequestMapping(value = "/item/register", method = RequestMethod.POST)
+	public String doRegister(@ModelAttribute("item") Item item, Principal principal) {
+
+		itemService.save(item, principal);
+		return "redirect:/item/register.html?success=true";
+	}
+
+	
+	@RequestMapping("/items/item-{id}/follow")
+	@ResponseBody public String toggleFollow(Principal principal, @PathVariable int id) {
+
+		return userItemDetailService.toggleFollow(principal, id);
+	}
+
+	
+	@RequestMapping("/items/item-{id}/rate-adv")
+	@ResponseBody public String getRateAdvs(Principal principal, @PathVariable int id) {
+
+		return tradePoolService.getRateAdvs(principal, id);
+	}
+
+	
+	@RequestMapping(value="/items/item-{id}/rate", method=RequestMethod.POST)
+	@ResponseBody public String doRate(Principal principal, @PathVariable int id, @RequestParam String amount) {
+	
+		return tradePoolService.save(principal,id,amount);
+	}
+
+	
+	@RequestMapping("/items/item-{id}/tradepool")
+	@ResponseBody public ResponseEntity<?> showItemTradePool(Principal principal, @PathVariable int id) {
+		
+		return ResponseEntity
+				.ok()
+				.body(itemService.getTradePoolByItemJson(principal, id));
 	}
 
 }

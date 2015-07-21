@@ -125,7 +125,7 @@ public class ItemDetailBuilder {
 
 		if (user != null) {
 
-			UserItemDetail userItemDetail = userItemDetailRepository.findOneByFollowTrueAndUserAndItem(user, item);
+			UserItemDetail userItemDetail = userItemDetailRepository.findByUserAndItemAndFollowTrue(user, item);
 
 			if (userItemDetail != null)
 				item.setFollowedByCurrentUser(true);
@@ -139,7 +139,7 @@ public class ItemDetailBuilder {
 
 		if (user != null) {
 
-			UserItemDetail userItemDetail = userItemDetailRepository.findOneByBuyTrueAndUserAndItem(user, item);
+			UserItemDetail userItemDetail = userItemDetailRepository.findByUserAndItemAndBuyTrue(user, item);
 
 			if (userItemDetail != null)
 				item.setBuyByCurrentUser(true);
@@ -164,7 +164,7 @@ public class ItemDetailBuilder {
 
 		if (user != null) {
 
-			if (userItemDetailRepository.findByItemAndUserAndHideTrue(item,user) != null)
+			if (userItemDetailRepository.findByUserAndItemAndHideTrue(user, item) != null)
 				item.setHide(true);
 			else 
 				item.setHide(false);
@@ -191,7 +191,7 @@ public class ItemDetailBuilder {
 
 		if (user != null) {
 
-			UserItemDetail userItemDetail = userItemDetailRepository.findOneByPublishTrueAndUserAndItem(user, item);
+			UserItemDetail userItemDetail = userItemDetailRepository.findByUserAndItemAndPublishTrue(user, item);
 
 			if (userItemDetail != null)
 				item.setPublishedByCurrentUser(true);
@@ -206,7 +206,7 @@ public class ItemDetailBuilder {
 	// Почему сразу тип User не возвращает??
 	public ItemDetailBuilder getPublisher() {
 
-		UserItemDetail userItemDetail = userItemDetailRepository.findOneByItemAndPublishTrue(item);
+		UserItemDetail userItemDetail = userItemDetailRepository.findByItemAndPublishTrue(item);
 		
 		item.setPublisher(userItemDetail.getUser());
 		return this;

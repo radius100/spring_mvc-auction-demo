@@ -39,14 +39,14 @@ public class ItemService {
 	@Autowired
 	TradePoolRepository tradePoolRepository;
 
-	public void save(Item item, User user) {
+	public void save(Item item, Principal principal) {
 
 		item.setActive(true);
 		itemRepository.save(item);
 
 		UserItemDetail userItemDetail = new UserItemDetail();
 		userItemDetail.setItem(item);
-		userItemDetail.setUser(user);
+		userItemDetail.setUser(userRepository.findOneByName(principal.getName()));
 		userItemDetail.setPublish(true);
 		userItemDetailRepository.save(userItemDetail);
 	}
@@ -89,5 +89,28 @@ public class ItemService {
 			.create();
 		
 		return gson.toJson(tpJs);
+	}
+
+	public String getNewItemId(Principal principal) {
+		
+		Item item = new Item();
+		User user = userRepository.findOneByName(principal.getName());
+		item.setName("View lot detail");
+		
+		itemRepository.save(item);
+		
+		UserItemDetail userItemDetail = new UserItemDetail();
+		userItemDetail.setUser(user);
+		userItemDetail.setItem(item);
+		userItemDetail.setPublish(true);
+		userItemDetail.setPreActive(true); 
+		
+		userItemDetailRepository.save(userItemDetail);
+		
+		userItemDetail = userItemDetailRepository.findByUserAndItemAndPreActiveTrue(user,item);
+		
+		item = userItemDetail.getItem();
+		
+		return Integer.toString(item.getId());
 	}
 }

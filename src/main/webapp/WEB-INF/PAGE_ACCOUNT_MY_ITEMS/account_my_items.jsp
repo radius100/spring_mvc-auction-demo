@@ -168,7 +168,8 @@ jQuery(document).ready(function($) {
 		
 		$.get("/account/"+str+"/hide.html",function(data,status) {
 			
-			if(data == 'hidden')
+			
+			if(data == 'Hidden') 
 				$('#block_'+str).hide();
 							
 		});

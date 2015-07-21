@@ -1,6 +1,5 @@
 package auction.service;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +28,14 @@ public class ItemListDetailBuilder {
 		return items;
 	}
 
-	public ItemListDetailBuilder getAll(Principal principal) {
+	public ItemListDetailBuilder getAll() {
 
-			items = itemRepository.findItemByActiveTrueAndSellFalseAndBlockFalse();
+			items = itemRepository.findByActiveTrueAndSellFalseAndBlockFalse();
 				
 			for (Item item : items){
 			
 				item = itemDetailBuilder
 						.getOne(item)
-						.setPrincipal(principal)
 						.getFollowersCount()
 						.getTradersCount()
 						.getCurrentAmount()

@@ -43,7 +43,7 @@ public class UserController {
 		model.addAttribute("user", user);
 //		model.addAttribute("publishs", userItemDetailService.findUserItemsPublish(user));	
 //		model.addAttribute("follows", userItemDetailService.findUserItemsFollow(user));
-		
+
 		return "user-item-detail";
 	}
 	
@@ -61,4 +61,3 @@ public class UserController {
 	}
 
 }
-

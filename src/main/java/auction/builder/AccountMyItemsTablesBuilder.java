@@ -1,4 +1,4 @@
-package auction.service;
+package auction.builder;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import com.google.gson.GsonBuilder;
 import auction.entity.Item;
 import auction.entity.User;
 import auction.entity.UserItemDetail;
-import auction.json.AccountTablesJson;
+import auction.json.AccountTables;
 import auction.repository.ItemRepository;
 import auction.repository.TradePoolRepository;
 import auction.repository.UserItemDetailRepository;
@@ -40,24 +40,16 @@ public class AccountMyItemsTablesBuilder {
 	private User user;
 	private StringBuilder sBuilder;
 
-	private List<AccountTablesJson> accountTables;
+	private List<AccountTables> accountTables;
 	private List<Item> collapseItems;
 	private List<UserItemDetail> collapsesUID;
 	
 	private List<Item> publishItems;
 	private List<UserItemDetail> publishByPrincipalUID;
-	//private List<User> followers;
 	
 	//проверить на анонима!!!
 	boolean err_flag=false;
 
-	/*
-	 * 1. «апрет на ставки по своим лотам
-	 * 2. ѕолучить List<Item> items по всем лотам published principal
-	 * 3. 
-	 * 
-	 * 
-	 */
 	
 	public AccountMyItemsTablesBuilder init(Principal principal){
 		
@@ -72,7 +64,7 @@ public class AccountMyItemsTablesBuilder {
 		publishByPrincipalUID = userItemDetailRepository.findByUserAndPublishTrue(user);
 		collapsesUID = userItemDetailRepository.findByUserAndCollapseTrue(user);
 		
-		accountTables = new ArrayList<AccountTablesJson>();
+		accountTables = new ArrayList<AccountTables>();
 		
 		publishItems = new ArrayList<Item>();
 		for(UserItemDetail uIDetail : publishByPrincipalUID)
@@ -103,10 +95,10 @@ public class AccountMyItemsTablesBuilder {
 					expandBool=false;
 
 				
-				accountTables.add(new AccountTablesJson("Trade", 
+				accountTables.add(new AccountTables("Trade", 
 						item.getName(), 
 						sBuilder.append("item-").append(item.getId()).toString(),
-						expandBool));
+						expandBool,true));
 			}
 			
 		}
@@ -115,7 +107,7 @@ public class AccountMyItemsTablesBuilder {
 	}
 
 
-	public List<AccountTablesJson> build() {
+	public List<AccountTables> build() {
 		
 		//if(err_flag)
 		//	return null;

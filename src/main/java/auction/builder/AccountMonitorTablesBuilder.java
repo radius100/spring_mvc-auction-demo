@@ -1,4 +1,4 @@
-package auction.service;
+package auction.builder;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import auction.entity.Item;
 import auction.entity.TradePool;
 import auction.entity.User;
 import auction.entity.UserItemDetail;
-import auction.json.AccountTablesJson;
+import auction.json.AccountTables;
 import auction.repository.ItemRepository;
 import auction.repository.TradePoolRepository;
 import auction.repository.UserItemDetailRepository;
@@ -40,105 +40,90 @@ public class AccountMonitorTablesBuilder {
 	@Autowired
 	TradePoolRepository tradePoolRepository;
 
-	static final Logger logger = Logger.getLogger(AccountService.class);
+	static final Logger logger = Logger.getLogger(AccountMonitorTablesBuilder.class);
 	
 	private User user;
 	private Item item;
 	private StringBuilder sBuilder;
 
-	private List<AccountTablesJson> accountTables;
+	private List<AccountTables> accountTables;
 	private List<TradePool> tradePools;
-	private List<Item> itemsTp;
+	private List<Item> items;
 	private List<Item> hideItems;
 	private List<Item> collapseItems;
 	private List<UserItemDetail> hidesUID;
 	private List<UserItemDetail> collapsesUID;
 	private List<UserItemDetail> followersUID;
-	
+
 	//проверить на анонима!!!
 	boolean err_flag=false;
+	boolean expandBool;
+	boolean hideBool;
 
-	/*
-	 * 1. «апрет на ставки по своим лотам
-	 * 2. ѕолучить List<Item> items по всем лотам published principal
-	 * 3. 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	
-	
-	
 	
 	public AccountMonitorTablesBuilder init(Principal principal){
 		
 		//BasicConfigurator.configure();
 		//logger.info("!!!!");
 		
-		if(principal == null) {
-			
-			err_flag=true;
+		if( principal == null ) 
 			return null;
-		}
+		
+		
+		sBuilder 		 = new StringBuilder();
 
-		user = userRepository.findOneByName(principal.getName());
-		tradePools = tradePoolRepository.findByUser(user);
+		accountTables	 = new ArrayList<AccountTables>();
 		
-		hidesUID = userItemDetailRepository.findByUserAndHideTrue(user);
-		collapsesUID = userItemDetailRepository.findByUserAndCollapseTrue(user);
-		followersUID = userItemDetailRepository.findByUserAndFollowTrue(user);
+		hideItems 		 = new ArrayList<Item>();
 		
-		sBuilder = new StringBuilder();
+		collapseItems 	 = new ArrayList<Item>();
+
+		items			 = new ArrayList<Item>();
+
 		
-		accountTables = new ArrayList<AccountTablesJson>();
+		user 		 =	userRepository.findOneByName(principal.getName());
+		tradePools	 =	tradePoolRepository.findByUser(user);
 		
-		itemsTp = new ArrayList<Item>();
+		hidesUID	 =	userItemDetailRepository.findByUserAndHideTrue(user);
+		collapsesUID =	userItemDetailRepository.findByUserAndCollapseTrue(user);
+		followersUID =	userItemDetailRepository.findByUserAndFollowTrue(user);
 		
-		hideItems = new ArrayList<Item>();
-		for(UserItemDetail uIDetail : hidesUID)
+		for(UserItemDetail uIDetail : hidesUID) 
 			hideItems.add(uIDetail.getItem());
 	
-		collapseItems = new ArrayList<Item>();
 		for(UserItemDetail uIDetail : collapsesUID)
 			collapseItems.add(uIDetail.getItem());
-	
 		
 		return this;
 	}
 	
 	public AccountMonitorTablesBuilder getTradePools(){
 
-		boolean expandBool;
-
 		for (TradePool tradePool : tradePools) {
 			
 			item=tradePool.getItem();
 			
-			if( hideItems.contains(item) == true ){
-				itemsTp.add(item);
-				
-				continue;
-			}
-				
-			if ((item.isActive() == true) && (itemsTp.contains(item) == false)){
+			if ((item.isActive() == true) && (items.contains(item) == false)){
 							
 				sBuilder.setLength(0);
 				
-				itemsTp.add(item);
+				items.add(item);
 				
 				if(collapseItems.contains(item) == true)
 					expandBool=true;
 				else
 					expandBool=false;
 
+				if(hideItems.contains(item) == true)
+					hideBool=true;
+				else
+					hideBool=false;
+
 				
-				accountTables.add(new AccountTablesJson("Trade", 
+				accountTables.add(new AccountTables("Trade", 
 						item.getName(), 
 						sBuilder.append("item-").append(item.getId()).toString(),
-						expandBool));
+						expandBool, hideBool));
 			}
 			
 		}
@@ -148,13 +133,11 @@ public class AccountMonitorTablesBuilder {
 
 	public AccountMonitorTablesBuilder getFollowers(){
 	
-		boolean expandBool;
-		
 		for (UserItemDetail uIDetail : followersUID) {
 
 			item = uIDetail.getItem();
 			
-			if ((item.isActive()) && (itemsTp.contains(item) == false)) {
+			if ((item.isActive()) && (items.contains(item) == false)) {
 				
 				sBuilder.setLength(0);
 				
@@ -163,10 +146,16 @@ public class AccountMonitorTablesBuilder {
 				else
 					expandBool=false;
 				
-				accountTables.add(new AccountTablesJson("Follow", 
+				if(hideItems.contains(item) == true)
+					hideBool=true;
+				else
+					hideBool=false;
+
+				
+				accountTables.add(new AccountTables("Follow", 
 						item.getName(), 
 						sBuilder.append("item-").append(item.getId()).toString(), 
-						expandBool));
+						expandBool, hideBool));
 			}
 				
 		}
@@ -175,7 +164,7 @@ public class AccountMonitorTablesBuilder {
 	}	
 	
 	
-	public List<AccountTablesJson> build() {
+	public List<AccountTables> build() {
 		
 		//if(err_flag)
 		//	return null;

@@ -25,6 +25,8 @@ public class UserItemDetail {
 	@JoinColumn(name="user_id")
 	private User user;
 
+	private boolean preActive;
+	
 	private boolean publish;
 	
 	private boolean follow;
@@ -98,6 +100,14 @@ public class UserItemDetail {
 
 	public void setCollapse(boolean collapse) {
 		this.collapse = collapse;
+	}
+
+	public boolean isPreActive() {
+		return preActive;
+	}
+
+	public void setPreActive(boolean preActive) {
+		this.preActive = preActive;
 	}
 
 }

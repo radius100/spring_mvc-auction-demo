@@ -30,9 +30,8 @@ public class ImageController {
 	private ImageService imageService;
 
 
-	@RequestMapping("/images/{id}.jpg")
-	@ResponseBody 
-	public ResponseEntity<?> showImage(@PathVariable int id) throws IOException {
+	@RequestMapping("/images/image-{id}")
+	@ResponseBody public ResponseEntity<?> showImage(@PathVariable int id) throws IOException {
 			
 		//int a =1; a=a/(a-1);
 		Image image = imageService.getOne(id);

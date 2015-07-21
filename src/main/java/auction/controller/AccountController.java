@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import auction.entity.UserDetail;
-import auction.service.AccountMonitorTablesBuilder;
-import auction.service.AccountMyItemsTablesBuilder;
 import auction.service.AccountService;
+import auction.service.ItemService;
 import auction.service.UserDetailService;
-import auction.service.UserService;
+import auction.service.UserItemDetailService;
 
 
 @Controller
@@ -29,20 +28,16 @@ public class AccountController {
 	}
 	
 	@Autowired
-	private UserService userService;
+	private AccountService accountService;
 	
+	@Autowired
+	private ItemService itemService;
+
 	@Autowired
 	private UserDetailService userDetailService;
 	
 	@Autowired
-	private AccountService accountService;
-	
-	@Autowired
-	private AccountMonitorTablesBuilder accountMonitorTablesBuilder;
-	
-	@Autowired
-	private AccountMyItemsTablesBuilder accountMyItemsTablesBuilder;
-
+	private UserItemDetailService userItemDetailService;
 	
 	
 	@RequestMapping(value = "/account", method = RequestMethod.POST)
@@ -55,6 +50,7 @@ public class AccountController {
 		
 	}
 
+	
 	@RequestMapping(value="/account")
 	public String accountProfile(Model model, Principal principal){
 		
@@ -66,76 +62,58 @@ public class AccountController {
 		return "account-profile";
 	}
 	
+	
 	@RequestMapping(value="/account/trading-monitor")
 	public String trading_monitor(Model model, Principal principal){
 		
-		model.addAttribute("tables", accountMonitorTablesBuilder
-				.init(principal)
-				.getTradePools()
-				.getFollowers()
-				.build());
+		model.addAttribute("tables", accountService.getAccountMonitorTables(principal)); 
 		
 		return "monitor";
 	}
 	
+	
 	@RequestMapping(value="/account/my-items")
 	public String myItems(Model model, Principal principal){
-		
-		model.addAttribute("tables", accountMyItemsTablesBuilder
-				.init(principal)
-				.getTradePoolsActive()
-				.build());
-		
+
+		model.addAttribute("tables", accountService.getAccountMyItemsTables(principal));
+	
 		return "my-items";
 	}
 
-	@ResponseBody
+	
 	@RequestMapping("/account-info-my-items")
-	public ResponseEntity<?> showMyItemsTradePool(Principal principal) {
+	@ResponseBody public ResponseEntity<?> showMyItemsTradePool(Principal principal) {
 
 		return ResponseEntity
 				.ok()
-				.body(accountMyItemsTablesBuilder
-						.init(principal)
-						.getTradePoolsActive()
-						.buildJSON());
+				.body(accountService.getAccountMyItemsTablesJSON(principal));
 	}
 
-	@ResponseBody
+	
 	@RequestMapping("/account-info-monitor")
-	public ResponseEntity<?> showMonitorTradePool(Principal principal) {
+	@ResponseBody public ResponseEntity<?> showMonitorTradePool(Principal principal) {
 
 		return ResponseEntity
 				.ok()
-				.body(accountMonitorTablesBuilder
-						.init(principal)
-						.getTradePools()
-						.getFollowers()
-						.buildJSON());
+				.body(accountService.getAccountMonitorTablesJSON(principal));
 	}
 
-	@ResponseBody
 	@RequestMapping("/account/item-{id}/hide")
-	public String doToggleHide(Principal principal, @PathVariable int id) {
+	@ResponseBody public String doToggleHide(Principal principal, @PathVariable int id) {
 	
-		return accountService.toggleHide(principal,id);
+		return userItemDetailService.toggleHide(principal,id);
 	}
 	
-	@ResponseBody
 	@RequestMapping("/account/item-{id}/collapse")
-	public String doToggleCollapse(Principal principal, @PathVariable int id) {
+	@ResponseBody public String doToggleCollapse(Principal principal, @PathVariable int id) {
 	
-		return accountService.toggleCollapse(principal,id);
+		return userItemDetailService.toggleCollapse(principal,id);
 	}
 	
-	@ResponseBody
 	@RequestMapping("/account/new-item")
-	public String addNewItem() {
-	
-		//Сделать поддержку языков
+	@ResponseBody public String addNewItem(Principal principal) {
 		
-		return "";
+		return itemService.getNewItemId(principal);
 	}
 	
 }
-

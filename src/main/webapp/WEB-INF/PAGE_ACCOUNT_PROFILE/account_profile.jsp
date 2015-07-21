@@ -109,10 +109,10 @@
 					<button id="btnHide_item-XXX" class="btn btn-primary btn-xs">Hide</button>
 					<button id="btnCollapse_item-XXX" class="btn btn-primary btn-xs">Collapse</button>
 				</td>
-				<td><a href="/items/item-XXX.html">Change lot name</a></td>
+				<td><a href="/items/item-XXX.html" id="linkXXX">View lot detail</a></td>
 				<td align="right">
-					<input class="btn btn-primary btn-xs" id="edit_Item-XXX" value="Edit" onclick="location.href='/item-XXX/edit.html'" type="button" />
-					<button id="delete_Item-XXX" class="btn btn-danger btn-xs">Delete</button>
+					<input class="btn btn-primary btn-xs" id="edit_item-XXX" value="Edit" onclick="location.href='/item-XXX/edit.html'" type="button" />
+					<button id="delete_item-XXX" class="btn btn-danger btn-xs">Delete</button>
 				</td>
 			</tr>
 			<tr id="lastLine">
@@ -197,19 +197,56 @@ jQuery(document).ready(function($) {
 	
 	$('#addNewItem').click(function(){
 		
-		/*
+/*
+ 			<tr id="clonable" style="display: none;">
+				<td align="right">
+					<input class="btn btn-primary btn-xs" id="edit_item-XXX" value="Edit" onclick="location.href='/item-XXX/edit.html'" type="button" />
+					<button id="delete_item-XXX" class="btn btn-danger btn-xs">Delete</button>
+				</td>
+			</tr>
+			<tr id="lastLine">
+				<td></td>
+				<td></td>
+				<td align="right"><button id="addNewItem" class="btn btn-primary btn-xs">Add new lot</button></td>
+			</tr>
+ 
+ */
+		
 		$.get("/account/new-item.html",function(data,status) {
 			
-			
+			if(status == 'success'){
+				
+				var id = 'item-'+data;
+								
+				$("#clonable").clone().insertBefore("#lastLine");
+				
+				$("#addLineTable tr").last().prev().attr('id', id).show();
+				
+				var str = $("#"+id+" #btnHide_item-XXX").attr("id");
+				str = str.substring(0,8);
+				$("#"+id+" #btnHide_item-XXX").attr("id",str+id);
+
+				str = $("#"+id+" #btnCollapse_item-XXX").attr("id");
+				str = str.substring(0,12);
+				$("#"+id+" #btnCollapse_item-XXX").attr("id", str+id);
+				
+				//parse: "/items/item-XXX.html"
+				str = $("#"+id+" #linkXXX").attr("href");
+				var pre  = str.substring(0,7);
+				var post = str.substring(15,20);
+				$("#"+id+" #linkXXX").attr("href", pre+id+post)
+				
+				//parse: "location.href='/item-XXX/edit.html'"
+				str = $("#"+id+" #edit_item-XXX").attr("onclick");
+				pre  = str.substring(0,16);
+				post = str.substring(24,35);
+				
+				$("#"+id+" #edit_item-XXX").attr("onclick", pre+id+post);
+				//alert(pre+id+post);
+				
+			}			
 							
 		});
-		*/
-		
-		$("#clonable").clone().insertBefore("#lastLine");
-		
-		$("#addLineTable tr").last().prev().attr('id', 'ttt').show();
-		
-		//$('#ttt').css("background-color", "green")
 		
 	});
 	
