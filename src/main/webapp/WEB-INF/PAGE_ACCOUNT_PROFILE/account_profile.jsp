@@ -2,7 +2,7 @@
 <%@ include file="../LAYOUTS/taglib.jsp"%>
 
 <div id="pageH">
-<div class="page-header">
+<div id="pageHeader" class="page-header blockPointer">
 	<h1>Profile: ${principal}</h1>
 </div>
 <br>
@@ -77,7 +77,7 @@
 	<div class="col-md-8">
 		<table id="addLineTable" class="table table-striped table-condensed">
 			<c:forEach items="${myItems}" var="item">
-				<tr>
+				<tr id="line_item-${item.id}">
 					<td width="25%">
 						<c:choose>
 							<c:when test="${item.hide eq true}">
@@ -99,8 +99,10 @@
 					
 					<td width="55%"><a href="/items/item-${item.id}.html">${item.name}</a></td>
 					<td width="20%" align="right">
-						<input class="btn btn-primary btn-xs" id="edit_Item-${item.id}" value="Edit" onclick="location.href='/item-${item.id}/edit.html'" type="button" />
-						<button id="delete_Item-${item.id}" class="btn btn-danger btn-xs">Delete</button>
+						<c:if test="${item.ownerDeletable eq true}">
+							<button id="btnDelete_item-${item.id}" class="btn btn-danger btn-xs">Delete</button>
+						</c:if>
+						<input class="btn btn-primary btn-xs" id="edit_item-${item.id}" value="Edit" onclick="location.href='/item-${item.id}/edit.html'" type="button" />
 					</td>
 			</tr>
 			</c:forEach>
@@ -112,7 +114,7 @@
 				<td><a href="/items/item-XXX.html" id="linkXXX">View lot detail</a></td>
 				<td align="right">
 					<input class="btn btn-primary btn-xs" id="edit_item-XXX" value="Edit" onclick="location.href='/item-XXX/edit.html'" type="button" />
-					<button id="delete_item-XXX" class="btn btn-danger btn-xs">Delete</button>
+					<button id="btnDelete_item-XXX" class="btn btn-danger btn-xs">Delete</button>
 				</td>
 			</tr>
 			<tr id="lastLine">
@@ -182,6 +184,17 @@ jQuery(document).ready(function($) {
 	    }
 	}    
 	
+	$('#pageHeader').click(function(){
+		$('#divMyLotsSettings').fadeToggle('fast');
+		$('#divTradeMonitorSettings').fadeToggle('fast');
+		
+	});
+	
+	$('#pageHeader').dblclick(function(){
+		$('#divMyAccountSettings').fadeToggle('fast');
+		
+	});
+
 	
 	$('#divMyLotsSettings').fadeIn('slow');
 	$('#divTradeMonitorSettings').fadeIn('slow');
@@ -197,53 +210,43 @@ jQuery(document).ready(function($) {
 	
 	$('#addNewItem').click(function(){
 		
-/*
- 			<tr id="clonable" style="display: none;">
-				<td align="right">
-					<input class="btn btn-primary btn-xs" id="edit_item-XXX" value="Edit" onclick="location.href='/item-XXX/edit.html'" type="button" />
-					<button id="delete_item-XXX" class="btn btn-danger btn-xs">Delete</button>
-				</td>
-			</tr>
-			<tr id="lastLine">
-				<td></td>
-				<td></td>
-				<td align="right"><button id="addNewItem" class="btn btn-primary btn-xs">Add new lot</button></td>
-			</tr>
- 
- */
-		
 		$.get("/account/new-item.html",function(data,status) {
 			
 			if(status == 'success'){
 				
-				var id = 'item-'+data;
-								
-				$("#clonable").clone().insertBefore("#lastLine");
+				var id   = 'item-'+data;
+				var line = 'line_';
 				
-				$("#addLineTable tr").last().prev().attr('id', id).show();
+				$("#clonable").clone(true).insertBefore("#lastLine");
+				$("#addLineTable tr").last().prev().prev().attr('id', line+id).show();
 				
-				var str = $("#"+id+" #btnHide_item-XXX").attr("id");
+				//parse: "btnHide_item-XXX"
+				var str = $("#"+line+id+" #btnHide_item-XXX").attr("id");
 				str = str.substring(0,8);
-				$("#"+id+" #btnHide_item-XXX").attr("id",str+id);
-
-				str = $("#"+id+" #btnCollapse_item-XXX").attr("id");
+				$("#"+line+id+" #btnHide_item-XXX").attr("id",str+id);
+				
+				//parse: "btnCollapse_item-XXX"
+				str = $("#"+line+id+" #btnCollapse_item-XXX").attr("id");
 				str = str.substring(0,12);
-				$("#"+id+" #btnCollapse_item-XXX").attr("id", str+id);
+				$("#"+line+id+" #btnCollapse_item-XXX").attr("id", str+id);
 				
 				//parse: "/items/item-XXX.html"
-				str = $("#"+id+" #linkXXX").attr("href");
+				str = $("#"+line+id+" #linkXXX").attr("href");
 				var pre  = str.substring(0,7);
 				var post = str.substring(15,20);
-				$("#"+id+" #linkXXX").attr("href", pre+id+post)
+				$("#"+line+id+" #linkXXX").attr("href", pre+id+post)
 				
 				//parse: "location.href='/item-XXX/edit.html'"
-				str = $("#"+id+" #edit_item-XXX").attr("onclick");
+				str = $("#"+line+id+" #edit_item-XXX").attr("onclick");
 				pre  = str.substring(0,16);
 				post = str.substring(24,35);
-				
-				$("#"+id+" #edit_item-XXX").attr("onclick", pre+id+post);
-				//alert(pre+id+post);
-				
+				$("#"+line+id+" #edit_item-XXX").attr("onclick", pre+id+post);
+
+				//parse: "btnDelete_item-XXX"				
+				str = $("#"+line+id+" #btnDelete_item-XXX").attr("id");
+				str = str.substring(0,10);
+				$("#"+line+id+" #btnDelete_item-XXX").attr("id",str+id);
+
 			}			
 							
 		});
@@ -304,6 +307,7 @@ jQuery(document).ready(function($) {
 		});
 	});
 
+
 	$("button[id*='btnHide_']").click(function(){
 		
 		var str = $(this).attr('id');
@@ -330,5 +334,19 @@ jQuery(document).ready(function($) {
 		});
 		
 	});
+	
+	$("button[id*='btnDelete_']").click(function(){
+		
+		var str = $(this).attr('id');
+		str = str.slice(10);
+		
+		$.get("/account/"+str+"/delete.html",function(data,status) {
+			
+			if(data == 'Delete')
+				$("#line_"+str).remove();
+	
+		});
+	});
+	
 });
 </script>

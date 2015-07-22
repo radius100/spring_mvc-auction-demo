@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,10 +31,9 @@ public class ImageController {
 	private ImageService imageService;
 
 
-	@RequestMapping("/images/image-{id}")
+	@RequestMapping("/images/image-{id}.jpg")
 	@ResponseBody public ResponseEntity<?> showImage(@PathVariable int id) throws IOException {
 			
-		//int a =1; a=a/(a-1);
 		Image image = imageService.getOne(id);
 		
 		if(image != null)
@@ -46,26 +46,29 @@ public class ImageController {
 			
 	}
 
-	@RequestMapping(value = "/images/item-{id}/add", method = RequestMethod.POST)
-	public void doAddImage(@RequestParam(value="file") MultipartFile file, @PathVariable int id) throws IOException {
+	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+	//@ResponseBody public String doAddImage(@RequestParam(value="file") MultipartFile file) throws IOException {
+	@ResponseBody public String doAddImage(@RequestPart("file") MultipartFile file) throws IOException {
 		
 		//добавить обработку аватарки
 		//добавить поддержку *.png, *.bmp etc
 		//добавить ограничение на размер файла
 		//добавить redirect по удачному добавлению/ошибке
 		
-		//int a =1; a=a/(a-1);
-		Image image = new Image();
+		int a =1; a=a/(a-1);
 				
 		if ( "application/jpeg".equals(file.getContentType()) /*|| "application/bmp".equals*/){
+			
+			Image image = new Image();
 			
 			image.setContentType(file.getContentType());
 			image.setBody(file.getBytes());
 			//image.setSize(file.getSize());
 			image.setName(file.getName());
-			imageService.save(image,itemDetailBuilder.getOne(id).build());
+			//imageService.save(image,itemDetailBuilder.getOne(id).build());
 		}
-
+		
+		return "ok";
 	}
 
 }

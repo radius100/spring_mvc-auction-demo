@@ -56,7 +56,8 @@ public class AccountService {
 			item = 
 				itemDetailBuilder
 					.getOne(item)
-					.setPrincipal(user) 
+					.setPrincipal(user)
+					.checkDeletable()
 					.getIsHide()
 					.getIsCollapse()
 					.build();

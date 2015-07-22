@@ -35,6 +35,16 @@ footer {
 	border: none;
 }
 
+.blockPointer:hover {
+    cursor: pointer;
+    color: blue;
+}
+
+.blockPointer1:hover {
+    cursor: pointer;
+   border-top: 1px solid red;
+}
+
 .amountInput {
 	text-align: right;
 }

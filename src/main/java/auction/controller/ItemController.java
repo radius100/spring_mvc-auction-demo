@@ -8,6 +8,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,8 +101,16 @@ public class ItemController {
 
 	
 	@RequestMapping(value = "/item-{id}/edit", method = RequestMethod.POST)
-	public String doEdit(@ModelAttribute("item") Item item, Principal principal, @PathVariable int id) {
+	public String doEdit(@ModelAttribute("item") Item item, 
+				 BindingResult result, Principal principal, @PathVariable int id) {
 
+		if(result.hasErrors()){
+			//item.setStartDate(null);
+			//result.
+			return "redirect:/item-{id}/edit.html?success=fail";
+		}
+			
+		
 		if (userService.isOwner(principal, id)) {
 
 			itemService.update(item, id);
@@ -113,7 +122,7 @@ public class ItemController {
 		
 	}
 
-	
+/*	
 	@RequestMapping("/item/register")
 	public String showRegister() {
 
@@ -127,7 +136,7 @@ public class ItemController {
 		itemService.save(item, principal);
 		return "redirect:/item/register.html?success=true";
 	}
-
+*/
 	
 	@RequestMapping("/items/item-{id}/follow")
 	@ResponseBody public String toggleFollow(Principal principal, @PathVariable int id) {

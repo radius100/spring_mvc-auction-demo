@@ -34,6 +34,30 @@ body {
 
 footer {
 	margin: 50px 0;
+}
+
+.blockPointer:hover {
+    cursor: pointer;
+    color: blue;
+}
+
+.myItem{
+	height: 100px;
+	width: 100px;
+	//border: 1px !important;
+	border-bottom: 1px;
+}
+.blockPointer1:hover {
+    cursor: pointer;
+   border-top: 1px solid red;
+}
+
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none;
+}
+#pageH {
+    min-height: 900px;
+}
 
 </style>
 

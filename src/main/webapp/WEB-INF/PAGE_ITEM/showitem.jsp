@@ -1,82 +1,92 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../LAYOUTS/taglib.jsp"%>
 
-${itemJson}
+<div id="pageH">
+	<div id="pageHeader" class="page-header blockPointer">
+		<h1>${item.name}:<br>
+		<small> ${item.descr}</small></h1>
+	</div>
+	<br>
 
-<div class="bodyh">
-	<br />
-	<!-- Nav tabs -->
-	<ul class="nav nav-tabs" role="tablist" id="myTabs">
-		<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Описание</a></li>
-		<li role="presentation"><a href="#trade" aria-controls="trade" role="tab" data-toggle="tab">Торги online!</a></li>
-		<li role="presentation"><a href="#images" aria-controls="images" role="tab" data-toggle="tab">Images</a></li>
-	</ul>
-	<!-- Tab panes -->
-	<br />
-	<div class="tab-content" id="tabscontent">
-		<div role="tabpanel" class="tab-pane active" id="home">
+	<h3 id="titleImages" class="blockPointer">Images:</h3>
+	<br>
+	<div class="row" id="divImages" style="display: none">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+
+       		<img src="http://placehold.it/650x450&text=Galaxy%20S5" width="100%"/>				
+				<br>	
+				
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+	<h3 id="titleDescripton" class="blockPointer">Description:</h3>
+	<br>
+	<div class="row" id="divDescr" style="display: none">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
 			
-			<c:if test="${item.publishedByCurrentUser eq false}">
-				<security:authorize access="isAuthenticated()">
-					<c:choose>
-						<c:when test="${item.followedByCurrentUser eq true}">
-							<td><button id="follow" class="btn btn-success">Follow</button></td>
-						</c:when>
-						<c:otherwise>
-							<td><button id="follow" class="btn btn-primary">Follow</button></td>
-						</c:otherwise>
-					</c:choose>
-				</security:authorize>
-			</c:if>
-			<table class="table borderless">
-				<col width="3%">
-				<tbody>
-					<tr>
-						<td></td>
-						<td>
-							<h3>${item.name}</h3>
-							<p>${item.descr}</p> <br />
-							<table class="table table-condensed">
-								<col width="30%">
-								<tbody>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-11">
+				<!-- Button follow -->
+					<c:if test="${item.publishedByCurrentUser eq false}">
+						<security:authorize access="isAuthenticated()">
+						<c:choose>
+							<c:when test="${item.followedByCurrentUser eq true}">
+								<td><button id="follow" class="btn btn-success">Follow</button></td>
+							</c:when>
+							<c:otherwise>
+								<td><button id="follow" class="btn btn-primary">Follow</button></td>
+							</c:otherwise>
+						</c:choose>
+						</security:authorize>
+					</c:if>
+					<p></p> <br>
+					<table class="table table-condensed">
+						<col width="30%">
+						<tbody>
+		<!-- 
 									<tr>
 										<td><spring:message code="showitem.descr" /></td>
 										<td align="justify">${item.fullDescr}</td>
 									</tr>
-									<c:choose>
-										<c:when test="${item.active eq true}">
-											<tr class="active">
-												<td><spring:message code="showitem.status" /></td>
-												<td><spring:message code="showitem.status.active" /></td>
-											</tr>
-										</c:when>
-										<c:when test="${item.block eq true}">
-											<tr class="info">
-												<td><spring:message code="showitem.status" /></td>
-												<td><spring:message code="showitem.status.block" /></td>
-											</tr>
-										</c:when>
-										<c:when test="${item.sell eq true}">
-											<tr class="success">
-												<td><spring:message code="showitem.status" /></td>
-												<td><spring:message code="showitem.status.sell" /></td>
-											</tr>
-										</c:when>
-									</c:choose>
-									<tr>
-										<td><spring:message code="showitem.start_in" /></td>
-										<td>добавить if 20 min</td>
-									</tr>
-									<tr>
-										<td><spring:message code="showitem.start_price" /></td>
-										<td>$ ${item.startAmount}</td>
-									</tr>
-									<tr>
-										<td><spring:message code="showitem.current_price" /></td>
-										<td>$ ${item.currentAmount}</td>
-									</tr>
-								</tbody>
-							</table>
+		 -->
+						<c:choose>
+							<c:when test="${item.active eq true}">
+								<tr class="active">
+									<td><spring:message code="showitem.status" /></td>
+									<td><spring:message code="showitem.status.active" /></td>
+								</tr>
+							</c:when>
+							<c:when test="${item.block eq true}">
+								<tr class="info">
+									<td><spring:message code="showitem.status" /></td>
+									<td><spring:message code="showitem.status.block" /></td>
+								</tr>
+							</c:when>
+							<c:when test="${item.sell eq true}">
+								<tr class="success">
+									<td><spring:message code="showitem.status" /></td>
+									<td><spring:message code="showitem.status.sell" /></td>
+								</tr>
+							</c:when>
+						</c:choose>
+						<tr>
+							<td><spring:message code="showitem.start_in" /></td>
+							<td>добавить if 20 min</td>
+						</tr>
+						<tr>
+							<td><spring:message code="showitem.start_price" /></td>
+							<td>$ ${item.startAmount}</td>
+						</tr>
+						<tr>
+							<td><spring:message code="showitem.current_price" /></td>
+							<td>$ ${item.currentAmount}</td>
+						</tr>
+						</tbody>
+					</table>
+
 							<h3>
 								<spring:message code="showitem.followers" />
 							</h3>
@@ -117,155 +127,109 @@ ${itemJson}
 									</tr>
 								</tbody>
 							</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div role="tabpanel" class="tab-pane" id="trade">
-			<br /> <br />
 
-			<table class="table borderless">
-				<col width="3%">
-				
-				<tbody>
-					<c:if test="${item.publishedByCurrentUser eq false}">
-						<tr>
-							<security:authorize access="isAuthenticated()">					
-								<td></td>
-								<td align="right">
-									<label>Минимальная ставка</label>
-									<input type="text" class="form-control" id="amount">
-									<button id="btnRate" class="btn btn-primary">Ставка</button>
-								</td>
-							</security:authorize>
-						</tr>
-					</c:if>
-					
-					<tr><td> </td></tr>
-					<tr>
-						<td></td>
-						<td>
-						<table id="dyntable" class="table borderless" data-toggle="table" data-url="/items/item-${item.id}/tradepool.json" data-cache="false">
-    						<thead>
-        						<tr>
-            						<th data-field="User">User</th>
-            						<th data-field="Amount">Amount</th>
-            						<th data-field="Date">Date</th>
-            						<th data-field="Time">Time</th>
-        						</tr>
-    						</thead>
-						</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div role="tabpanel" class="tab-pane" id="images">
-			<div id="banner-fade">
-				<img src="/resources/1.jpg" />
-				<div id="my-slideshow">
-					<ul class="bjqs">
-						<li><img src="/resources/1.jpg" /></li>
-						<li><img src="/resources/2.jpg" /></li>
-						<li><img src="/resources/3.jpg" /></li>
-					</ul>
+
 				</div>
 			</div>
+			
+			<div class="col-md-1"></div>
+		</div>
+		</div>
+
+		<h3 id="titleTradePool" class="blockPointer">Trade pool:</h3>
+		<br>
+		<div class="row" id="divTradePool" style="display: none">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+			Trade Pool
+
+			<div class="col-md-1"></div>
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
+	jQuery(document).ready(function($) {
 
-jQuery(document).ready(function($) {
-	
-	$('#banner-fade').bjqs({
-		animtype : 'slide',
-		'height' : 250,
-		'width' : 300,
-		'randomstart' : true,
-		'animspeed' : 7000,
-		'responsive' : true,
-		'nexttext' : '>>>',
-		'prevtext' : '<<<',
-		'showmarkers' : true
-	});
-	
-	//допилить когда сервер перегружается, а пользователь был залогинин
-	var login_ok=false;
-	
-	
-	$("#follow").click(function() { 
-		$.get("/items/item-${item.id}/follow.html",function(data,status) { 
-			if (data == 'follow')  
-				$('#follow').removeClass("btn-primary").removeClass("disabled").addClass("btn-success").text("Follow");
-			else if (data == 'unfollow') 
-				$('#follow').removeClass("btn-success").removeClass("disabled").addClass("btn-primary").text("Follow");
-			else if (data == 'fail_login') 
-				OnFailLogin();
-			alert("Data: " + data + "\nStatus: " + status);  
+		$('#banner-fade').bjqs({
+			animtype : 'slide',
+			'height' : 250,
+			'width' : 300,
+			'randomstart' : true,
+			'animspeed' : 7000,
+			'responsive' : true,
+			'nexttext' : '>>>',
+			'prevtext' : '<<<',
+			'showmarkers' : true
 		});
-	});
-	
-	setInterval(UpdateTableAndRate, 10000);
-	
-	function UpdateTable(){
-		$('#dyntable').bootstrapTable('refresh', {
-	    	url: '/items/item-${item.id}/tradepool.json'
-		});
-	}
+		
+		$('#startWin').click(function() {
 
-	function RateAdvs() {
-		$.get("/items/item-${item.id}/rate-adv.html",function(data,status) {
-			if( data.localeCompare("fail_login") == 0 ) {
-				OnServerFall();
-			}
-			else {
-				$('#amount').val(data);
-				login_ok=true;
-			}
-				
-		});
-	}
-	
-	function UpdateTableAndRate(){
-		UpdateTable();
-		if(login_ok == true)
-			RateAdvs();
-	}
-		
-	function OnFailLogin(){
-		if(login_ok == true){
-			$('#btnRate').hide();
-			$('#amount').hide();
-			$('#follow').removeClass("btn-success").addClass("btn-primary").addClass("disabled").text("Follow");
-			login_ok=false;	
-		}
-	}
-	
-	$("#btnRate").click(function() {
-		
-		$.post("/items/item-${item.id}/rate.html",
-			{ 
-				amount: $('#amount').val() 
-			},
-			function(data,status){ 
-				if( data.localeCompare("ok") == 0 ){
-					login_ok=true;
-					UpdateTableAndRate();
-				}
-				else if(data.localeCompare("fail_login") == 0)
-					OnServerFall();
-				else if(data.localeCompare("fail") == 0)
-					RateAdvs();
-		});
-	});
-		
-	$("#amount").ready(RateAdvs);
-	
-	//$('#myTabs a[href="#home"]').tab('show') // Select tab by name
-	//$('#myTabs a[href="#trade"]').tab('show') // Select tab by name
-	//$('#myTabs a[href="#images"]').tab('show') // Select tab by name
- });
+			$('#startWin').hide();
+			$('#switchWin').show();
 
+		});
+
+		$('#switchWin').click(function() {
+
+			$('#switchWin').hide();
+			$('#startWin').show();
+
+		});
+
+		$('#pageHeader').click(function() {
+			$('#divTradePool').fadeToggle('fast');
+			$('#divDescr').fadeToggle('fast');
+
+		});
+
+		$('#pageHeader').dblclick(function() {
+			$('#divImages').fadeToggle('fast');
+
+		});
+
+		$('#divTradePool').fadeIn('slow');
+
+		$('#titleImages').click(function() {
+			$('#divImages').fadeToggle('fast');
+		});
+
+		$('#titleTradePool').click(function() {
+			$('#divTradePool').fadeToggle('fast');
+		});
+
+		$('#titleDescripton').click(function() {
+			$('#divDescr').fadeToggle('fast');
+		});
+
+		/*
+		 * Добавить чтение локали из кук
+		 *	
+		 * Проверки:
+		 *	Заполненные поля являются датами и временем 
+		 *  PublisDate >= now, можно менять пока не опубликовано.. т.е. Прошел срок указанной PublishDate 
+		 *  неделя >= (StartDate - PublishDate) >= 1 час
+		 *	(FinishDate - StartDate) <= 30 дней
+		 *
+		 */
+		var loc = 'en';
+
+		$('#pickerPublishDate').datetimepicker({
+			viewMode : 'days',
+			format : 'DD-MMM-YYYY HH:mm',
+			locale : loc
+		});
+		$('#pickerStartDate').datetimepicker({
+			viewMode : 'days',
+			format : 'DD-MMM-YYYY HH:mm',
+			locale : loc
+
+		});
+		$('#pickerFinishDate').datetimepicker({
+			viewMode : 'days',
+			format : 'DD-MMM-YYYY HH:mm',
+			locale : loc
+		});
+
+	});
 </script>

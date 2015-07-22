@@ -103,6 +103,7 @@ public class InitDbService {
 		Item item1 = new Item();
 		item1.setName("Лот 1");
 		item1.setStartAmount(10);
+		item1.setStartDate(new Date());
 		item1.setActive(true);
 		item1.setSell(false);
 		item1.setBlock(false);
@@ -111,6 +112,7 @@ public class InitDbService {
 		Item item2 = new Item();
 		item2.setName("Лот 2");
 		item2.setStartAmount(10);
+		item2.setStartDate(new Date());
 		item2.setActive(true);
 		item2.setSell(false);
 		item2.setBlock(false);
@@ -119,6 +121,7 @@ public class InitDbService {
 		Item item3 = new Item();
 		item3.setName("Крутой тел Meizu");
 		item3.setStartAmount(100);
+		item3.setStartDate(new Date());
 		item3.setDescr("Очень крутой тел от китаезов! Meizu MX4 Pro! Рекомендую");
 		item3.setFullDescr("Meizu MX4 – обновленная модель нашумевшего смартфона от азиатского производителя. Устройство получило увеличенный, обновленный экран, а также возросшую автономность. Первое, что бросается в глаза при взгляде на Meizu MX4 – минимальные боковые рамки дисплея, благодаря чему девайс с 5,36-дюймовым экраном отлично лежит в руке. Разрешение IPS матрицы составляет 1920х1152 точки, что обеспечивает потрясающую четкость изображения.");
 		item3.setPublishDate(new Date());

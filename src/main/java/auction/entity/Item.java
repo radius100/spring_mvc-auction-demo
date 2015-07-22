@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
+import javax.xml.crypto.Data;
 
 import org.joda.time.DateTime;
 
@@ -88,7 +89,10 @@ public class Item {
 	@Transient
 	private boolean collapse;
 
+	@Transient
+	private boolean ownerDeletable;
 
+	
 	/*
 	 * public List<Image> getImages() { return images; }
 	 * 
@@ -144,9 +148,17 @@ public class Item {
 	}
 	
 	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+		
+		if( (!startDate.getClass().equals(Data.class)) )
+			this.startDate = startDate;
 	}
-
+	
+	public void setStartDate(String startDate) {
+		
+		this.startDate = null;
+	}
+	
+	
 	public Date getFinishDate() {
 		return finishDate;
 	}
@@ -345,6 +357,14 @@ public class Item {
 
 	public void setCollapse(boolean collapse) {
 		this.collapse = collapse;
+	}
+
+	public boolean isOwnerDeletable() {
+		return ownerDeletable;
+	}
+
+	public void setOwnerDeletable(boolean ownerDeletable) {
+		this.ownerDeletable = ownerDeletable;
 	}
 
 }

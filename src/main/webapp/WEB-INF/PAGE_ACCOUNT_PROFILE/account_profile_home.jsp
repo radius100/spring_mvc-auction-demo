@@ -21,7 +21,11 @@ footer {
 
 .blockPointer:hover {
     cursor: pointer;
+    border-left: 1px solid red;
+    border-right: 1px solid red;
+    
 }
+
 #pageH {
     min-height: 600px;
 }

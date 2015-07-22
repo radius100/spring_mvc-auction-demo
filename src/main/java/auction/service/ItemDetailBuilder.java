@@ -27,6 +27,7 @@ package auction.service;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -257,6 +258,22 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
+	public ItemDetailBuilder checkDeletable() {
+
+		Date startDate = item.getStartDate();
+		
+		if( startDate != null ){
+			if( item.getStartDate().before(new Date()) )
+				item.setOwnerDeletable(false);
+			else
+				item.setOwnerDeletable(true);
+		}
+		else
+			item.setOwnerDeletable(true);
+		
+		return this;
+	}
+	
 	public ItemDetailBuilder createItemDateMessage4IndexJsp() {
 
 		DateTimeUtils.createItemDateMessage4IndexJsp(item);

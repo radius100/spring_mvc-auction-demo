@@ -115,5 +115,11 @@ public class AccountController {
 		
 		return itemService.getNewItemId(principal);
 	}
+
+	///account/"+str+"/delete.html
+	@RequestMapping("/account/item-{id}/delete")
+	@ResponseBody public String doDelete(Principal principal, @PathVariable int id) {
 	
+		return itemService.delete(principal,id);
+	}
 }

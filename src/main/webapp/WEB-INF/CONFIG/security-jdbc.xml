@@ -6,6 +6,7 @@
 		   http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<http>
+		<intercept-url pattern="/uploadFile**" access="hasRole('USER')" />
 		<intercept-url pattern="/users**" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/users/**" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/account**" access="hasRole('USER')" />
@@ -16,7 +17,7 @@
 		<logout logout-url="/logout" logout-success-url="/index.html" />
 		<csrf disabled="true" />
 	</http>
-
+	
 	<authentication-manager>
 		<authentication-provider>
 			<password-encoder hash="bcrypt" />

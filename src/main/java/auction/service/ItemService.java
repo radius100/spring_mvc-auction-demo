@@ -31,6 +31,9 @@ public class ItemService {
 	ItemRepository itemRepository;
 
 	@Autowired
+	ItemDetailBuilder itemDetailBuilder;
+	
+	@Autowired
 	UserRepository userRepository;
 
 	@Autowired
@@ -112,5 +115,29 @@ public class ItemService {
 		item = userItemDetail.getItem();
 		
 		return Integer.toString(item.getId());
+	}
+
+	public String delete(Principal principal, int id) {
+		
+		/*
+		Item item = itemDetailBuilder
+						.getOne(id)
+						.setPrincipal(principal)
+						.checkDeletable()
+						.build();
+		*/
+		
+		Item item = itemRepository.findOne(id);
+		
+		List<UserItemDetail> userItemDetails = userItemDetailRepository.findByItem(item);
+		for(UserItemDetail userItemDetail : userItemDetails)
+			userItemDetailRepository.delete(userItemDetail.getId());
+		
+		List<TradePool> tradePools = tradePoolRepository.findByItem(item);
+		for(TradePool tradePool : tradePools)
+			tradePoolRepository.delete(tradePool.getId());
+
+		itemRepository.delete(id);
+		return "Delete";
 	}
 }
