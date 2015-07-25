@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
-import javax.xml.crypto.Data;
 
 import org.joda.time.DateTime;
 
@@ -54,6 +53,12 @@ public class Item {
 	private int tradersCount;
 
 	@Transient
+	private boolean preTrading;
+	
+	@Transient
+	private boolean trading;
+	
+	@Transient
 	private boolean followedByCurrentUser = false;
 
 	@Transient
@@ -91,6 +96,15 @@ public class Item {
 
 	@Transient
 	private boolean ownerDeletable;
+
+	@Transient
+	private String publishDateAsString;
+
+	@Transient
+	private String startDateAsString;
+
+	@Transient
+	private String finishDateAsString;
 
 	
 	/*
@@ -146,18 +160,10 @@ public class Item {
 		}
 		return "";
 	}
-	
+
 	public void setStartDate(Date startDate) {
-		
-		if( (!startDate.getClass().equals(Data.class)) )
-			this.startDate = startDate;
+		this.startDate = startDate;
 	}
-	
-	public void setStartDate(String startDate) {
-		
-		this.startDate = null;
-	}
-	
 	
 	public Date getFinishDate() {
 		return finishDate;
@@ -235,10 +241,6 @@ public class Item {
 		this.currentAmount = currentAmount;
 	}
 
-	public Date getPublishDate() {
-		return publishDate;
-	}
-	
 	public String getPublishDateToLocaleString(Locale locale) {
 		
 		if(publishDate != null){
@@ -251,6 +253,10 @@ public class Item {
 		return "";
 	}
 	
+	public Date getPublishDate() {
+		return publishDate;
+	}
+		
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
 	}
@@ -365,6 +371,46 @@ public class Item {
 
 	public void setOwnerDeletable(boolean ownerDeletable) {
 		this.ownerDeletable = ownerDeletable;
+	}
+
+	public boolean isPreTrading() {
+		return preTrading;
+	}
+
+	public void setPreTrading(boolean preTrading) {
+		this.preTrading = preTrading;
+	}
+
+	public boolean isTrading() {
+		return trading;
+	}
+
+	public void setTrading(boolean trading) {
+		this.trading = trading;
+	}
+
+	public String getPublishDateAsString() {
+		return publishDateAsString;
+	}
+
+	public void setPublishDateAsString(String publishDateAsString) {
+		this.publishDateAsString = publishDateAsString;
+	}
+
+	public String getStartDateAsString() {
+		return startDateAsString;
+	}
+
+	public void setStartDateAsString(String startDateAsString) {
+		this.startDateAsString = startDateAsString;
+	}
+
+	public String getFinishDateAsString() {
+		return finishDateAsString;
+	}
+
+	public void setFinishDateAsString(String finishDateAsString) {
+		this.finishDateAsString = finishDateAsString;
 	}
 
 }

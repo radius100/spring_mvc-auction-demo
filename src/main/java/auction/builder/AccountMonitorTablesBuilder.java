@@ -40,7 +40,7 @@ public class AccountMonitorTablesBuilder {
 	@Autowired
 	TradePoolRepository tradePoolRepository;
 
-	static final Logger logger = Logger.getLogger(AccountMonitorTablesBuilder.class);
+//	static final Logger logger = Logger.getLogger(AccountMonitorTablesBuilder.class);
 	
 	private User user;
 	private Item item;

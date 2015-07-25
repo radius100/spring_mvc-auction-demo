@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import auction.entity.Item;
-import auction.service.ItemDetailBuilder;
+import auction.builder.ItemDetailBuilder;
 import auction.service.ItemService;
 import auction.service.TradePoolService;
 import auction.service.UserItemDetailService;
@@ -59,13 +59,13 @@ public class ItemController {
 	public String showItem(Principal principal, Model model, @PathVariable int id) {
 
 		Item item = itemDetailBuilder
-				.getOne(id)
+				.setOne(id)
 				.setPrincipal(principal)
-				.getFollowers()
-				.getTraders()
-				.getIsPublishByPrincipal() 
-				.getPublisher()
-				.getIsFollowByPrincipal()
+				.setFollowers()
+				.setTraders()
+				.setIsPublishByPrincipal() 
+				.setPublisher()
+				.setIsFollowByPrincipal()
 				.build();
 
 		model.addAttribute("item", item);
@@ -80,7 +80,7 @@ public class ItemController {
 		if (userService.isOwner(principal, id)) {
 
 			Item item = itemDetailBuilder
-					.getOne(id)
+					.setOne(id)
 					.build();
 
 			model.addAttribute("item", item);
@@ -102,7 +102,10 @@ public class ItemController {
 	
 	@RequestMapping(value = "/item-{id}/edit", method = RequestMethod.POST)
 	public String doEdit(@ModelAttribute("item") Item item, 
-				 BindingResult result, Principal principal, @PathVariable int id) {
+				 BindingResult result, 
+				 Principal principal,
+				 Locale locale,
+				 @PathVariable int id) {
 
 		if(result.hasErrors()){
 			//item.setStartDate(null);
@@ -113,7 +116,7 @@ public class ItemController {
 		
 		if (userService.isOwner(principal, id)) {
 
-			itemService.update(item, id);
+			itemService.update(item, id, locale);
 			return "redirect:/item-{id}/edit.html?success=true";
 		}
 		
@@ -151,6 +154,11 @@ public class ItemController {
 		return tradePoolService.getRateAdvs(principal, id);
 	}
 
+	@RequestMapping("/items/item-{id}/countdown")
+	@ResponseBody public String getCountDown(Locale locale, @PathVariable int id) {
+
+		return itemService.getCountDown(id, locale);
+	}
 	
 	@RequestMapping(value="/items/item-{id}/rate", method=RequestMethod.POST)
 	@ResponseBody public String doRate(Principal principal, @PathVariable int id, @RequestParam String amount) {

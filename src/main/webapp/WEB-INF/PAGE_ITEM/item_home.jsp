@@ -6,15 +6,14 @@
 <link rel="stylesheet" href="/resources/bootstrap/bootstrap.min.css">
  -->
 <link rel="stylesheet" href="/resources/bootstrap/cosmo/bootstrap.min.css">
+<link href="/resources/bjqs/bjqs.css" type="text/css" rel="Stylesheet" />
+
 <script src="/resources/bootstrap/jquery.min.js"></script>
 <script src="/resources/bootstrap/bootstrap.min.js"></script> 
 <script src="/resources/jquery-cookie/jquery.cookie.min.js" type="text/javascript"></script>
-
-<link href="/resources/bjqs/bjqs.css" type="text/css" rel="Stylesheet" />
-<link href="/resources/bootstrap-table/bootstrap-table.css" rel="stylesheet">
+<script src="/resources/countdown/jquery.countdown.js" type="text/javascript"></script>
 
 <script src="/resources/bjqs/bjqs-1.3.min.js"></script>
-<script src="/resources/bootstrap-table/bootstrap-table.js"></script>
 
 <style type="text/css">
 body {
@@ -24,6 +23,14 @@ body {
 
 footer {
 	margin: 50px 0;
+}
+
+#countDownColor {
+	color: blue;
+}
+
+#dyntable {
+	height: 50px;
 }
 
 .bodyh {
@@ -48,6 +55,11 @@ footer {
 .amountInput {
 	text-align: right;
 }
+
+#pageH {
+    min-height: 600px;
+}
+
 </style>
 
 <title><tiles:getAsString name="title" /></title>
@@ -62,11 +74,10 @@ footer {
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<tiles:insertAttribute name="slidebar" />
-				<br />
 				<tiles:insertAttribute name="sidemenu" />
+				<br>
+				<tiles:insertAttribute name="slidebar" />
 			</div>
-
 			<div class="col-md-6">
 				<tiles:insertAttribute name="showitem" />
 			</div>

@@ -23,18 +23,21 @@
 	 * build()
 */
 
-package auction.service;
+package auction.builder;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 import auction.entity.Item;
 import auction.entity.TradePool;
@@ -51,6 +54,9 @@ import auction.utils.DateTimeUtils;
 public class ItemDetailBuilder {
 
 	@Autowired
+	private MessageSource messageSource;
+	
+	@Autowired
 	ItemRepository itemRepository;
 
 	@Autowired
@@ -63,21 +69,32 @@ public class ItemDetailBuilder {
 	TradePoolRepository tradePoolRepository;
 
 	private Item item;
-
 	private User user;
+	private Locale locale;
 
 	public Item build() {
 
 		return item;
 	}
+	
+	@RenderMapping(params = "render=details")
+	public String getCountDownString() {
 
-	public ItemDetailBuilder getOne(int id) {
+		return DateTimeUtils.getCountDownString(
+					item,
+					messageSource.getMessage("countdown.day", null, locale),
+					messageSource.getMessage("countdown.days", null, locale)
+				);
+	}
+
+
+	public ItemDetailBuilder setOne(int id) {
 
 		item = itemRepository.findOne(id);
 		return this;
 	}
 
-	public ItemDetailBuilder getOne(Item item) {
+	public ItemDetailBuilder setOne(Item item) {
 
 		this.item = item;
 		return this;
@@ -96,21 +113,47 @@ public class ItemDetailBuilder {
 		this.user = user;
 		return this;
 	}
-
 	
-	public ItemDetailBuilder getFollowersCount() {
+	public ItemDetailBuilder setLocale(Locale locale) {
+
+		this.locale = locale;
+		return this;
+	}
+	
+	public ItemDetailBuilder setIsPreTrading() {
+
+		Date date = new Date();
+		
+		if( date.before(item.getStartDate()) )
+			item.setPreTrading(true);
+
+		return this;
+	}
+
+	public ItemDetailBuilder setIsTrading() {
+
+		Date date = new Date();
+		
+		if( date.after(item.getStartDate()) 
+				&& date.before(item.getFinishDate()) )
+			item.setTrading(true);
+		
+		return this;
+	}
+	
+	public ItemDetailBuilder setFollowersCount() {
 
 		item.setFollowersCount(userItemDetailRepository.countUserDistinctByItemAndFollowTrue(item));
 		return this;
 	}
 
-	public ItemDetailBuilder getTradersCount() {
+	public ItemDetailBuilder setTradersCount() {
 
 		item.setTradersCount(tradePoolRepository.countDistinctUserByItem(item));
 		return this;
 	}
 
-	public ItemDetailBuilder getCurrentAmount() {
+	public ItemDetailBuilder setCurrentAmount() {
 
 		TradePool tradePool = tradePoolRepository.findFirstByItemOrderByAmountDesc(item);
 
@@ -122,7 +165,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getIsFollowByPrincipal() {
+	public ItemDetailBuilder setIsFollowByPrincipal() {
 
 		if (user != null) {
 
@@ -136,7 +179,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getIsBuyByPrincipal() {
+	public ItemDetailBuilder setIsBuyByPrincipal() {
 
 		if (user != null) {
 
@@ -151,7 +194,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getIsTradeByPrincipal() {
+	public ItemDetailBuilder setIsTradeByPrincipal() {
 
 		if (tradePoolRepository.countByUserAndItem(user, item) > 0)
 			item.setTradeedByCurrentUser(true);
@@ -161,7 +204,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 	
-	public ItemDetailBuilder getIsHide() {
+	public ItemDetailBuilder setIsHide() {
 
 		if (user != null) {
 
@@ -174,7 +217,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getIsCollapse() {
+	public ItemDetailBuilder setIsCollapse() {
 		
 		if (user != null) {
 
@@ -188,7 +231,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getIsPublishByPrincipal() {
+	public ItemDetailBuilder setIsPublishByPrincipal() {
 
 		if (user != null) {
 
@@ -204,8 +247,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	// Почему сразу тип User не возвращает??
-	public ItemDetailBuilder getPublisher() {
+	public ItemDetailBuilder setPublisher() {
 
 		UserItemDetail userItemDetail = userItemDetailRepository.findByItemAndPublishTrue(item);
 		
@@ -213,7 +255,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 	
-	public ItemDetailBuilder getTradePool() {
+	public ItemDetailBuilder setTradePool() {
 
 		List<TradePool> tradePools = tradePoolRepository.findByItem(item);
 
@@ -228,7 +270,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getTraders() {
+	public ItemDetailBuilder setTraders() {
 
 		Set<User> setUsers = new HashSet<User>();
 		
@@ -243,7 +285,7 @@ public class ItemDetailBuilder {
 		return this;
 	}
 
-	public ItemDetailBuilder getFollowers() {
+	public ItemDetailBuilder setFollowers() {
 
 		Set<User> setUsers = new HashSet<User>();
 		
@@ -279,5 +321,5 @@ public class ItemDetailBuilder {
 		DateTimeUtils.createItemDateMessage4IndexJsp(item);
 		return this;
 	}
-
+	
 }

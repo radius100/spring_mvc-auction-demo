@@ -13,6 +13,7 @@ import auction.builder.AccountMonitorTablesBuilder;
 import auction.builder.AccountMyItemsTablesBuilder;
 import auction.builder.TradePoolBuilder;
 import auction.builder.UserItemDetailBuilder;
+import auction.builder.ItemDetailBuilder;
 import auction.entity.Item;
 import auction.entity.User;
 import auction.json.AccountTables;
@@ -55,11 +56,11 @@ public class AccountService {
 		for( Item item : items )
 			item = 
 				itemDetailBuilder
-					.getOne(item)
+					.setOne(item)
 					.setPrincipal(user)
 					.checkDeletable()
-					.getIsHide()
-					.getIsCollapse()
+					.setIsHide()
+					.setIsCollapse()
 					.build();
 		
 		return items;
@@ -87,11 +88,11 @@ public class AccountService {
 		
 		for(Item item : items)
 			item = itemDetailBuilder
-					.getOne(item)
+					.setOne(item)
 					.setPrincipal(user)
-					.getIsHide()
-					.getIsCollapse()
-					.getIsFollowByPrincipal()
+					.setIsHide()
+					.setIsCollapse()
+					.setIsFollowByPrincipal()
 					.build();
 			
 		return items;

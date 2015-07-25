@@ -41,15 +41,20 @@ public class AccountMyItemsTablesBuilder {
 	private StringBuilder sBuilder;
 
 	private List<AccountTables> accountTables;
+	
 	private List<Item> collapseItems;
 	private List<UserItemDetail> collapsesUID;
 	
 	private List<Item> publishItems;
 	private List<UserItemDetail> publishByPrincipalUID;
 	
+	private List<Item> hideItems;
+	private List<UserItemDetail> hidesUID;
+	
+	
 	//проверить на анонима!!!
 	boolean err_flag=false;
-
+	
 	
 	public AccountMyItemsTablesBuilder init(Principal principal){
 		
@@ -63,6 +68,7 @@ public class AccountMyItemsTablesBuilder {
 		
 		publishByPrincipalUID = userItemDetailRepository.findByUserAndPublishTrue(user);
 		collapsesUID = userItemDetailRepository.findByUserAndCollapseTrue(user);
+		hidesUID = userItemDetailRepository.findByUserAndHideTrue(user);
 		
 		accountTables = new ArrayList<AccountTables>();
 		
@@ -74,6 +80,10 @@ public class AccountMyItemsTablesBuilder {
 		for(UserItemDetail uIDetail : collapsesUID)
 			collapseItems.add(uIDetail.getItem());
 		
+		hideItems = new ArrayList<Item>();
+		for(UserItemDetail uIDetail : hidesUID)
+			hideItems.add(uIDetail.getItem());
+		
 		sBuilder = new StringBuilder();
 		
 		return this;
@@ -82,23 +92,26 @@ public class AccountMyItemsTablesBuilder {
 	public AccountMyItemsTablesBuilder getTradePoolsActive(){
 
 		boolean expandBool;
+		boolean hideBool;
 
 		for (Item item : publishItems) {
 			
 			if ( item.isActive() == true ){
 							
 				sBuilder.setLength(0);
+				expandBool=false;
+				hideBool=false;
 				
 				if(collapseItems.contains(item) == true)
 					expandBool=true;
-				else
-					expandBool=false;
-
+				
+				if(hideItems.contains(item) == true)
+					hideBool=true;
 				
 				accountTables.add(new AccountTables("Trade", 
 						item.getName(), 
 						sBuilder.append("item-").append(item.getId()).toString(),
-						expandBool,true));
+						expandBool,hideBool));
 			}
 			
 		}

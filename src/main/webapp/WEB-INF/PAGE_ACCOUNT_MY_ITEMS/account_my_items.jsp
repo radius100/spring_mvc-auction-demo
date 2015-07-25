@@ -11,39 +11,42 @@
 <br>
 <c:forEach items="${tables}" var="table">
 	<c:if test="${table.type eq 'Trade' }">
-		<div id="block_${table.itemId}">
-			<div class="row">
-				<div class="col-md-10">	
-					<a href="/items/${table.itemId}.html#trade">${table.name}</a>
+		<c:if test="${table.hidden eq false}">
+			<div id="block_${table.itemId}">
+				<div class="row">
+					<div class="col-md-10">	
+						<a href="/items/${table.itemId}.html#trade">${table.name}</a>
+						<br>
+						<table id="table_${table.itemId}" class="table table-bordered table-striped table-condensed" style="display: none">
+							<tr id="table_head_${table.itemId}">
+								<th width="25%">User</th>
+								<th width="25%">Amount</th>
+								<th width="25%">Date</th>
+								<th width="25%">Time</th>
+							</tr>
+						</table>
+					</div>
+					</div>
+					<div class="row">
+					<div class="col-md-3">
+						<button id="btnUpdate_${table.itemId}" class="btn btn-xs btn-primary">Refresh</button>
+						<!-- collapse -->
+						<c:choose>
+							<c:when test="${table.collapsed eq true}">
+								<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _collapsed">Expand</button>
+							</c:when>
+							<c:otherwise>
+								<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _expanded">Collapse</button>
+							</c:otherwise>
+						</c:choose>							
+						<!-- Hide -->
+						<button id="btnHide_${table.itemId}" class="btn btn-xs btn-primary">Hide</button>
+					</div>
+					</div>
 					<br>
-					<table id="table_${table.itemId}" class="table table-bordered table-striped table-condensed" style="display: none">
-						<tr id="table_head_${table.itemId}">
-							<th width="25%">User</th>
-							<th width="25%">Amount</th>
-							<th width="25%">Date</th>
-							<th width="25%">Time</th>
-						</tr>
-					</table>
+					<br>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-3">
-					<button id="btnUpdate_${table.itemId}" class="btn btn-xs btn-primary">Refresh</button>
-					<!-- collapse -->
-					<c:choose>
-						<c:when test="${table.collapsed eq true}">
-							<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _collapsed">Expand</button>
-						</c:when>
-						<c:otherwise>
-							<button id="btnCollapse_${table.itemId}" class="btn btn-xs btn-primary _expanded">Collapse</button>
-						</c:otherwise>
-					</c:choose>							
-					<button id="btnHide_${table.itemId}" class="btn btn-xs btn-primary">Hide</button>
-				</div>
-			</div>
-			<br>
-			<br>
-		</div>
+		</c:if>
 	</c:if>
 </c:forEach>
 

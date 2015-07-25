@@ -7,25 +7,20 @@
 		<small> ${item.descr}</small></h1>
 	</div>
 	<br>
-
 	<h3 id="titleImages" class="blockPointer">Images:</h3>
 	<br>
 	<div class="row" id="divImages" style="display: none">
 		<div class="col-md-1"></div>
 		<div class="col-md-10">
-
-       		<img src="http://placehold.it/650x450&text=Galaxy%20S5" width="100%"/>				
-				<br>	
-				
+       		<img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRnm256OocmHn9U_j0vOfJ1_b4K83OptMe82pUBEC4LVDw3CKdB7g" width="100%"/>				
 		</div>
 		<div class="col-md-1"></div>
 	</div>
 	<h3 id="titleDescripton" class="blockPointer">Description:</h3>
 	<br>
 	<div class="row" id="divDescr" style="display: none">
-		<div class="col-md-1"></div>
-		<div class="col-md-10">
-			
+		<div class="col-md-2"></div>
+		<div class="col-md-9">
 			<div class="row">
 				<div class="col-md-1"></div>
 				<div class="col-md-11">
@@ -34,17 +29,19 @@
 						<security:authorize access="isAuthenticated()">
 						<c:choose>
 							<c:when test="${item.followedByCurrentUser eq true}">
-								<td><button id="follow" class="btn btn-success">Follow</button></td>
+								<td><button id="btnFollow" class="btn btn-success">Follow</button></td>
 							</c:when>
 							<c:otherwise>
-								<td><button id="follow" class="btn btn-primary">Follow</button></td>
+								<td><button id="btnFollow" class="btn btn-primary">Follow</button></td>
 							</c:otherwise>
 						</c:choose>
+						<br>
 						</security:authorize>
 					</c:if>
-					<p></p> <br>
-					<table class="table table-condensed">
-						<col width="30%">
+					<br>
+					<br>
+					<table class="table borderless">
+						<col width="35%">
 						<tbody>
 		<!-- 
 									<tr>
@@ -56,7 +53,7 @@
 							<c:when test="${item.active eq true}">
 								<tr class="active">
 									<td><spring:message code="showitem.status" /></td>
-									<td><spring:message code="showitem.status.active" /></td>
+									<td align="right"><spring:message code="showitem.status.active" /></td>
 								</tr>
 							</c:when>
 							<c:when test="${item.block eq true}">
@@ -73,79 +70,115 @@
 							</c:when>
 						</c:choose>
 						<tr>
-							<td><spring:message code="showitem.start_in" /></td>
-							<td>добавить if 20 min</td>
+							<c:choose>
+								<c:when test="${item.preTrading eq true}">
+									<td><spring:message code="countdown.start_in" /></td>
+								</c:when>
+								<c:otherwise>
+									<td><spring:message code="countdown.finish_in" /></td>
+								</c:otherwise>
+							</c:choose>
+							<td align="right">
+								<span id="countDownColor" class="countdownContainer"></span>
+							</td>
+							
 						</tr>
 						<tr>
 							<td><spring:message code="showitem.start_price" /></td>
-							<td>$ ${item.startAmount}</td>
+							<td align="right">$ ${item.startAmount}</td>
 						</tr>
 						<tr>
 							<td><spring:message code="showitem.current_price" /></td>
-							<td>$ ${item.currentAmount}</td>
+							<td align="right">$ ${item.currentAmount}</td>
 						</tr>
 						</tbody>
 					</table>
-
-							<h3>
-								<spring:message code="showitem.followers" />
-							</h3>
-							<table class="table borderless">
-								<col width="30%">
-								<tbody>
-									<c:forEach items="${item.followers}" var="follower">
-										<tr>
-											<td></td>
-											<td>${follower.name}</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-							<h3>
-								<spring:message code="showitem.traders" />
-							</h3>
-							<table class="table borderless">
-								<col width="30%">
-								<tbody>
-									<c:forEach items="${item.traders}" var="trader">
-										<tr>
-											<td></td>
-											<td>${trader.name}</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-							<h3>
-								<spring:message code="showitem.publisher" />
-							</h3>
-							<table class="table borderless">
-								<col width="30%">
-								<tbody>
-									<tr>
-										<td></td>
-										<td><a href="#">${item.publisher.name}</a></td>
-									</tr>
-								</tbody>
-							</table>
-
-
+					<h3 id="titleFollowers" class="blockPointer"><spring:message code="showitem.followers" /></h3>
+					<table id="tableFollowers" class="table borderless" style="display: none">
+						<col width="30%">
+						<tbody>
+							<c:forEach items="${item.followers}" var="follower">
+								<tr>
+									<td></td>
+									<td>${follower.name}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<h3 id="titleTraders" class="blockPointer"><spring:message code="showitem.traders" /></h3>
+					<table id="tableTraders" class="table borderless" style="display: none">
+						<col width="30%">
+						<tbody>
+							<c:if test="${item.traders eq '[]'}">
+								<tr>
+									<td></td>
+									<td>none</td>
+								</tr>
+							</c:if>
+							<c:forEach items="${item.traders}" var="trader">
+								<tr>
+									<td></td>
+									<td>${trader.name}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<h3 id="titlePublisher" class="blockPointer"><spring:message code="showitem.publisher" /></h3>
+					<table id="tablePublisher" class="table borderless">
+						<col width="30%">
+						<tbody>
+							<tr>
+								<td></td>
+								<td><a href="#">${item.publisher.name}</a></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			
 			<div class="col-md-1"></div>
 		</div>
 		</div>
-
 		<h3 id="titleTradePool" class="blockPointer">Trade pool:</h3>
 		<br>
 		<div class="row" id="divTradePool" style="display: none">
-			<div class="col-md-1"></div>
-			<div class="col-md-10">
-			Trade Pool
-
+			<div class="col-md-2"></div>
+			<div class="col-md-9">
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-11">
+						<c:if test="${item.publishedByCurrentUser eq false}">
+							<security:authorize access="! isAuthenticated()">
+								<button id="btnRefresh" class="btn btn-primary">Refresh</button>					
+							</security:authorize>
+							<security:authorize access="isAuthenticated()">					
+								<div class="form form-inline">
+											<input type="text" id="inputAmount" class="form-control" style="text-align: right">
+											<button id="btnRate" class="btn btn-success">Ставка</button>
+											<button id="btnRefresh" class="btn btn-primary">Refresh</button>
+								</div>
+								
+							</security:authorize>
+						</c:if>
+						<br>
+						<br>
+						<table class="table borderless" id="dyntable">
+							<thead>
+        						<tr id="appendPointLine">
+        							<th align="left">User</th>
+            						<th align="center">Amount</th>
+            						<th align="right">Date</th>
+            						<th align="right">Time</th>
+        						</tr>
+    						</thead>
+						</table>
+						<br>
+						<br>
+					</div>
+				</div>
+			</div>
 			<div class="col-md-1"></div>
 		</div>
-	</div>
 </div>
 
 <script type="text/javascript">
@@ -161,6 +194,28 @@
 			'nexttext' : '>>>',
 			'prevtext' : '<<<',
 			'showmarkers' : true
+		});
+		
+		$(function() {
+		    
+			$.get("/items/item-${item.id}/countdown.html",function(data,status) { 
+
+				alert(data);
+				
+				if(data.charAt(0) == '!'){
+					
+					var str = data.substring(1,data.length);
+					$('.countdownContainer').text(str);
+				}
+					
+				
+				else
+					$('.countdownContainer').countdown({
+			        	date: data
+			    	});
+			
+			});
+			
 		});
 		
 		$('#startWin').click(function() {
@@ -201,35 +256,133 @@
 		$('#titleDescripton').click(function() {
 			$('#divDescr').fadeToggle('fast');
 		});
-
-		/*
-		 * Добавить чтение локали из кук
-		 *	
-		 * Проверки:
-		 *	Заполненные поля являются датами и временем 
-		 *  PublisDate >= now, можно менять пока не опубликовано.. т.е. Прошел срок указанной PublishDate 
-		 *  неделя >= (StartDate - PublishDate) >= 1 час
-		 *	(FinishDate - StartDate) <= 30 дней
-		 *
-		 */
-		var loc = 'en';
-
-		$('#pickerPublishDate').datetimepicker({
-			viewMode : 'days',
-			format : 'DD-MMM-YYYY HH:mm',
-			locale : loc
+		
+		$('#titleFollowers').click(function(){
+			$('#tableFollowers').fadeToggle('fast');			
 		});
-		$('#pickerStartDate').datetimepicker({
-			viewMode : 'days',
-			format : 'DD-MMM-YYYY HH:mm',
-			locale : loc
-
+		
+		$('#titleTraders').click(function(){
+			$('#tableTraders').fadeToggle('fast');			
 		});
-		$('#pickerFinishDate').datetimepicker({
-			viewMode : 'days',
-			format : 'DD-MMM-YYYY HH:mm',
-			locale : loc
+		
+		$('#titlePublisher').click(function(){
+			$('#tablePublisher').fadeToggle('fast');			
 		});
 
+		
+		$("#btnFollow").click(function() { 
+			
+			$.get("/items/item-${item.id}/follow.html",function(data,status) { 
+				
+				if (data == 'follow')  
+					$('#btnFollow').removeClass("btn-primary").addClass("btn-success");
+				
+				else if (data == 'unfollow') 
+					$('#btnFollow').removeClass("btn-success").addClass("btn-primary");
+				
+				else if (data == 'fail_login') 
+					OnLoginFail();
+			
+			});
+		});
+		
+		refreshTableAndRate();
+		setInterval(refreshTableAndRate, 3000000);
+		$("#amount").ready(RateAdvs);
+		
+		function refreshTable(){
+			
+			$.getJSON("/items/item-${item.id}/tradepool.json", function(json){
+				
+				if( json != null ){
+				
+					var output="";
+		
+					$.each(json, function(i,item){
+					
+						output+="<tr class=\"tempLine\" style=\"display:none\">"
+								+"<td>"+item.User+"</td>"
+								+"<td>"+item.Amount+"</td>"
+								+"<td>"+item.Date+"</td>"
+								+"<td>"+item.Time+"</td>"
+								+"</tr>"
+
+					});
+
+				}
+				
+				if( output.length > 0 ){
+					$('.tempLine').remove();
+					$('#appendPointLine').after(output);
+					$('.tempLine').fadeToggle('fast');
+				}
+				
+			});
+
+		}
+		
+		
+		$('#btnRefresh').click(function(){
+			
+			refreshTable();
+						
+		});		
+		
+		
+		function refreshTableAndRate(){
+			
+			refreshTable();
+			RateAdvs();
+			
+		}
+		
+
+		function RateAdvs() {
+			
+			$.get("/items/item-${item.id}/rate-adv.html",function(data,status) {
+				
+				if( data.localeCompare('fail_login') == 0 )
+					OnLoginFail();
+					
+				else 
+					$('#inputAmount').val(data);
+					
+			});
+		}
+		
+			
+		function OnLoginFail() {
+		
+			$('#btnRate').hide();
+		
+			$('#inputAmount').hide();
+			$('#labelAmount').hide();
+			
+			$('#btnFollow').hide();
+			
+		}
+		
+		
+		$("#btnRate").click(function() {
+			
+			$.post("/items/item-${item.id}/rate.html",
+				{ 
+					amount: $('#inputAmount').val() 
+				},
+				
+				function(data,status){ 
+				
+					if( data.localeCompare("ok") == 0 )
+						refreshTableAndRate();
+					
+					else if(data.localeCompare("fail_login") == 0)
+						OnLoginFail();
+					
+					else if(data.localeCompare("fail") == 0)
+						RateAdvs();
+					
+			});
+		});
+			
 	});
 </script>

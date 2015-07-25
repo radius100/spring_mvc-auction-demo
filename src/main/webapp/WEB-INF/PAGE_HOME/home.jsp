@@ -129,12 +129,16 @@ footer {
         <div class="form-group"><input type="submit" class="btn btn-primary" value="Add"></div>
     </form>
     -->
+    <!-- 
     <form method="POST" action="uploadFile" enctype="multipart/form-data">
         File to upload: <input type="file" name="file"><br> 
         <input type="submit" value="Upload"> 
     </form>
+     -->
 </div>
-	
+ 
+<h1>${nav}</h1>	
+ 
 	<!-- Page Content -->
 	<div class="container-fluid">
 		<div class="row">
@@ -146,7 +150,12 @@ footer {
 			<div class="col-md-9">
 				<tiles:insertAttribute name="carusel" />
 				<p class="lead text-right" >
-				active now | trading now | all
+				<a href="/trading/index.html">trading</a>&ensp;|
+				&nbsp;<a href="/publish/index.html">pretrading</a>&ensp;|
+				&nbsp;<a href="/all/index.html">all</a>&ensp;|
+				&nbsp;<a href="/history/index.html">history</a>&ensp;|
+				page: 10 | <br>
+				sort: <a href="/index.html?sort=DESC">&darr;</a> | <a href="/index.html?sort=ASC">&uarr;</a> 
 				</p>
 				<tiles:insertAttribute name="showitems" />
 			</div>
