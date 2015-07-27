@@ -16,8 +16,10 @@
 		<put-attribute name="title" value="!!!" />
 		
 		<put-attribute name="slidebar" value="/WEB-INF/PAGE_HOME/slidebar.jsp" />
+		<put-attribute name="bodynav" value="/WEB-INF/PAGE_HOME/bodynav.jsp" />
 		<put-attribute name="carusel" value="/WEB-INF/PAGE_HOME/carusel_home.jsp" />
 		<put-attribute name="showitems" value="/WEB-INF/PAGE_HOME/showitems.jsp" />
+		<put-attribute name="pagination" value="/WEB-INF/PAGE_HOME/pagination.jsp" />
 
 		<put-attribute name="current" value="index" />
 	</definition>

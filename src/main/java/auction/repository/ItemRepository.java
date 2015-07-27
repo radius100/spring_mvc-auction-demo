@@ -9,8 +9,12 @@ import auction.entity.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Integer>{
 
-	//public List<Item> findByActiveTrueAndSellFalseAndBlockFalse();
-
 	public List<Item> findByActiveTrueAndBlockFalse(Pageable pageable);
+	
+	public List<Item> findByActiveFalseAndBlockFalse(Pageable pageable);
+	
+	public int countByActiveTrueAndBlockFalse();
+	
+	public int countByActiveFalseAndBlockFalse();
 
 }

@@ -136,11 +136,14 @@ footer {
     </form>
      -->
 </div>
- 
-<h1>${nav}</h1>	
- 
-	<!-- Page Content -->
+ 	<!-- Page Content -->
 	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<tiles:insertAttribute name="carusel" />
+				<br>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-3">
 				<tiles:insertAttribute name="slidebar" />
@@ -148,16 +151,15 @@ footer {
 				<tiles:insertAttribute name="sidemenu" />
 			</div>
 			<div class="col-md-9">
-				<tiles:insertAttribute name="carusel" />
-				<p class="lead text-right" >
-				<a href="/trading/index.html">trading</a>&ensp;|
-				&nbsp;<a href="/publish/index.html">pretrading</a>&ensp;|
-				&nbsp;<a href="/all/index.html">all</a>&ensp;|
-				&nbsp;<a href="/history/index.html">history</a>&ensp;|
-				page: 10 | <br>
-				sort: <a href="/index.html?sort=DESC">&darr;</a> | <a href="/index.html?sort=ASC">&uarr;</a> 
-				</p>
+				<tiles:insertAttribute name="bodynav" />
+				<br>
+				<br>
 				<tiles:insertAttribute name="showitems" />
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<tiles:insertAttribute name="pagination" />
+					</div>
+				</div>			
 			</div>
 		</div>
 	</div>

@@ -10,7 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 @Entity
@@ -19,12 +21,14 @@ public class Item {
 	@GeneratedValue
 	private Integer id;
 
+	@Size(min = 3)
 	private String name;
 
 	private String descr;
 
 	@Lob
-	@Column(length = 500)
+	@Type(type="org.hibernate.type.StringClobType")
+	@Column(length=500)
 	private String fullDescr;
 
 	private Date publishDate;
@@ -39,10 +43,10 @@ public class Item {
 
 	private boolean active;
 
-	private boolean sell;
-
-	private boolean pay;
-
+	private boolean preTrading;
+	
+	private boolean trading;
+	
 	@Transient
 	private int currentAmount;
 
@@ -52,12 +56,6 @@ public class Item {
 	@Transient
 	private int tradersCount;
 
-	@Transient
-	private boolean preTrading;
-	
-	@Transient
-	private boolean trading;
-	
 	@Transient
 	private boolean followedByCurrentUser = false;
 
@@ -215,22 +213,6 @@ public class Item {
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}
-
-	public boolean isSell() {
-		return sell;
-	}
-
-	public void setSell(boolean sell) {
-		this.sell = sell;
-	}
-
-	public boolean isPay() {
-		return pay;
-	}
-
-	public void setPay(boolean pay) {
-		this.pay = pay;
 	}
 
 	public int getCurrentAmount() {

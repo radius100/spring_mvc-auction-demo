@@ -6,8 +6,8 @@
 
 	<context:component-scan base-package="auction.controller" />
 
-
 	<mvc:annotation-driven />
+
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 
 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">

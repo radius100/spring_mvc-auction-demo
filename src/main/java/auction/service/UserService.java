@@ -84,4 +84,9 @@ public class UserService {
 			return false;
 	}
 
+	public User findOne(String username) {
+		
+		return userRepository.findOneByName(username);
+	}
+
 }

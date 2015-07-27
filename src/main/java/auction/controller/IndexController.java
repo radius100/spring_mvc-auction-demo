@@ -5,8 +5,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import auction.builder.ItemListDetailBuilder;
@@ -18,66 +18,102 @@ public class IndexController {
 
 	@ModelAttribute
 	public Pagination createPagination(){
-		return new Pagination("All", Direction.DESC, 0, 3);
+		return new Pagination("Active", Direction.DESC, 1, 3);
 	}
 	
 	@Autowired
 	private ItemListDetailBuilder itemListDetailBuilder;
 	
-
+	
 	@RequestMapping("/index")
-	public String index(@ModelAttribute Pagination pagination, Model model, @RequestParam String sort){
-		
-		if(sort.equals("DESC"))
-			pagination.setSortDirection(Direction.DESC);
-		else if(sort.equals("ASC"))
-			pagination.setSortDirection(Direction.ASC);
-		
-		if( !pagination.isInit() ){
-			pagination.setInit(true);
+	public String index(@ModelAttribute Pagination pagination, Model model){
 
-			model.addAttribute("items", itemListDetailBuilder.getQuery(pagination).build());
+		switch (pagination.getSection()) {
+			
+			case "Archive": 
+				model.addAttribute("items", itemListDetailBuilder
+						.getArchiveItemList(pagination)
+						.build());
+				break;
+			
+			case "Active": 
+				model.addAttribute("items", itemListDetailBuilder
+						.getActiveItemList(pagination)
+						.build());
+				break;
+
+			case "PreTrading": 
+				model.addAttribute("items", itemListDetailBuilder
+						.getPreTradingItemList(pagination)
+						.build());
+				break;
+			
+			case "Trading": 
+				model.addAttribute("items", itemListDetailBuilder
+						.getTradingItemList(pagination)
+						.build());
+				break;
+
 		}
 		
-		model.addAttribute("nav", pagination.getSortDirection());
-
 		return "index";
 	}
 
 	@RequestMapping("/trading/index")
-	public String indexTradingNow(@ModelAttribute Pagination pagination, Model model) {
+	public String indexTradingNow(@ModelAttribute Pagination pagination) {
 
 		pagination.setSection("Trading");
-		model.addAttribute("items", itemListDetailBuilder.getQuery(pagination).build());
 
-		return "forward:/index.html";
+		return "redirect:/index.html";
 	}
 
 	@RequestMapping("/publish/index")
-	public String indexPreTrading(@ModelAttribute Pagination pagination, Model model) {
+	public String indexPreTrading(@ModelAttribute Pagination pagination) {
 
 		pagination.setSection("PreTrading");
-		model.addAttribute("items", itemListDetailBuilder.getQuery(pagination).build());
 		
-		return "forward:/index.html";
+		return "redirect:/index.html";
 	}
 	
 	@RequestMapping("/all/index")
-	public String indexAll(@ModelAttribute Pagination pagination, Model model) {
+	public String indexAll(@ModelAttribute Pagination pagination) {
 
-		pagination.setSection("All");
-		model.addAttribute("items", itemListDetailBuilder.getQuery(pagination).build());
-		
-		return "forward:/index.html";
+		pagination.setSection("Active");
+
+		return "redirect:/index.html";
 	}
 
-	@RequestMapping("/history/index")
-	public String indexHistory(@ModelAttribute Pagination pagination, Model model) {
+	@RequestMapping("/archive/index")
+	public String indexArchive(@ModelAttribute Pagination pagination) {
 
-		pagination.setSection("History");
-		model.addAttribute("items", itemListDetailBuilder.getQuery(pagination).build());
+		pagination.setSection("Archive");
 		
-		return "forward:/index.html";
+		return "redirect:/index.html";
 	}
-	
+
+	@RequestMapping("/desc/index")
+	public String setDesc(@ModelAttribute Pagination pagination) {
+		
+		pagination.setSortDirection(Direction.DESC);
+		
+		return "redirect:/index.html";
+	}
+
+	@RequestMapping("/asc/index")
+	public String setAsc(@ModelAttribute Pagination pagination) {
+
+		pagination.setSortDirection(Direction.ASC);
+
+		return "redirect:/index.html";
+	}
+
+	@RequestMapping("/page-{id}/index")
+	public String setPage(@ModelAttribute Pagination pagination, @PathVariable int id) {
+
+		if( (id <= pagination.getTotalPages()) && (id > 0) )
+			pagination.setPageIndex(id);
+
+		return "redirect:/index.html";
+	}
+
 }

@@ -8,19 +8,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
+import auction.annotation.UniqueUserName;
+
 
 @Entity
+@Table(name = "app_user")
 public class User {
 	
 	@Id
 	@GeneratedValue
 	private Integer id;
 
+	@Size(min = 3, max = 20)
+	@Pattern(regexp="[a-zA-Z]+")
+	@UniqueUserName(message="Such user already exist")
 	private String name;
 	
 	@Column(length = 60)
+	@Size(min = 5, max = 60)
 	private String password;
 
+	@Email
+	@Size(min = 5, max = 35)
 	private String email;
 
 	@ManyToMany

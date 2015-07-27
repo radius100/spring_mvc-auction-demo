@@ -26,31 +26,81 @@ public class ItemListDetailBuilder {
 
 	public List<Item> build() {
 
+		for (Item item : items)
+			item = itemDetailBuilder
+				.setOne(item)
+				.setFollowersCount()
+				.setTradersCount()
+				.setCurrentAmount()
+				.setIsFollowByPrincipal()
+				.setIsPublishByPrincipal()
+				.build();
+		
 		return items;
 	}
 
-	public ItemListDetailBuilder getQuery(Pagination pagination) {
+	public ItemListDetailBuilder getActiveItemList(Pagination pagination) {
 
+			pagination.setGrid(
+					itemRepository.countByActiveTrueAndBlockFalse()
+					);
+		
 			items = itemRepository.findByActiveTrueAndBlockFalse(
 						new PageRequest(
-								pagination.getPageIndex(), 
+								pagination.getPageIndex()-1, 
 								pagination.getItemsPerPage(), 
 								pagination.getSortDirection(), 
-								"publishDate"));
-				
-			for (Item item : items){
-			
-				item = itemDetailBuilder
-						.setOne(item)
-						.setFollowersCount()
-						.setTradersCount()
-						.setCurrentAmount()
-						.setIsFollowByPrincipal()
-						.setIsPublishByPrincipal()
-						.build();
-			}
+								"publishDate")
+						);
 		
-		return this;
+			return this;
+	}
+	
+	public ItemListDetailBuilder getPreTradingItemList(Pagination pagination) {
+
+			pagination.setGrid(10);
+		
+			items = itemRepository.findByActiveTrueAndBlockFalse(
+					new PageRequest(
+							pagination.getPageIndex()-1, 
+							pagination.getItemsPerPage(), 
+							pagination.getSortDirection(), 
+							"publishDate")
+					);
+	
+			return this;
+	}
+
+	public ItemListDetailBuilder getTradingItemList(Pagination pagination) {
+
+			pagination.setGrid(10);
+		
+			items = itemRepository.findByActiveTrueAndBlockFalse(
+					new PageRequest(
+							pagination.getPageIndex()-1, 
+							pagination.getItemsPerPage(), 
+							pagination.getSortDirection(), 
+							"publishDate")
+					);
+	
+			return this;
+	}
+
+	public ItemListDetailBuilder getArchiveItemList(Pagination pagination) {
+
+			pagination.setGrid(
+					itemRepository.countByActiveFalseAndBlockFalse()
+					);
+		
+			items = itemRepository.findByActiveFalseAndBlockFalse(
+					new PageRequest(
+							pagination.getPageIndex()-1, 
+							pagination.getItemsPerPage(), 
+							pagination.getSortDirection(), 
+							"publishDate")
+					);
+	
+			return this;
 	}
 
 }

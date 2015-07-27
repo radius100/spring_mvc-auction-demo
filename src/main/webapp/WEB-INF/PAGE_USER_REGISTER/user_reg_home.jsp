@@ -3,20 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/cosmo/bootstrap.min.css">
-<!-- 
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
- -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<link rel="stylesheet" href="/resources/bootstrap/cosmo/bootstrap.min.css">
+<script src="/resources/bootstrap/jquery.min.js"></script>
+<script src="/resources/bootstrap/bootstrap.min.js"></script> 
+<script src="/resources/jquery-cookie/jquery.cookie.min.js" type="text/javascript"></script>
+<script src="/resources/validationplugin/jquery.validate.min.js" type="text/javascript"></script>
 
 <style type="text/css">
 
@@ -25,6 +17,9 @@ body {
 	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
+#pageH {
+    min-height: 650px;
+}
 
 footer {
 	margin: 50px 0;
@@ -43,9 +38,11 @@ footer {
 	<!-- Page Content -->
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12" align="center">
+			<div class="col-md-4" align="center"></div>
+			<div class="col-md-4" align="center">
 				<tiles:insertAttribute name="register" />
 			</div>
+			<div class="col-md-4" align="center"></div>
 		</div>
 	</div>
 	<!-- Page footer -->

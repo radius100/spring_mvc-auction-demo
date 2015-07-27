@@ -61,6 +61,7 @@ public class InitDbService {
 		userAdmin.setName("admin");
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		userAdmin.setPassword(encoder.encode("admin"));
+		userAdmin.setEmail("admin@gmail.com");
 		userAdmin.setEnabled(true);
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(roleAdmin);
@@ -70,7 +71,8 @@ public class InitDbService {
 
 		User userTest = new User();
 		userTest.setName("test");
-		userTest.setPassword(encoder.encode("test"));
+		userTest.setPassword(encoder.encode("12345"));
+		userTest.setEmail("test@gmail.com");
 		userTest.setEnabled(true);
 		roles.clear();
 		roles.add(roleUser);
@@ -78,8 +80,9 @@ public class InitDbService {
 		userRepository.save(userTest);
 
 		User userTest1 = new User();
-		userTest1.setName("test1");
-		userTest1.setPassword(encoder.encode("test1"));
+		userTest1.setName("testuser");
+		userTest1.setPassword(encoder.encode("12345"));
+		userTest1.setEmail("test1@gmail.com");
 		userTest1.setEnabled(true);
 		roles.clear();
 		roles.add(roleUser);
@@ -105,16 +108,14 @@ public class InitDbService {
 		item1.setStartAmount(10);
 		item1.setStartDate(new Date());
 		item1.setActive(true);
-		item1.setSell(false);
 		item1.setBlock(false);
 		itemRepository.save(item1);
-		
+
 		Item item2 = new Item();
 		item2.setName("Ëîò 2");
 		item2.setStartAmount(10);
 		item2.setStartDate(new Date());
 		item2.setActive(true);
-		item2.setSell(false);
 		item2.setBlock(false);
 		itemRepository.save(item2);
 		
@@ -128,7 +129,6 @@ public class InitDbService {
 		item3.setStartDate(new Date());
 		item3.setFinishDate(new Date());
 		item3.setActive(true);
-		item3.setSell(false);
 		item3.setBlock(false);
 		itemRepository.save(item3);
 		
@@ -141,7 +141,6 @@ public class InitDbService {
 		item4.setStartDate(new Date());
 		item4.setFinishDate(new Date());
 		item4.setActive(true);
-		item4.setSell(false);
 		item4.setBlock(false);
 		itemRepository.save(item4);
 

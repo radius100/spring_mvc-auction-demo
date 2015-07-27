@@ -62,12 +62,6 @@
 									<td><spring:message code="showitem.status.block" /></td>
 								</tr>
 							</c:when>
-							<c:when test="${item.sell eq true}">
-								<tr class="success">
-									<td><spring:message code="showitem.status" /></td>
-									<td><spring:message code="showitem.status.sell" /></td>
-								</tr>
-							</c:when>
 						</c:choose>
 						<tr>
 							<c:choose>
