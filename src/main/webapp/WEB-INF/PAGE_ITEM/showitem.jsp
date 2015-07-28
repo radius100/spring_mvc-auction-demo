@@ -194,7 +194,7 @@
 		    
 			$.get("/items/item-${item.id}/countdown.html",function(data,status) { 
 
-				alert(data);
+				data = 'Jul 29, 2015 09:00:00';
 				
 				if(data.charAt(0) == '!'){
 					
@@ -281,7 +281,7 @@
 		});
 		
 		refreshTableAndRate();
-		setInterval(refreshTableAndRate, 3000000);
+		setInterval(refreshTableAndRate, 7000);
 		$("#amount").ready(RateAdvs);
 		
 		function refreshTable(){

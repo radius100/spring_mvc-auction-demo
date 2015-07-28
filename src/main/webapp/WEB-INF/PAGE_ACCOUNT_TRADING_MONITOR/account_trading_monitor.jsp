@@ -90,7 +90,7 @@ jQuery(document).ready(function($) {
 
 	UpdateTables();
 	
-	setInterval(UpdateTables, 300000);
+	setInterval(UpdateTables, 60000);
 	
 	function UpdateTables() {
 		

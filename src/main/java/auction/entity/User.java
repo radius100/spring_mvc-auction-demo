@@ -18,7 +18,7 @@ import auction.annotation.UniqueUserName;
 
 
 @Entity
-@Table(name = "app_user")
+//@Table(name = "app_user")
 public class User {
 	
 	@Id

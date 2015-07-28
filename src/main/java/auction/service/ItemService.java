@@ -75,7 +75,7 @@ public class ItemService {
 		item.setDescr(itemToSave.getDescr());
 		item.setFullDescr(itemToSave.getFullDescr());
 		item.setStartAmount(itemToSave.getStartAmount());
-
+/*
 		logger.info(itemToSave.getPublishDateAsString());
 		logger.info(itemToSave.getStartDateAsString());
 		logger.info(itemToSave.getFinishDateAsString());

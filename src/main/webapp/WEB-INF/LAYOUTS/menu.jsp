@@ -1,22 +1,5 @@
 <%@ include file="../LAYOUTS/taglib.jsp"%>
 
-<script>
-	$(document).ready(function() {
-
-		var lang = $.cookie('myAppLocaleCookie');
-	
-		//alert(lang);
-		if (lang == 'en') {
-			$("#ru").show();
-			lang='ru'
-		} else if (lang == 'ru'){
-			$("#en").show();
-		}
-		
-		
-	});
-</script>
-
 <!-- Static navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
@@ -53,3 +36,21 @@
 	</div>
 	<!--/.container-fluid -->
 </nav>
+
+<script>
+	$(document).ready(function() {
+
+		var currentLocal = $.cookie('currentLocal');
+	
+		alert(currentLocal);
+		
+		if (currentLocal == 'en') {
+			$("#ru").show();
+			lang='ru'
+		} else if (currentLocal == 'ru'){
+			$("#en").show();
+		}
+		
+	});
+</script>
+
