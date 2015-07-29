@@ -6,6 +6,7 @@
 		<h1>Edit:</h1>
 	</div>
 	<br>
+	<div id="item-${item.id}"></div>
 	<form:form commandName="item" cssClass="form-horizontal">
 		<div class="form-group">
 			<div class="col-sm-12" align="left">
@@ -79,7 +80,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="startDate" class="col-sm-2 control-label"><spring:message code="register.item.startDate" /></label>
+					<label id="notNessesary" for="startDate" class="col-sm-2 control-label"><spring:message code="register.item.startDate" /></label>
 					<div class="col-sm-4">
 						<div class="input-group" id="pickerStartDate">
 							<form:input type="text" path="startDateAsString" class="form-control" value="${formatStartDate}" />
@@ -101,6 +102,7 @@
 			<div class="col-md-1"></div>
 		</div>
 	</form:form>
+	<button id="btnAA">Send post</button>
 </div>
 
 <script type="text/javascript">
@@ -150,30 +152,93 @@
 		 * Добавить чтение локали из кук
 		 *	
 		 * Проверки:
-		 *	Заполненные поля являются датами и временем 
-		 *  PublisDate >= now, можно менять пока не опубликовано.. т.е. Прошел срок указанной PublishDate 
+		 *	PublisDate >= now, можно менять пока не опубликовано.. т.е. Прошел срок указанной PublishDate 
 		 *  неделя >= (StartDate - PublishDate) >= 1 час
 		 *	(FinishDate - StartDate) <= 30 дней
 		 *
 		 */
 		var loc = 'en';
+		 
+		 
+		 
+		 /*
+		 publish minDate - now
+		 		 maxDate - now + mounth
+		 start	 minDate - now
+		 		 maxDate - minDate + 2 weaks
+		 finish  minDate - start minDate + 1 day
+		 		 maxDate - start maxDate + mounth
+		 
+		 */
+		 
+		 /*
+		 1. на старте получить JSON с мин и макс значаниеми для каждого поля
+		 2. обновить опции по мин макс значениям для каждого поля
+		 3. если пользователь покинул поле проверить на корректность интервалы
+		 */
+		 
+		 function DateTimeAdviseAndCheck(){
+			 
+			
+			 
+		 }
+		 /* 
+		 	$("#publishDateAsString").prop('disabled', true);
+		 	$("#startDateAsString").prop('disabled', true);
+		 	$("#finishDateAsString").prop('disabled', true);
+		 */
+		 $("#btnAA").click(function(){
+			    
+			 	var id=$("div[id*='item-']").attr('id');
+			 	var path='/items/'+id+'/datetime.json';
+			 				 	
+			 	$.post(path,
+			    {
+			    	PublishDateInputBox: $('#publishDateAsString').val(),
+			    	StartDateInputBox: $('#startDateAsString').val(),
+			    	FinishDateInputBox: $('#finishDateAsString').val(),
+			    },
+			    function(data, status){
+			        
+			    	$('#pickerPublishDate').data("DateTimePicker").minDate(data.PublishDateMin);
+					$('#pickerPublishDate').data("DateTimePicker").maxDate(data.PublishDateMax);
+					$('#publishDateAsString').val(data.PublishDate);
+					
+			        $('#pickerStartDate').data("DateTimePicker").minDate(data.StartDateMin);
+				 	$('#pickerStartDate').data("DateTimePicker").maxDate(data.StartDateMax);
+				 	$('#startDateAsString').val(data.StartDate)
+				 	
+				 	$('#pickerFinishDate').data("DateTimePicker").minDate(data.FinishDateMin);
+				 	$('#pickerFinishDate').data("DateTimePicker").maxDate(data.FinishDateMax);
+				 	$('#finishDateAsString').val(data.FinishDate) 
+					 
+				//	$('#pickerPublishDate').data("DateTimePicker").minDate('30-Jul-2015 01:00');
+			
+			    });
+			});
 
+		 
 		$('#pickerPublishDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
+			//maxDate : '30-Jul-2015 10:10',
+			//minDate : 
 			locale : loc
 		});
+	
 		$('#pickerStartDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
+			minDate : '29-Jul-2015',
 			locale : loc
 
 		});
+		
 		$('#pickerFinishDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
 			locale : loc
 		});
-
+		
 	});
 </script>

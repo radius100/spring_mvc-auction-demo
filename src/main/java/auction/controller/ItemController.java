@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,12 +46,20 @@ public class ItemController {
 	@Autowired
 	ItemDetailBuilder itemDetailBuilder;
 
-	
-	@RequestMapping("/items")
-	public String users(Model model) {
+/*	
+	@RequestMapping("/admin/items")
+	public String items(Model model) {
 
 		return "items";
 	}
+*/
+	/*	
+	@RequestMapping("/admin/users")
+	public String items(Model model) {
+
+		return "users";
+	}
+	 */
 
 	
 	@RequestMapping("/items/item-{id}")
@@ -75,7 +82,7 @@ public class ItemController {
 
 	
 	@RequestMapping("/item-{id}/edit")
-	public String showEdit(Model model, Principal principal, @PathVariable int id) {
+	public String showEdit(Model model, Principal principal, Locale locale, @PathVariable int id) {
 
 		if (userService.isOwner(principal, id)) {
 
@@ -85,11 +92,10 @@ public class ItemController {
 
 			model.addAttribute("item", item);
 			
-			Locale locale = LocaleContextHolder.getLocale();
 			
-			model.addAttribute("formatPublishDate", item.getPublishDateToLocaleString(locale));
-			model.addAttribute("formatStartDate", item.getStartDateToLocaleString(locale));
-			model.addAttribute("formatFinishDate", item.getFinishDateToLocaleString(locale));
+		//	model.addAttribute("formatPublishDate", DateTimeUtils.getPublishDateToLocaleString(item, locale));
+		//	model.addAttribute("formatStartDate", DateTimeUtils.getStartDateToLocaleString(item, locale));
+		//	model.addAttribute("formatFinishDate", DateTimeUtils.getFinishDateToLocaleString(item, locale));
 
 			return "item-edit";
 		}
@@ -125,21 +131,6 @@ public class ItemController {
 		
 	}
 
-/*	
-	@RequestMapping("/item/register")
-	public String showRegister() {
-
-		return "item-register";
-	}
-
-	
-	@RequestMapping(value = "/item/register", method = RequestMethod.POST)
-	public String doRegister(@ModelAttribute("item") Item item, Principal principal) {
-
-		itemService.save(item, principal);
-		return "redirect:/item/register.html?success=true";
-	}
-*/
 	
 	@RequestMapping("/items/item-{id}/follow")
 	@ResponseBody public String toggleFollow(Principal principal, @PathVariable int id) {
@@ -154,11 +145,13 @@ public class ItemController {
 		return tradePoolService.getRateAdvs(principal, id);
 	}
 
+	
 	@RequestMapping("/items/item-{id}/countdown")
 	@ResponseBody public String getCountDown(Locale locale, @PathVariable int id) {
 
 		return itemService.getCountDown(id, locale);
 	}
+	
 	
 	@RequestMapping(value="/items/item-{id}/rate", method=RequestMethod.POST)
 	@ResponseBody public String doRate(Principal principal, @PathVariable int id, @RequestParam String amount) {
@@ -173,6 +166,25 @@ public class ItemController {
 		return ResponseEntity
 				.ok()
 				.body(itemService.getTradePoolByItemJson(principal, id));
+	}
+	
+	
+	@RequestMapping("/items/item-{id}/datetime")
+	@ResponseBody ResponseEntity<?> getDateTimeAdviseAndCheck(Principal principal, Locale locale, @PathVariable int id) {
+
+		String PublishDateInputBox = "";
+    	String StartDateInputBox = "";
+    	String FinishDateInputBox = "";
+    	
+/*
+		String PublishDateInputBox = "30-Jul-2015 01:00";
+    	String StartDateInputBox = "01-Aug-2015 01:00";
+    	String FinishDateInputBox = "02-Aug-2015 01:00";
+*/
+		return ResponseEntity
+				.ok()
+				.body(itemService.getDateTimeAdviseAndCheck(principal, id, locale,
+						PublishDateInputBox, StartDateInputBox, FinishDateInputBox ));
 	}
 
 }

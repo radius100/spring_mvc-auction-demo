@@ -26,6 +26,7 @@ import auction.entity.TradePool;
 import auction.entity.User;
 import auction.entity.UserItemDetail;
 import auction.builder.ItemDetailBuilder;
+import auction.json.DateTimeAdviseAndCheck;
 import auction.json.TradePoolByItemJson;
 import auction.repository.ItemRepository;
 import auction.repository.TradePoolRepository;
@@ -54,6 +55,7 @@ public class ItemService {
 	@Autowired
 	TradePoolRepository tradePoolRepository;
 
+	
 	public void save(Item item, Principal principal) {
 
 		item.setActive(true);
@@ -66,6 +68,7 @@ public class ItemService {
 		userItemDetailRepository.save(userItemDetail);
 	}
 
+	
 	public void update(Item itemToSave, int itemId, Locale locale) {
 
 		Item item = itemRepository.findOne(itemId);
@@ -121,6 +124,7 @@ public class ItemService {
 		itemRepository.save(item);
 	}
 
+	
 	public String getTradePoolByItemJson(Principal principal, int id) {
 
 				
@@ -145,6 +149,7 @@ public class ItemService {
 		return gson.toJson(tpJs);
 	}
 
+	
 	public String getNewItemId(Principal principal) {
 		
 		Item item = new Item();
@@ -156,18 +161,19 @@ public class ItemService {
 		UserItemDetail userItemDetail = new UserItemDetail();
 		userItemDetail.setUser(user);
 		userItemDetail.setItem(item);
-		userItemDetail.setPublish(true);
+		//userItemDetail.setPublish(true);
 		userItemDetail.setPreActive(true); 
 		
 		userItemDetailRepository.save(userItemDetail);
 		
-		userItemDetail = userItemDetailRepository.findByUserAndItemAndPreActiveTrue(user,item);
+		//userItemDetail = userItemDetailRepository.findByUserAndItemAndPreActiveTrue(user,item);
 		
-		item = userItemDetail.getItem();
+		//item = userItemDetail.getItem();
 		
 		return Integer.toString(item.getId());
 	}
 
+	
 	public String delete(Principal principal, int id) {
 		
 		/*
@@ -192,6 +198,7 @@ public class ItemService {
 		return "Delete";
 	}
 
+	
 	public String getCountDown(int id, Locale locale) {
 		
 			return itemDetailBuilder
@@ -200,6 +207,24 @@ public class ItemService {
 			 		.setIsPreTrading()
 			 		.setIsTrading()
 			 		.getCountDownString();
+	}
+
+	
+	public String getDateTimeAdviseAndCheck(Principal principal, int id, Locale locale, 
+												String publishDateInputBox, 
+												String startDateInputBox, 
+												String finishDateInputBox) {
+	
+		
+		
+		return new DateTimeAdviseAndCheck()
+						.setItem(itemRepository.findOne(id))
+						.setLocale(locale)
+						.setPublishDateInputBox(publishDateInputBox)
+						.setStartDateInputBox(startDateInputBox)
+						.setFinishDateInputBox(finishDateInputBox)
+						.buildJSON();
+		
 	}
 
 }

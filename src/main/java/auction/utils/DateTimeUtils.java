@@ -1,6 +1,7 @@
 package auction.utils;
 
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -16,6 +17,7 @@ public class DateTimeUtils {
 	static final Logger logger = Logger.getLogger(DateTimeUtils.class);
 
 	
+
 	static public String getDateAsString(Date date) {
 
 		DateTime dateTime = new DateTime(date);
@@ -25,6 +27,8 @@ public class DateTimeUtils {
 		return dtf.print(dateTime);
 	}
 
+	
+	
 	static public String getTimeAsString(Date date) {
 
 		DateTime dateTime = new DateTime(date);
@@ -34,6 +38,8 @@ public class DateTimeUtils {
 		return dtf.print(dateTime);
 	}
 
+	
+	
 	static public String getDateTimeAsString(Date date) {
 
 		DateTime dateTime = new DateTime(date);
@@ -43,6 +49,65 @@ public class DateTimeUtils {
 		return dtf.print(dateTime);
 	}
 
+	
+	
+	static public String getPublishDateToLocaleString(Item item, Locale locale){
+		
+		DateTime publishDate = new DateTime(item.getPublishDate());
+	//	DateTime startDate = new DateTime(item.getStartDate());
+	//	DateTime finishDate = new DateTime(item.getFinishDate());
+		DateTime now = new DateTime();
+		
+		if( item.getPublishDate() == null )
+			return now.toString("d MMM yyyy HH:mm", locale);
+		
+		//if(publishDate.isAfter( now.plusMonths(2) ))
+		//	return now.toString("d MMM yyyy HH:mm", locale);
+		
+		return publishDate.toString("d MMM yyyy HH:mm", locale);
+			
+	}
+	
+
+	
+	static public String getStartDateToLocaleString(Item item, Locale locale){
+		
+	//	DateTime publishDate = new DateTime(item.getPublishDate());
+		DateTime startDate = new DateTime(item.getStartDate());
+	//	DateTime finishDate = new DateTime(item.getFinishDate());
+		DateTime now = new DateTime();
+		
+		if( item.getStartDate() == null )
+			return now.plusDays(1).toString("d MMM yyyy HH:mm", locale);
+		
+	//	if(startDate.isAfter( publishDate.plusWeeks(2) ))
+	//		return now.toString("d MMM yyyy HH:mm", locale);
+		
+		return startDate.toString("d MMM yyyy HH:mm", locale);
+			
+	}
+
+
+
+	static public String getFinishDateToLocaleString(Item item, Locale locale){
+		
+		//	DateTime publishDate = new DateTime(item.getPublishDate());
+		//	DateTime startDate = new DateTime(item.getStartDate());
+			DateTime finishDate = new DateTime(item.getFinishDate());
+			DateTime now = new DateTime();
+			
+			if( item.getFinishDate() == null )
+				return now.plusWeeks(1).toString("d MMM yyyy HH:mm", locale);
+			
+		//	if(startDate.isAfter( publishDate.plusWeeks(2) ))
+		//		return now.toString("d MMM yyyy HH:mm", locale);
+			
+			return finishDate.toString("d MMM yyyy HH:mm", locale);
+				
+	}
+
+	
+	
 	static public String getCountDownString(Item item, String day, String days){
 
 		StringBuilder str = new StringBuilder();
@@ -99,55 +164,4 @@ public class DateTimeUtils {
 		//return str1;
 	}
 	
-	
-	
-	static public Item createItemDateMessage4IndexJsp(Item item) {
-
-		DateTime dateStart = new DateTime(item.getStartDate());
-		DateTime dateFinish = new DateTime(item.getFinishDate());
-		DateTime dateCurrent = new DateTime();
-
-		dateCurrent = dateCurrent.minusMinutes(25);
-		// dateStart=dateStart.minusMinutes(35);
-		dateFinish = dateFinish.plusDays(2);
-
-		if (dateCurrent.isBefore(dateStart)) {
-
-			Duration duration1 = new Duration(dateCurrent, dateStart);
-			long d1 = duration1.getStandardDays();
-			long h1 = duration1.getStandardHours();
-
-			if (d1 >= 1) {
-				item.setDateMessage(1);
-				item.setDateValue(d1);
-			} else if (h1 >= 1 && h1 <= 24) {
-				item.setDateMessage(2);
-				item.setDateValue(h1);
-			}
-
-			else if (h1 < 1)
-				item.setDateMessage(3);
-
-		} else if (dateCurrent.isBefore(dateFinish) && dateCurrent.isAfter(dateStart)) {
-
-			Duration duration2 = new Duration(dateCurrent, dateFinish);
-			long d2 = duration2.getStandardDays();
-			long h2 = duration2.getStandardHours();
-
-			if (d2 >= 1) {
-				item.setDateMessage(4);
-				item.setDateValue(d2);
-			}
-
-			else if (h2 >= 1 && h2 <= 24) {
-				item.setDateMessage(5);
-				item.setDateValue(h2);
-			}
-
-			else if (h2 < 1)
-				item.setDateMessage(6);
-		}
-
-		return item;
-	}
 }

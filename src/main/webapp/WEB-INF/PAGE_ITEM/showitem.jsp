@@ -7,6 +7,23 @@
 		<small> ${item.descr}</small></h1>
 	</div>
 	<br>
+	<div class="container">
+    <!--  
+    <form role="form" enctype="multipart/form-data" class="form-horizontal" action="uploadFile" method="post">
+        <div class="form-group"><h3>New photo</h3></div>
+        <div class="form-group">Photo: <input type="file" name="file"></div>
+        <div class="form-group"><input type="submit" class="btn btn-primary" value="Add"></div>
+    </form>
+    -->
+    <!-- 
+    <form method="POST" action="uploadFile" enctype="multipart/form-data">
+        File to upload: <input type="file" name="file"><br> 
+        <input type="submit" value="Upload"> 
+    </form>
+     -->
+	</div>
+	<br>
+	
 	<h3 id="titleImages" class="blockPointer">Images:</h3>
 	<br>
 	<div class="row" id="divImages" style="display: none">

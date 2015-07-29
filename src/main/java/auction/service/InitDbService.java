@@ -106,7 +106,7 @@ public class InitDbService {
 		Item item1 = new Item();
 		item1.setName("Лот 1");
 		item1.setStartAmount(10);
-		item1.setStartDate(new Date());
+//		item1.setStartDate(new Date());
 		item1.setActive(true);
 		item1.setBlock(false);
 		itemRepository.save(item1);
@@ -114,7 +114,7 @@ public class InitDbService {
 		Item item2 = new Item();
 		item2.setName("Лот 2");
 		item2.setStartAmount(10);
-		item2.setStartDate(new Date());
+//		item2.setStartDate(new Date());
 		item2.setActive(true);
 		item2.setBlock(false);
 		itemRepository.save(item2);
@@ -122,12 +122,11 @@ public class InitDbService {
 		Item item3 = new Item();
 		item3.setName("Крутой тел Meizu");
 		item3.setStartAmount(100);
-		item3.setStartDate(new Date());
 		item3.setDescr("Очень крутой тел от китаезов! Meizu MX5 Pro! Рекомендую");
 		item3.setFullDescr("Meizu MX5 – обновленная модель нашумевшего смартфона от азиатского производителя. Устройство получило увеличенный, обновленный экран, а также возросшую автономность. Первое, что бросается в глаза при взгляде на Meizu MX4 – минимальные боковые рамки дисплея, благодаря чему девайс с 5,36-дюймовым экраном отлично лежит в руке. Разрешение IPS матрицы составляет 1920х1152 точки, что обеспечивает потрясающую четкость изображения.");
-		item3.setPublishDate(new Date());
-		item3.setStartDate(new Date());
-		item3.setFinishDate(new Date());
+//		item3.setPublishDate(new Date());
+//		item3.setStartDate(new Date());
+//		item3.setFinishDate(new Date());
 		item3.setActive(true);
 		item3.setBlock(false);
 		itemRepository.save(item3);
@@ -137,9 +136,9 @@ public class InitDbService {
 		item4.setStartAmount(200);
 		item4.setDescr("крутой тел как у китаезов!");
 		item4.setFullDescr("LG G4 – обновленная модель нашумевшего смартфона. Устройство получило увеличенный, обновленный экран, а также возросшую автономность. Первое, что бросается в глаза при взгляде на LG G4 – минимальные боковые рамки дисплея, благодаря чему девайс отлично лежит в руке. Разрешение IPS матрицы составляет 1920х1152 точки, что обеспечивает потрясающую четкость изображения.");
-		item4.setPublishDate(new Date());
-		item4.setStartDate(new Date());
-		item4.setFinishDate(new Date());
+//		item4.setPublishDate(new Date());
+//		item4.setStartDate(new Date());
+//		item4.setFinishDate(new Date());
 		item4.setActive(true);
 		item4.setBlock(false);
 		itemRepository.save(item4);

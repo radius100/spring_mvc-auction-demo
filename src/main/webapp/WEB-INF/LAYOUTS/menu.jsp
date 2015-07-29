@@ -42,7 +42,7 @@
 
 		var currentLocal = $.cookie('currentLocal');
 	
-		alert(currentLocal);
+//		alert(currentLocal);
 		
 		if (currentLocal == 'en') {
 			$("#ru").show();

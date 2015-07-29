@@ -315,11 +315,11 @@ public class ItemDetailBuilder {
 		
 		return this;
 	}
-	
+/*	
 	public ItemDetailBuilder createItemDateMessage4IndexJsp() {
 
-		DateTimeUtils.createItemDateMessage4IndexJsp(item);
+//		DateTimeUtils.createItemDateMessage4IndexJsp(item);
 		return this;
 	}
-	
+*/	
 }

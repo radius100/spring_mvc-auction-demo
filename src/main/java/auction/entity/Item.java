@@ -227,9 +227,12 @@ public class Item {
 		
 		if(publishDate != null){
 			
+			DateTime now = new DateTime();
+			
 			DateTime dt = new DateTime(publishDate);
 			
-			return dt.toString("d MMM yyyy HH:mm", locale);
+			if( dt.isAfter(now) )
+				return dt.toString("d MMM yyyy HH:mm", locale);
 			
 		}
 		return "";

@@ -98,11 +98,13 @@ public class AccountController {
 				.body(accountService.getAccountMonitorTablesJSON(principal));
 	}
 
+	
 	@RequestMapping("/account/item-{id}/hide")
 	@ResponseBody public String doToggleHide(Principal principal, @PathVariable int id) {
 	
 		return userItemDetailService.toggleHide(principal,id);
 	}
+	
 	
 	@RequestMapping("/account/item-{id}/collapse")
 	@ResponseBody public String doToggleCollapse(Principal principal, @PathVariable int id) {
@@ -110,13 +112,14 @@ public class AccountController {
 		return userItemDetailService.toggleCollapse(principal,id);
 	}
 	
+	
 	@RequestMapping("/account/new-item")
 	@ResponseBody public String addNewItem(Principal principal) {
 		
 		return itemService.getNewItemId(principal);
 	}
 
-	///account/"+str+"/delete.html
+
 	@RequestMapping("/account/item-{id}/delete")
 	@ResponseBody public String doDelete(Principal principal, @PathVariable int id) {
 	
