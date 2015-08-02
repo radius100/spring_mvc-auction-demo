@@ -1,5 +1,6 @@
 package auction.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,13 +14,10 @@ public class Image {
 	@GeneratedValue
 	private Integer id;
 	
-	private String name;
+	@Column(length = 250000)
+	private byte[] body;
 	
 	private String contentType;
-	
-	private long size;
-	
-	private byte[] body;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name="item_id")	
@@ -33,14 +31,6 @@ public class Image {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public byte[] getBody() {
@@ -73,14 +63,6 @@ public class Image {
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
-	}
-
-	public long getSize() {
-		return size;
-	}
-
-	public void setSize(long size) {
-		this.size = size;
 	}
 	
 }

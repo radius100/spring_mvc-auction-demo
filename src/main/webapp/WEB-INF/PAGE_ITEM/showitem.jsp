@@ -8,6 +8,8 @@
 	</div>
 	<br>
 	<div class="container">
+    <img alt="" src="/images/image-1.png">
+    
     <!--  
     <form role="form" enctype="multipart/form-data" class="form-horizontal" action="uploadFile" method="post">
         <div class="form-group"><h3>New photo</h3></div>
@@ -15,12 +17,13 @@
         <div class="form-group"><input type="submit" class="btn btn-primary" value="Add"></div>
     </form>
     -->
-    <!-- 
-    <form method="POST" action="uploadFile" enctype="multipart/form-data">
-        File to upload: <input type="file" name="file"><br> 
+     
+    <form method="POST" action="/uploadFile" enctype="multipart/form-data">
+        <input type="file" name="file"><br>
+        <input type="text" name="id" value="${item.id}" style="display: none"><br> 
         <input type="submit" value="Upload"> 
     </form>
-     -->
+    
 	</div>
 	<br>
 	
@@ -298,7 +301,7 @@
 		});
 		
 		refreshTableAndRate();
-		setInterval(refreshTableAndRate, 7000);
+		setInterval(refreshTableAndRate, 700000);
 		$("#amount").ready(RateAdvs);
 		
 		function refreshTable(){
