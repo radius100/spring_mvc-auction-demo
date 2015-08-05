@@ -71,10 +71,7 @@
 					<label for="publishDate" class="col-sm-2 control-label"><spring:message code="register.item.publishDate" /></label>
 					<div class="col-sm-4">
 						<div class="input-group" id="pickerPublishDate">
-							<!-- 
-							<form:input type="text" path="publishDate" class="form-control" value="${formatPublishDate}"/>
-							 -->
-							<form:input path="publishDateAsString" class="form-control datetimepickerInput" value="${formatPublishDate}" />
+							<form:input path="publishDateAsString" class="form-control datetimepickerInput" />
 							<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
 						</div>
 					</div>
@@ -83,7 +80,7 @@
 					<label id="notNessesary" for="startDate" class="col-sm-2 control-label"><spring:message code="register.item.startDate" /></label>
 					<div class="col-sm-4">
 						<div class="input-group" id="pickerStartDate">
-							<form:input type="text" path="startDateAsString" class="form-control" value="${formatStartDate}" />
+							<form:input path="startDateAsString" class="form-control datetimepickerInput" />
 							<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
 						</div>
 					</div>
@@ -134,18 +131,20 @@
 		});
 
 		$('#divMandate').fadeIn('slow');
-		//$('#divDescr').fadeIn('slow');
-
+		
 		$('#titleImages').click(function() {
 			$('#divImages').fadeToggle('fast');
+		
 		});
 
 		$('#titleMandate').click(function() {
 			$('#divMandate').fadeToggle('fast');
+		
 		});
 
 		$('#titleDescripton').click(function() {
 			$('#divDescr').fadeToggle('fast');
+		
 		});
 
 		/*
@@ -159,8 +158,6 @@
 		 */
 		var loc = 'en';
 		 
-		 
-		 
 		 /*
 		 publish minDate - now
 		 		 maxDate - now + mounth
@@ -169,12 +166,6 @@
 		 finish  minDate - start minDate + 1 day
 		 		 maxDate - start maxDate + mounth
 		 
-		 */
-		 
-		 /*
-		 1. на старте получить JSON с мин и макс значаниеми для каждого поля
-		 2. обновить опции по мин макс значениям для каждого поля
-		 3. если пользователь покинул поле проверить на корректность интервалы
 		 */
 		 
 		 function DateTimeAdviseAndCheck(){
@@ -192,11 +183,15 @@
 			 	var id=$("div[id*='item-']").attr('id');
 			 	var path='/items/'+id+'/datetime.json';
 			 				 	
+			 	var publishDateJavaFormat = moment($('#publishDateAsString').val(), "DD-MMM-YYYY HH:mm").format("DD-MM-YYYY HH:mm");
+			 	var startDateJavaFormat = moment($('#startDateAsString').val(), "DD-MMM-YYYY HH:mm").format("DD-MM-YYYY HH:mm");
+			 	var finishDateJavaFormat = moment($('#finishDateAsString').val(), "DD-MMM-YYYY HH:mm").format("DD-MM-YYYY HH:mm");
+			 
 			 	$.post(path,
 			    {
-			    	PublishDateInputBox: $('#publishDateAsString').val(),
-			    	StartDateInputBox: $('#startDateAsString').val(),
-			    	FinishDateInputBox: $('#finishDateAsString').val(),
+			    	PublishDateInputBox: publishDateJavaFormat,
+			    	StartDateInputBox: startDateJavaFormat,
+			    	FinishDateInputBox: finishDateJavaFormat
 			    },
 			    function(data, status){
 			        
@@ -206,14 +201,12 @@
 					
 			        $('#pickerStartDate').data("DateTimePicker").minDate(data.StartDateMin);
 				 	$('#pickerStartDate').data("DateTimePicker").maxDate(data.StartDateMax);
-				 	$('#startDateAsString').val(data.StartDate)
+				 	$('#startDateAsString').val(data.StartDate);
 				 	
 				 	$('#pickerFinishDate').data("DateTimePicker").minDate(data.FinishDateMin);
 				 	$('#pickerFinishDate').data("DateTimePicker").maxDate(data.FinishDateMax);
-				 	$('#finishDateAsString').val(data.FinishDate) 
+				 	$('#finishDateAsString').val(data.FinishDate); 
 					 
-				//	$('#pickerPublishDate').data("DateTimePicker").minDate('30-Jul-2015 01:00');
-			
 			    });
 			});
 
@@ -229,7 +222,6 @@
 		$('#pickerStartDate').datetimepicker({
 			viewMode : 'days',
 			format : 'DD-MMM-YYYY HH:mm',
-			minDate : '29-Jul-2015',
 			locale : loc
 
 		});

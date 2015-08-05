@@ -4,14 +4,10 @@
 <html>
 <head>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/cosmo/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<link rel="stylesheet" href="/resources/bootstrap/cosmo/bootstrap.min.css">
+<script src="/resources/bootstrap/jquery.min.js"></script>
+<script src="/resources/bootstrap/bootstrap.min.js"></script> 
+<script src="/resources/jquery-cookie/jquery.cookie.min.js" type="text/javascript"></script>
 
 <spring:url value="/resources/datetimepicker/moment.min.js" var="momentJs" />
 <script src="${momentJs}"></script>
@@ -41,12 +37,6 @@ footer {
     color: blue;
 }
 
-.myItem{
-	height: 100px;
-	width: 100px;
-	//border: 1px !important;
-	border-bottom: 1px;
-}
 .blockPointer1:hover {
     cursor: pointer;
    border-top: 1px solid red;

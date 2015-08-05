@@ -3,7 +3,12 @@ package auction.json;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.sound.midi.MidiDevice.Info;
+
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.apache.log4j.Logger;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -26,12 +31,13 @@ public class DateTimeAdviseAndCheck {
 	@Expose private String finishDateMax;
 	@Expose private String finishDate;
 	
-	DateTime now = new DateTime();
+	@Expose private boolean editExpired;
+	
+	DateTime now = new DateTime().plusMinutes(30);
 	DateTime publish;
 	DateTime start;
 	DateTime finish;
 	
-	private boolean editExpired;
 	private Locale locale;
 	private Item item;
 	private String parseString = "d MMM yyyy HH:mm";
@@ -40,7 +46,7 @@ public class DateTimeAdviseAndCheck {
 	String startDateInputBox; 
 	String finishDateInputBox;
 	
-	
+	static final Logger logger = Logger.getLogger(DateTimeAdviseAndCheck.class);
 		
 	public DateTimeAdviseAndCheck setPublishDateInputBox(String publishDateInputBox){
 		
@@ -85,6 +91,7 @@ public class DateTimeAdviseAndCheck {
 		
 	}
 
+
 	public void fillStartDateMinMaxDate(DateTime start){
 		
 		startDate = start.toString(parseString, locale);
@@ -93,14 +100,75 @@ public class DateTimeAdviseAndCheck {
 		
 	}
 	
+	
 	public void fillFinishDateMinMaxDate(DateTime finish){
 		
 		finishDate = finish.toString(parseString, locale);
-		publishDateMin = start.plusDays(1).toString(parseString, locale);
-		publishDateMax = start.plusMonths(1).toString(parseString, locale);
-		
+		finishDateMin = start.plusDays(1).toString(parseString, locale);
+		finishDateMax = start.plusMonths(1).toString(parseString, locale);
+				
 	}
 
+	
+	public void checkAndBuildVer2(){
+		
+		//item
+	
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm");
+		formatter.withLocale(locale);
+		
+		publishDateInputBox = "30-07-2015 01:00";
+    	startDateInputBox = "01-08-2015 01:00";
+    	finishDateInputBox = "02-Aug-2015 01:00";
+		
+		DateTime publishInput;
+		DateTime startInput;
+		DateTime finishInput;
+		
+		//item.setFinishDate(new DateTime().plusMonths(1).toDate());
+		
+		try {
+			publishInput = formatter.parseDateTime(publishDateInputBox);
+		} catch(Exception e) {
+			logger.info("catch publishDate");
+        	if(item.getPublishDate() != null)
+        		publishInput = new DateTime(item.getPublishDate());
+        	else
+        		publishInput = new DateTime(now);
+        } 
+		
+		try {
+			startInput = formatter.parseDateTime(startDateInputBox);
+		} catch(Exception e) {
+			logger.info("catch startDate");
+			if(item.getStartDate() != null)
+        		startInput = new DateTime(item.getStartDate());
+        	else
+        		startInput = new DateTime(publishInput);
+        }
+		
+		try {
+			finishInput = formatter.parseDateTime(finishDateInputBox);
+		} catch(Exception e) {
+			logger.info("catch finishDate");
+			if(item.getFinishDate() != null)
+        		finishInput = new DateTime(item.getFinishDate());
+        	else
+        		finishInput = new DateTime(startInput.plusWeeks(1));
+        } 
+		
+		//logger.info(publishInput.toString());
+		//logger.info(startInput.plusDays(1).toString());
+		//logger.info(finishInput.plusDays(2).toString());
+		
+		
+		if(publishInput.isBefore(now))
+			publishInput=now;
+		
+		if(publishInput.isAfter(now.plusMonths(1)))
+			publishInput=now.plusMonths(1);
+		
+	}
 	
 	public void checkAndBuild() {
 		
@@ -108,13 +176,28 @@ public class DateTimeAdviseAndCheck {
 			
 			publish = new DateTime(now);
 			start = new DateTime(now);
-			finish = new DateTime(start.plusDays(3));
 			
-			fillPublishDateMinMaxDate(now);
+			DateTime finishTemp = new DateTime(start.plusDays(3));
+			finish = new DateTime(finishTemp);
+			
+			fillPublishDateMinMaxDate(publish);
 			
 			fillStartDateMinMaxDate(start);
 			
 			fillFinishDateMinMaxDate(finish);
+			
+			//DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm");
+			DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-YYYY HH:mm");
+			formatter.withLocale(locale);
+			DateTime dt = formatter.parseDateTime("03-08-2015 12:17");
+			
+			logger.info(dt.toString());
+			item.setStartDate(dt.toDate());
+			
+			//DateTime publishDateInput new DateTime();// publishDateInputBox; 
+			//startDateInputBox; 
+			//finishDateInputBox;
+			
 			
 		}
 		
@@ -156,11 +239,11 @@ public class DateTimeAdviseAndCheck {
 		}
 		else { 
 			
-			fillPublishDateMinMaxDate( new DateTime(item.getPublishDate()) );
+			//fillPublishDateMinMaxDate( new DateTime(item.getPublishDate()) );
 			
-			fillStartDateMinMaxDate( new DateTime(item.getStartDate()) );
+			//fillStartDateMinMaxDate( new DateTime(item.getStartDate()) );
 			
-			fillFinishDateMinMaxDate( new DateTime(item.getFinishDate()) );
+			//fillFinishDateMinMaxDate( new DateTime(item.getFinishDate()) );
 			
 			editExpired=true;
 			
@@ -171,7 +254,8 @@ public class DateTimeAdviseAndCheck {
 	
 	public String buildJSON() {
 
-		checkAndBuild();
+		checkAndBuildVer2();
+		//checkAndBuild();
 		
 		Gson gson = new GsonBuilder()
 			.disableHtmlEscaping()

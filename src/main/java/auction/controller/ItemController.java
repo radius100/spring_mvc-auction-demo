@@ -3,6 +3,7 @@ package auction.controller;
 import java.security.Principal;
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import auction.entity.Item;
+import auction.json.DateTimeAdviseAndCheck;
 import auction.builder.ItemDetailBuilder;
 import auction.service.ItemService;
 import auction.service.TradePoolService;
@@ -39,7 +41,9 @@ public class ItemController {
 
 	@Autowired
 	private TradePoolService tradePoolService;
-
+	
+	static final Logger logger = Logger.getLogger(ItemController.class);
+	
 	@Autowired
 	private UserItemDetailService userItemDetailService;
 
@@ -92,11 +96,6 @@ public class ItemController {
 
 			model.addAttribute("item", item);
 			
-			
-		//	model.addAttribute("formatPublishDate", DateTimeUtils.getPublishDateToLocaleString(item, locale));
-		//	model.addAttribute("formatStartDate", DateTimeUtils.getStartDateToLocaleString(item, locale));
-		//	model.addAttribute("formatFinishDate", DateTimeUtils.getFinishDateToLocaleString(item, locale));
-
 			return "item-edit";
 		}
 
@@ -114,8 +113,7 @@ public class ItemController {
 				 @PathVariable int id) {
 
 		if(result.hasErrors()){
-			//item.setStartDate(null);
-			//result.
+
 			return "redirect:/item-{id}/edit.html?success=fail";
 		}
 			
@@ -170,20 +168,25 @@ public class ItemController {
 	
 	
 	@RequestMapping("/items/item-{id}/datetime")
-	@ResponseBody ResponseEntity<?> getDateTimeAdviseAndCheck(Principal principal, Locale locale, @PathVariable int id) {
+	@ResponseBody ResponseEntity<?> getDateTimeAdviseAndCheck(
+			Principal principal, 
+			Locale locale, 
+			@PathVariable int id,
+			@RequestParam String PublishDateInputBox,
+			@RequestParam String StartDateInputBox,
+			@RequestParam String FinishDateInputBox) {
 
-		String PublishDateInputBox = "";
-    	String StartDateInputBox = "";
-    	String FinishDateInputBox = "";
-    	
-/*
-		String PublishDateInputBox = "30-Jul-2015 01:00";
-    	String StartDateInputBox = "01-Aug-2015 01:00";
-    	String FinishDateInputBox = "02-Aug-2015 01:00";
-*/
+    	//logger.info(PublishDateInputBox);
+    	//logger.info(StartDateInputBox);
+    	//logger.info(FinishDateInputBox);
+
+		//PublishDateInputBox = "30-Jul-2015 01:00";
+    	//StartDateInputBox = "01-Aug-2015 01:00";
+    	//FinishDateInputBox = "02-Aug-2015 01:00";
+
 		return ResponseEntity
 				.ok()
-				.body(itemService.getDateTimeAdviseAndCheck(principal, id, locale,
+				.body( itemService.getDateTimeAdviseAndCheck(principal, id, locale,
 						PublishDateInputBox, StartDateInputBox, FinishDateInputBox ));
 	}
 

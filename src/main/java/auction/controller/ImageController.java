@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import auction.entity.Image;
 import auction.service.ImageService;
-import auction.utils.DateTimeUtils;
 import auction.builder.ItemDetailBuilder;
 
 @Controller
@@ -32,7 +31,7 @@ public class ImageController {
 	@Autowired
 	private ImageService imageService;
 
-	static final Logger logger = Logger.getLogger(ImageController.class);
+	//static final Logger logger = Logger.getLogger(ImageController.class);
 
 
 	@RequestMapping("/images/image-{id}.jpeg")
@@ -97,10 +96,6 @@ public class ImageController {
 		
 		
 		Image image = new Image();
-			
-		logger.info(file.getOriginalFilename());
-		logger.info(file.getContentType());
-		logger.info(id);
 			
 		image.setBody(file.getBytes());
 		image.setContentType(file.getContentType());

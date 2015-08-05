@@ -19,7 +19,7 @@ public class ImageService {
 	@Autowired
 	ImageRepository imageRepository;
 	
-	public void save(Image image, Item item){
+	public void save(Image image, Item item) {
 		
 		image.setItem(item);
 				
