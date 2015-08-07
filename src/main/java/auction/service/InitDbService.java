@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -119,15 +120,17 @@ public class InitDbService {
 		item2.setBlock(false);
 		itemRepository.save(item2);
 		
+		DateTime now = new DateTime();
+		
 		Item item3 = new Item();
 		item3.setName("Крутой тел Meizu");
 		item3.setStartAmount(100);
 		item3.setDescr("Очень крутой тел от китаезов! Meizu MX5 Pro! Рекомендую");
 		item3.setFullDescr("Meizu MX5 – обновленная модель нашумевшего смартфона от азиатского производителя. Устройство получило увеличенный, обновленный экран, а также возросшую автономность. Первое, что бросается в глаза при взгляде на Meizu MX4 – минимальные боковые рамки дисплея, благодаря чему девайс с 5,36-дюймовым экраном отлично лежит в руке. Разрешение IPS матрицы составляет 1920х1152 точки, что обеспечивает потрясающую четкость изображения.");
-//		item3.setPublishDate(new Date());
-//		item3.setStartDate(new Date());
-//		item3.setFinishDate(new Date());
-		item3.setActive(true);
+		item3.setPublishDate(now.plusMinutes(1).toDate());
+		item3.setStartDate(now.plusMinutes(2).toDate());
+		item3.setFinishDate(now.plusMinutes(3).toDate());
+		//item3.setActive(true);
 		item3.setBlock(false);
 		itemRepository.save(item3);
 		

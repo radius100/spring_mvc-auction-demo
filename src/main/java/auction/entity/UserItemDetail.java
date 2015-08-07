@@ -25,7 +25,7 @@ public class UserItemDetail {
 	@JoinColumn(name="user_id")
 	private User user;
 
-	private boolean preActive;
+//	private boolean preActive;
 	
 	private boolean publish;
 	
@@ -101,7 +101,7 @@ public class UserItemDetail {
 	public void setCollapse(boolean collapse) {
 		this.collapse = collapse;
 	}
-
+/*
 	public boolean isPreActive() {
 		return preActive;
 	}
@@ -109,5 +109,5 @@ public class UserItemDetail {
 	public void setPreActive(boolean preActive) {
 		this.preActive = preActive;
 	}
-
+*/
 }

@@ -21,7 +21,7 @@ public interface UserItemDetailRepository extends JpaRepository<UserItemDetail, 
 	
 	public UserItemDetail findByUserAndItemAndBuyTrue(User user, Item item);
 	
-	public UserItemDetail findByUserAndItemAndPreActiveTrue(User user, Item item);
+//	public UserItemDetail findByUserAndItemAndPreActiveTrue(User user, Item item);
 
 	public UserItemDetail findByUserAndItemAndCollapseTrue(User user, Item item);
 

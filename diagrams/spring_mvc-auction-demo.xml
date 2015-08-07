@@ -35,7 +35,7 @@
 	<entity>
 		<entity-name>auction.entity.Image</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>226</entity-height>
+		<entity-height>186</entity-height>
 		<entity-X-Coordinate>840</entity-X-Coordinate>
 		<entity-Y-Coordinate>19</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -46,10 +46,10 @@
 	<entity>
 		<entity-name>auction.entity.Item</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>688</entity-height>
+		<entity-height>683</entity-height>
 		<entity-X-Coordinate>650</entity-X-Coordinate>
 		<entity-Y-Coordinate>19</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
+		<primary-collapsed>true</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
 	</entity>
@@ -57,7 +57,7 @@
 	<entity>
 		<entity-name>auction.entity.UserItemDetail</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>266</entity-height>
+		<entity-height>246</entity-height>
 		<entity-X-Coordinate>357</entity-X-Coordinate>
 		<entity-Y-Coordinate>19</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>

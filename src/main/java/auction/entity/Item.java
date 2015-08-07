@@ -47,6 +47,8 @@ public class Item {
 	
 	private boolean trading;
 	
+	private boolean archive;
+	
 	@Transient
 	private int currentAmount;
 
@@ -396,6 +398,14 @@ public class Item {
 
 	public void setFinishDateAsString(String finishDateAsString) {
 		this.finishDateAsString = finishDateAsString;
+	}
+
+	public boolean isArchive() {
+		return archive;
+	}
+
+	public void setArchive(boolean archive) {
+		this.archive = archive;
 	}
 
 }

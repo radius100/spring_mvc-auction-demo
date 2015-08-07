@@ -162,7 +162,7 @@ public class ItemService {
 		userItemDetail.setUser(user);
 		userItemDetail.setItem(item);
 		//userItemDetail.setPublish(true);
-		userItemDetail.setPreActive(true); 
+//		userItemDetail.setPreActive(true); 
 		
 		userItemDetailRepository.save(userItemDetail);
 		

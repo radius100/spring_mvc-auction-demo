@@ -3,9 +3,8 @@ package auction.json;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.sound.midi.MidiDevice.Info;
-
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.apache.log4j.Logger;
@@ -33,7 +32,7 @@ public class DateTimeAdviseAndCheck {
 	
 	@Expose private boolean editExpired;
 	
-	DateTime now = new DateTime().plusMinutes(30);
+	DateTime now = new DateTime();
 	DateTime publish;
 	DateTime start;
 	DateTime finish;
@@ -114,12 +113,12 @@ public class DateTimeAdviseAndCheck {
 		
 		//item
 	
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm");
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-YYYY HH:mm");
 		formatter.withLocale(locale);
 		
 		publishDateInputBox = "30-07-2015 01:00";
     	startDateInputBox = "01-08-2015 01:00";
-    	finishDateInputBox = "02-Aug-2015 01:00";
+    	finishDateInputBox = "02-08-2015 01:00";
 		
 		DateTime publishInput;
 		DateTime startInput;
@@ -128,8 +127,11 @@ public class DateTimeAdviseAndCheck {
 		//item.setFinishDate(new DateTime().plusMonths(1).toDate());
 		
 		try {
+			
 			publishInput = formatter.parseDateTime(publishDateInputBox);
+	
 		} catch(Exception e) {
+			
 			logger.info("catch publishDate");
         	if(item.getPublishDate() != null)
         		publishInput = new DateTime(item.getPublishDate());
@@ -137,9 +139,13 @@ public class DateTimeAdviseAndCheck {
         		publishInput = new DateTime(now);
         } 
 		
+		
 		try {
+		
 			startInput = formatter.parseDateTime(startDateInputBox);
+		
 		} catch(Exception e) {
+		
 			logger.info("catch startDate");
 			if(item.getStartDate() != null)
         		startInput = new DateTime(item.getStartDate());
@@ -147,9 +153,13 @@ public class DateTimeAdviseAndCheck {
         		startInput = new DateTime(publishInput);
         }
 		
+		
 		try {
+			
 			finishInput = formatter.parseDateTime(finishDateInputBox);
+		
 		} catch(Exception e) {
+		
 			logger.info("catch finishDate");
 			if(item.getFinishDate() != null)
         		finishInput = new DateTime(item.getFinishDate());
@@ -162,11 +172,33 @@ public class DateTimeAdviseAndCheck {
 		//logger.info(finishInput.plusDays(2).toString());
 		
 		
-		if(publishInput.isBefore(now))
-			publishInput=now;
+		if( publishInput.isBeforeNow() )
+			editExpired=true;
 		
-		if(publishInput.isAfter(now.plusMonths(1)))
-			publishInput=now.plusMonths(1);
+		else{
+			
+			Duration nowPublish = new Duration(publishInput,now);
+			Duration publishStart = new Duration(publishInput,startInput);
+			Duration publishFinish = new Duration(publishInput,finishInput);
+			Duration startFinish = new Duration(startInput,finishInput);
+			
+			
+			//if( publishStart.getStandardDays() > 14 )
+				
+			
+			/*	
+			if( startInput.isBefore(publishInput) )
+				publishInput=startInput;
+			
+			if( publishInput.plusWeeks(2).isBefore(startInput) )
+				startInput=publishInput.plusWeeks(2);
+
+			if( publishInput.plusMonths(1).isBefore(finishInput) )
+				finishInput=publishInput.plusMonths(1);
+			*/
+			//if( publishInput.plusDays(1).isAfter(startInput) )
+			
+		}
 		
 	}
 	
