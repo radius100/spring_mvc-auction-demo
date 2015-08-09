@@ -23,8 +23,8 @@
 	<div class="col-md-6">
 		<p class="lead text-right">
 			<a href="/trading/index.html">trading</a>&ensp;
-			|&nbsp;<a href="/publish/index.html">pretrading</a>&ensp;
-			|&nbsp;<a href="/all/index.html">all</a>&ensp;
+			|&nbsp;<a href="/pretrading/index.html">pretrading</a>&ensp;
+			|&nbsp;<a href="/active/index.html">all</a>&ensp;
 			|&nbsp;<a href="/archive/index.html">archive</a>&ensp;
 		</p>
 	</div>

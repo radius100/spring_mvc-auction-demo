@@ -2,6 +2,7 @@ package auction.builder;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import auction.entity.Item;
 import auction.repository.ItemRepository;
+import auction.service.ItemService;
 import auction.session.Pagination;
 
 @Service
@@ -21,8 +23,10 @@ public class ItemListDetailBuilder {
 	@Autowired
 	ItemDetailBuilder itemDetailBuilder;
 
+
 	private List<Item> items;
 
+	static final Logger logger = Logger.getLogger(ItemListDetailBuilder.class);
 
 	public List<Item> build() {
 
@@ -42,10 +46,12 @@ public class ItemListDetailBuilder {
 	public ItemListDetailBuilder getActiveItemList(Pagination pagination) {
 
 			pagination.setGrid(
-					itemRepository.countByActiveTrueAndBlockFalse()
+						itemRepository.countByActiveTrueAndBlockFalse()
 					);
 		
-			items = itemRepository.findByActiveTrueAndBlockFalse(
+			try {
+				
+				items = itemRepository.findByActiveTrueAndBlockFalse(
 						new PageRequest(
 								pagination.getPageIndex()-1, 
 								pagination.getItemsPerPage(), 
@@ -53,29 +59,50 @@ public class ItemListDetailBuilder {
 								"publishDate")
 						);
 		
+			} catch (Exception e) {
+				
+				items.clear();
+				
+			}
+			
 			return this;
 	}
 	
 	public ItemListDetailBuilder getPreTradingItemList(Pagination pagination) {
 
-			pagination.setGrid(10);
+			pagination.setGrid(
+						itemRepository.countByPreTradingTrueAndBlockFalse()
+					);
 		
-			items = itemRepository.findByActiveTrueAndBlockFalse(
+			
+			try {
+				
+				items = itemRepository.findByPreTradingTrueAndBlockFalse(
 					new PageRequest(
 							pagination.getPageIndex()-1, 
 							pagination.getItemsPerPage(), 
 							pagination.getSortDirection(), 
 							"publishDate")
 					);
-	
+
+			} catch (Exception e) {
+
+				items.clear();
+				
+			}
+
 			return this;
 	}
 
 	public ItemListDetailBuilder getTradingItemList(Pagination pagination) {
 
-			pagination.setGrid(10);
+			pagination.setGrid(
+						itemRepository.countByTradingTrueAndBlockFalse()
+					);
 		
-			items = itemRepository.findByActiveTrueAndBlockFalse(
+			try {
+				
+				items = itemRepository.findByTradingTrueAndBlockFalse(
 					new PageRequest(
 							pagination.getPageIndex()-1, 
 							pagination.getItemsPerPage(), 
@@ -83,16 +110,24 @@ public class ItemListDetailBuilder {
 							"publishDate")
 					);
 	
+			} catch (Exception e) {
+				
+				items.clear();
+	
+			}
+
 			return this;
 	}
 
 	public ItemListDetailBuilder getArchiveItemList(Pagination pagination) {
 
 			pagination.setGrid(
-					itemRepository.countByActiveFalseAndBlockFalse()
+						itemRepository.countByArchiveTrueAndBlockFalse()
 					);
 		
-			items = itemRepository.findByActiveFalseAndBlockFalse(
+			try {
+				
+				items = itemRepository.findByArchiveTrueAndBlockFalse(
 					new PageRequest(
 							pagination.getPageIndex()-1, 
 							pagination.getItemsPerPage(), 
@@ -100,6 +135,12 @@ public class ItemListDetailBuilder {
 							"publishDate")
 					);
 	
+			} catch (Exception e) {
+				
+				items.clear();
+				
+			}
+		
 			return this;
 	}
 

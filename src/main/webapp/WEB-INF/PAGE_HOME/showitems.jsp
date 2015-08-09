@@ -2,7 +2,8 @@
 
 <%@ include file="../LAYOUTS/taglib.jsp"%>
 
-<div class="row">
+<div class="row" id="pageH">
+	<c:if test="${not empty items}">
 	<c:forEach items="${items}" var="item">
 		<div class="col-sm-4 col-md-4">
 			<div class="thumbnail">
@@ -21,7 +22,6 @@
 							</h4>
 						</div>
 					</div>
-					<!-- 	<p>32GB, 2GB Ram, 1080HD, 5.1 inches, Android</p>  -->
 					<div class="row">
 						<c:choose>
 							<c:when test="${item.dateMessage eq 1}">
@@ -168,4 +168,5 @@
 			</div>
 		</div>
 	</c:forEach>
+	</c:if>
 </div>

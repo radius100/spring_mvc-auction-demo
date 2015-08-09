@@ -69,59 +69,26 @@ public class ItemService {
 	}
 
 	
-	public void update(Item itemToSave, int itemId, Locale locale) {
+	public void update(Item itemToSave, int itemId, Principal principal, Locale locale) {
 
 		Item item = itemRepository.findOne(itemId);
-
+		UserItemDetail userItemDetail = new UserItemDetail();
+		
 		item.setId(itemId);
 		item.setName(itemToSave.getName());
 		item.setDescr(itemToSave.getDescr());
 		item.setFullDescr(itemToSave.getFullDescr());
 		item.setStartAmount(itemToSave.getStartAmount());
-/*
-		logger.info(itemToSave.getPublishDateAsString());
-		logger.info(itemToSave.getStartDateAsString());
-		logger.info(itemToSave.getFinishDateAsString());
-		//dd-MMM-YYYY HH:mm
-		//24-Jul-2015 16:25
-		//Jul-2015 16:16
-		
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm");
-		//formatter.withLocale(locale);
-		formatter.withLocale(Locale.ENGLISH);
-		//DateTime dt = formatter.parseDateTime(item.getStartDateAsString());
-		DateTime dt = formatter.parseDateTime("23-Jul-2015 14:19");
-		item.setStartDate(dt.toDate());
-		
-	
-	/*	
-		 SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-YYYY HH:mm");
-		 String startDateAsString = itemToSave.getStartDateAsString();
-		 try {
-			Date date = formatter.parse(startDateAsString);
-		} catch (ParseException e) {
-			//int i=1;i=i/(i-1);
-			e.printStackTrace();
-		}
-	*/	
-		
-	/*	
-		DateTime date = DateTime.parse(itemToSave.getStartDateAsString(), 
-				DateTimeFormat.forPattern("dd-MMM-yyyy HH:mm"));
-		item.setStartDate(date.toDate());
-		logger.info(date.toString());
-	*/
-		
-		//DateTime dt = formatter.parseDateTime(itemToSave.getPublishDateAsString());
-		//item.setPublishDate(dt.toDate());
 
-		//dt = formatter.parseDateTime(itemToSave.getStartDateAsString());
-		//item.setStartDate(dt.toDate());
-
-		//dt = formatter.parseDateTime(itemToSave.getFinishDateAsString());
-		//item.setFinishDate(dt.toDate());
-
+		
+		
 		itemRepository.save(item);
+		/*
+		userItemDetail.setItem(item);
+		userItemDetail.setUser(userRepository.findOneByName(principal.getName()));
+		userItemDetail.setPublish(true);
+		
+		userItemDetailRepository.save(userItemDetail);*/
 	}
 
 	
@@ -161,14 +128,9 @@ public class ItemService {
 		UserItemDetail userItemDetail = new UserItemDetail();
 		userItemDetail.setUser(user);
 		userItemDetail.setItem(item);
-		//userItemDetail.setPublish(true);
-//		userItemDetail.setPreActive(true); 
+		userItemDetail.setPublish(true);
 		
 		userItemDetailRepository.save(userItemDetail);
-		
-		//userItemDetail = userItemDetailRepository.findByUserAndItemAndPreActiveTrue(user,item);
-		
-		//item = userItemDetail.getItem();
 		
 		return Integer.toString(item.getId());
 	}

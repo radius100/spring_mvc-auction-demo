@@ -67,7 +67,7 @@ public class IndexController {
 		return "redirect:/index.html";
 	}
 
-	@RequestMapping("/publish/index")
+	@RequestMapping("/pretrading/index")
 	public String indexPreTrading(@ModelAttribute Pagination pagination) {
 
 		pagination.setSection("PreTrading");
@@ -75,7 +75,7 @@ public class IndexController {
 		return "redirect:/index.html";
 	}
 	
-	@RequestMapping("/all/index")
+	@RequestMapping("/active/index")
 	public String indexAll(@ModelAttribute Pagination pagination) {
 
 		pagination.setSection("Active");

@@ -83,6 +83,10 @@ body {
 	color: #333;
 }
 
+#pageH {
+	height: 250px;
+}
+
 footer {
 	margin: 50px 0;
 }

@@ -1,5 +1,6 @@
 <%@ include file="../LAYOUTS/taglib.jsp"%>
 
+<c:if test="${not empty items}">
 <nav>
 	<ul class="pagination">
     	<c:if test="${pagination.prevPage == -1 }">
@@ -40,3 +41,17 @@
     	</c:if>
     </ul>
 </nav>
+</c:if>
+<c:if test="${empty items}">
+<nav>	
+	<ul class="pagination">
+    	<li class="disabled">
+    		<a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+    	</li>
+    	<li class="disabled"><a href="#">1</a></li>
+    	<li class="disabled">
+  			<a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    	</li>
+    </ul>
+</nav>
+</c:if>

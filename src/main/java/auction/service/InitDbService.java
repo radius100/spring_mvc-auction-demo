@@ -127,9 +127,9 @@ public class InitDbService {
 		item3.setStartAmount(100);
 		item3.setDescr("Очень крутой тел от китаезов! Meizu MX5 Pro! Рекомендую");
 		item3.setFullDescr("Meizu MX5 – обновленная модель нашумевшего смартфона от азиатского производителя. Устройство получило увеличенный, обновленный экран, а также возросшую автономность. Первое, что бросается в глаза при взгляде на Meizu MX4 – минимальные боковые рамки дисплея, благодаря чему девайс с 5,36-дюймовым экраном отлично лежит в руке. Разрешение IPS матрицы составляет 1920х1152 точки, что обеспечивает потрясающую четкость изображения.");
-		item3.setPublishDate(now.plusMinutes(1).toDate());
-		item3.setStartDate(now.plusMinutes(2).toDate());
-		item3.setFinishDate(now.plusMinutes(3).toDate());
+		item3.setPublishDate(now.plusMinutes(10).toDate());
+		item3.setStartDate(now.plusDays(2).toDate());
+		item3.setFinishDate(now.plusWeeks(1).toDate());
 		//item3.setActive(true);
 		item3.setBlock(false);
 		itemRepository.save(item3);

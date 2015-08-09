@@ -99,7 +99,6 @@
 			<div class="col-md-1"></div>
 		</div>
 	</form:form>
-	<button id="btnAA">Send post</button>
 </div>
 
 <script type="text/javascript">
@@ -147,51 +146,20 @@
 		
 		});
 
-		/*
-		 * Добавить чтение локали из кук
-		 *	
-		 * Проверки:
-		 *	PublisDate >= now, можно менять пока не опубликовано.. т.е. Прошел срок указанной PublishDate 
-		 *  неделя >= (StartDate - PublishDate) >= 1 час
-		 *	(FinishDate - StartDate) <= 30 дней
-		 *
-		 */
+		
 		var loc = 'en';
+		var pattern = 'DD MM YYYY HH:mm'; 
 		 
-		 /*
-		 publish minDate - now
-		 		 maxDate - now + mounth
-		 start	 minDate - now
-		 		 maxDate - minDate + 2 weaks
-		 finish  minDate - start minDate + 1 day
-		 		 maxDate - start maxDate + mounth
-		 
-		 */
-		 
-		 function DateTimeAdviseAndCheck(){
+		function DateTimeAdviseAndCheck(){
 			 
-			
-			 
-		 }
-		 /* 
-		 	$("#publishDateAsString").prop('disabled', true);
-		 	$("#startDateAsString").prop('disabled', true);
-		 	$("#finishDateAsString").prop('disabled', true);
-		 */
-		 $("#btnAA").click(function(){
-			    
-			 	var id=$("div[id*='item-']").attr('id');
+			 var id=$("div[id*='item-']").attr('id');
 			 	var path='/items/'+id+'/datetime.json';
 			 				 	
-			 	var publishDateJavaFormat = moment($('#publishDateAsString').val(), "DD-MMM-YYYY HH:mm").format("DD-MM-YYYY HH:mm");
-			 	var startDateJavaFormat = moment($('#startDateAsString').val(), "DD-MMM-YYYY HH:mm").format("DD-MM-YYYY HH:mm");
-			 	var finishDateJavaFormat = moment($('#finishDateAsString').val(), "DD-MMM-YYYY HH:mm").format("DD-MM-YYYY HH:mm");
-			 
 			 	$.post(path,
 			    {
-			    	PublishDateInputBox: publishDateJavaFormat,
-			    	StartDateInputBox: startDateJavaFormat,
-			    	FinishDateInputBox: finishDateJavaFormat
+			    	PublishDateInputBox: $('#publishDateAsString').val(),
+			    	StartDateInputBox: $('#startDateAsString').val(),
+			    	FinishDateInputBox: $('#finishDateAsString').val()
 			    },
 			    function(data, status){
 			        
@@ -206,14 +174,31 @@
 				 	$('#pickerFinishDate').data("DateTimePicker").minDate(data.FinishDateMin);
 				 	$('#pickerFinishDate').data("DateTimePicker").maxDate(data.FinishDateMax);
 				 	$('#finishDateAsString').val(data.FinishDate); 
-					 
-			    });
-			});
+					
+				 	if( data.EditExpired == true ){
 
-		 
+					 	$("#publishDateAsString").prop('disabled', true);
+					 	$("#startDateAsString").prop('disabled', true);
+					 	$("#finishDateAsString").prop('disabled', true);
+				 		
+				 	}
+				 		
+				 	
+			    });
+			 
+		 }
+		
+		$('#pickerPublishDate').focusout(DateTimeAdviseAndCheck);
+		
+		$('#pickerStartDate').focusout(DateTimeAdviseAndCheck);
+		
+		$('#pickerFinishDate').focusout(DateTimeAdviseAndCheck);
+		
+		$('#item').ready(DateTimeAdviseAndCheck);
+		 		 
 		$('#pickerPublishDate').datetimepicker({
 			viewMode : 'days',
-			format : 'DD-MMM-YYYY HH:mm',
+			format : pattern,
 			//maxDate : '30-Jul-2015 10:10',
 			//minDate : 
 			locale : loc
@@ -221,14 +206,14 @@
 	
 		$('#pickerStartDate').datetimepicker({
 			viewMode : 'days',
-			format : 'DD-MMM-YYYY HH:mm',
+			format : pattern,
 			locale : loc
 
 		});
 		
 		$('#pickerFinishDate').datetimepicker({
 			viewMode : 'days',
-			format : 'DD-MMM-YYYY HH:mm',
+			format : pattern,
 			locale : loc
 		});
 		

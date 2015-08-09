@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import auction.entity.Item;
-import auction.json.DateTimeAdviseAndCheck;
 import auction.builder.ItemDetailBuilder;
 import auction.service.ItemService;
 import auction.service.TradePoolService;
@@ -120,7 +119,7 @@ public class ItemController {
 		
 		if (userService.isOwner(principal, id)) {
 
-			itemService.update(item, id, locale);
+			itemService.update(item, id, principal, locale);
 			return "redirect:/item-{id}/edit.html?success=true";
 		}
 		
