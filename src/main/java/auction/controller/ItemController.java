@@ -1,14 +1,20 @@
 package auction.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +33,31 @@ import auction.service.UserService;
 @Controller
 public class ItemController {
 
+
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+
+		return "error";
+	}
+
+	
+	@InitBinder
+	public void initBinderItem(WebDataBinder binder){
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy HH:mm");
+		
+		binder.registerCustomEditor(Date.class, "publishDate", new CustomDateEditor(simpleDateFormat, true));
+		binder.registerCustomEditor(Date.class, "startDate", new CustomDateEditor(simpleDateFormat, true));
+		binder.registerCustomEditor(Date.class, "finishDate", new CustomDateEditor(simpleDateFormat, true));
+	}
+
+	
 	@ModelAttribute("item")
 	public Item constract() {
 		return new Item();
 	}
 
+	
 	@Autowired
 	private ItemService itemService;
 
@@ -41,14 +67,15 @@ public class ItemController {
 	@Autowired
 	private TradePoolService tradePoolService;
 	
-	static final Logger logger = Logger.getLogger(ItemController.class);
-	
 	@Autowired
 	private UserItemDetailService userItemDetailService;
 
 	@Autowired
 	ItemDetailBuilder itemDetailBuilder;
 
+	static final Logger logger = Logger.getLogger(ItemController.class);
+	
+	
 /*	
 	@RequestMapping("/admin/items")
 	public String items(Model model) {
@@ -175,14 +202,7 @@ public class ItemController {
 			@RequestParam String StartDateInputBox,
 			@RequestParam String FinishDateInputBox) {
 
-    	//logger.info(PublishDateInputBox);
-    	//logger.info(StartDateInputBox);
-    	//logger.info(FinishDateInputBox);
-
-		//PublishDateInputBox = "30-Jul-2015 01:00";
-    	//StartDateInputBox = "01-Aug-2015 01:00";
-    	//FinishDateInputBox = "02-Aug-2015 01:00";
-
+  
 		return ResponseEntity
 				.ok()
 				.body( itemService.getDateTimeAdviseAndCheck(principal, id, locale,

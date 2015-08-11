@@ -23,6 +23,7 @@
 				<value>/WEB-INF/DEFS/user-register.xml</value>
 				<value>/WEB-INF/DEFS/item-register.xml</value>
 				<value>/WEB-INF/DEFS/item-edit.xml</value>
+				<value>/WEB-INF/DEFS/error.xml</value>
 			</list>
 		</property>
 	</bean>
