@@ -88,6 +88,8 @@ public class TradePoolBuilder {
 
 		items = new ArrayList<Item>();
 		
+		
+		
 		for( TradePool i : tradePools )
 			if( items.contains(i.getItem()) == false )
 				items.add(i.getItem());

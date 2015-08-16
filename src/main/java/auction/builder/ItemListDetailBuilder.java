@@ -2,7 +2,6 @@ package auction.builder;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import auction.entity.Item;
 import auction.repository.ItemRepository;
-import auction.service.ItemService;
 import auction.session.Pagination;
 
 @Service
@@ -23,10 +21,8 @@ public class ItemListDetailBuilder {
 	@Autowired
 	ItemDetailBuilder itemDetailBuilder;
 
-
 	private List<Item> items;
 
-	static final Logger logger = Logger.getLogger(ItemListDetailBuilder.class);
 
 	public List<Item> build() {
 

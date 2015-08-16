@@ -29,9 +29,14 @@ public class DateTimeAdviseAndCheck {
 	@Expose private String finishDate;
 	
 	@Expose private boolean editExpired;
-	
-	DateTime now = new DateTime();
-	DateTime publish;
+
+    private DateTime now;
+
+    {
+        now = new DateTime();
+    }
+
+    DateTime publish;
 	DateTime start;
 	DateTime finish;
 	
@@ -80,7 +85,7 @@ public class DateTimeAdviseAndCheck {
 	}
 
 	
-	public void checkAndBuild(){
+	void checkAndBuild(){
 		
 		DateTimeFormatter formatter = DateTimeFormat.forPattern(pattern);
 		formatter.withLocale(locale);

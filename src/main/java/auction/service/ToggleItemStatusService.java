@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import auction.constant.Constants;
 import auction.entity.Item;
 import auction.repository.ItemRepository;
 
@@ -37,7 +38,7 @@ public class ToggleItemStatusService {
 		
 		boolean updateFlag;
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-YYYY HH:mm");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DATETIMEFORMATTER_STRING);
 		
 		nowDateString = simpleDateFormat.format(now);
 		

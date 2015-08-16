@@ -9,6 +9,7 @@ import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import auction.constant.Constants;
 import auction.entity.Item;
 
 
@@ -22,7 +23,7 @@ public class DateTimeUtils {
 
 		DateTime dateTime = new DateTime(date);
 
-		DateTimeFormatter dtf = DateTimeFormat.forPattern("dd-MMM-YYYY");
+		DateTimeFormatter dtf = DateTimeFormat.forPattern(Constants.DATEFORMATTER_STRING);
 
 		return dtf.print(dateTime);
 	}
@@ -33,7 +34,7 @@ public class DateTimeUtils {
 
 		DateTime dateTime = new DateTime(date);
 
-		DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm:ss");
+		DateTimeFormatter dtf = DateTimeFormat.forPattern(Constants.TIMEFORMATTER_STRING);
 
 		return dtf.print(dateTime);
 	}
@@ -44,69 +45,11 @@ public class DateTimeUtils {
 
 		DateTime dateTime = new DateTime(date);
 
-		DateTimeFormatter dtf = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm");
+		DateTimeFormatter dtf = DateTimeFormat.forPattern(Constants.DATETIMEFORMATTER_STRING);
 
 		return dtf.print(dateTime);
 	}
 
-	
-	
-	static public String getPublishDateToLocaleString(Item item, Locale locale){
-		
-		DateTime publishDate = new DateTime(item.getPublishDate());
-	//	DateTime startDate = new DateTime(item.getStartDate());
-	//	DateTime finishDate = new DateTime(item.getFinishDate());
-		DateTime now = new DateTime();
-		
-		if( item.getPublishDate() == null )
-			return now.toString("d MMM yyyy HH:mm", locale);
-		
-		//if(publishDate.isAfter( now.plusMonths(2) ))
-		//	return now.toString("d MMM yyyy HH:mm", locale);
-		
-		return publishDate.toString("d MMM yyyy HH:mm", locale);
-			
-	}
-	
-
-	
-	static public String getStartDateToLocaleString(Item item, Locale locale){
-		
-	//	DateTime publishDate = new DateTime(item.getPublishDate());
-		DateTime startDate = new DateTime(item.getStartDate());
-	//	DateTime finishDate = new DateTime(item.getFinishDate());
-		DateTime now = new DateTime();
-		
-		if( item.getStartDate() == null )
-			return now.plusDays(1).toString("d MMM yyyy HH:mm", locale);
-		
-	//	if(startDate.isAfter( publishDate.plusWeeks(2) ))
-	//		return now.toString("d MMM yyyy HH:mm", locale);
-		
-		return startDate.toString("d MMM yyyy HH:mm", locale);
-			
-	}
-
-
-
-	static public String getFinishDateToLocaleString(Item item, Locale locale){
-		
-		//	DateTime publishDate = new DateTime(item.getPublishDate());
-		//	DateTime startDate = new DateTime(item.getStartDate());
-			DateTime finishDate = new DateTime(item.getFinishDate());
-			DateTime now = new DateTime();
-			
-			if( item.getFinishDate() == null )
-				return now.plusWeeks(1).toString("d MMM yyyy HH:mm", locale);
-			
-		//	if(startDate.isAfter( publishDate.plusWeeks(2) ))
-		//		return now.toString("d MMM yyyy HH:mm", locale);
-			
-			return finishDate.toString("d MMM yyyy HH:mm", locale);
-				
-	}
-
-	
 	
 	static public String getCountDownString(Item item, String day, String days){
 
@@ -114,54 +57,54 @@ public class DateTimeUtils {
 		
 		DateTime dateCurrent    = new DateTime();
 		DateTime dateStart  	= new DateTime(item.getStartDate());
-//		DateTime dateFinish 	= new DateTime(item.getFinishDate());
-		DateTime datePublish 	= new DateTime(item.getPublishDate());
+		DateTime dateFinish 	= new DateTime(item.getFinishDate());
+		
+		Duration duration = new Duration(0);
 		
 		logger.info(item.isPreTrading());
 		logger.info(item.isTrading());
-		logger.info(dateCurrent.toString("MM dd, YYYY HH:mm:ss"));
-		logger.info(dateStart.toString("MM dd, YYYY HH:mm:ss"));
-		logger.info(datePublish.toString("MM dd, YYYY HH:mm:ss"));
+		logger.info(dateCurrent.toString(Constants.DATETIMEFORMATTER_STRING));
+		logger.info(dateStart.toString(Constants.DATETIMEFORMATTER_STRING));
 		
 		
-		if( item.isPreTrading() == true ){
-			
-			Duration duration = new Duration(dateCurrent, dateStart);
+		if( item.isPreTrading() )
+			duration = new Duration(dateCurrent, dateStart);
 		
-			int i=1;i=i/(i-1);
-			
-			if( duration.getStandardDays() < 1 ){
+		else if( item.isTrading() ) 
+			duration = new Duration(dateCurrent, dateFinish);
+		
+	//	if( duration == null )
+	//		return "";
+		
+		if( duration.getStandardDays() < 1 ){
 
-				//int i=1;i=i/(i-1);
+			str
+				.append(dateStart.toString(Constants.DATETIMECOUNTDOWNFORMATTER_STRING, Locale.ENGLISH));
 				
-				str
-					//.append(dtf.print(dateStart));
-					//  .append(DATE_FORMAT.format(item.getStartDate()));
-					.append(dateStart.toString("MM dd, YYYY HH:mm:ss"));
-				
-				
-			}
-			
-			else if( duration.getStandardDays() == 1 ){
-				str
-					.append("!")
-					.append(duration.getStandardDays())
-					.append(" ")
-					.append(day);
-			}
-			
-			else if( duration.getStandardDays() > 1 ){
-				str
-					.append("!")
-					.append(duration.getStandardDays())
-					.append(" ")
-					.append(days);
-			}
-			
 		}
-	
+			
+		else if( duration.getStandardDays() == 1 ){
+		
+			str
+				.append("!")
+				.append(duration.getStandardDays())
+				.append(" ")
+				.append(day);
+			}
+			
+		else if( duration.getStandardDays() > 1 ){
+			str
+				.append("!")
+				.append(duration.getStandardDays())
+				.append(" ")
+				.append(days);
+		}
+			
+		
+		logger.info("--->>");
+		logger.info(str.toString());
+		
 		return str.toString();
-		//return str1;
 	}
 	
 }

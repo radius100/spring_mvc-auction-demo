@@ -52,8 +52,8 @@ public class AccountMyItemsTablesBuilder {
 	private List<UserItemDetail> hidesUID;
 	
 	
-	//проверить на анонима!!!
-	boolean err_flag=false;
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!!!
+	private boolean err_flag=false;
 	
 	
 	public AccountMyItemsTablesBuilder init(Principal principal){

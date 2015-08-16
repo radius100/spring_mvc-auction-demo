@@ -14,7 +14,7 @@
 			function() {
 				$('#myCarousel').carousel({
 					interval : 7000
-				})
+				});
 				$('.fdi-Carousel .item').each(
 						function() {
 							var next = $(this).next();

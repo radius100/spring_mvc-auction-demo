@@ -214,8 +214,9 @@
 		    
 			$.get("/items/item-${item.id}/countdown.html",function(data,status) { 
 
-				data = 'Jul 29, 2015 09:00:00';
-				
+			//	data = 'Aug 17, 2015 09:00:00';
+				alert(data);
+			
 				if(data.charAt(0) == '!'){
 					
 					var str = data.substring(1,data.length);

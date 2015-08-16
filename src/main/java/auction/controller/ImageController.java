@@ -31,9 +31,19 @@ public class ImageController {
 	@Autowired
 	private ImageService imageService;
 
-	//static final Logger logger = Logger.getLogger(ImageController.class);
+	static final Logger logger = Logger.getLogger(ImageController.class);
 
 
+	/*
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex, Model model) {
+
+		model.addAttribute("msg",ex.getMessage());
+
+		return "error";
+	}
+*/
+	
 	@RequestMapping("/images/image-{id}.jpeg")
 	@ResponseBody public ResponseEntity<?> processJPEG(@PathVariable int id) throws IOException {
 			
@@ -79,10 +89,14 @@ public class ImageController {
 	
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	@ResponseBody public String addImage(@RequestPart("file") MultipartFile file, 
-			@RequestParam(value="id") int id) throws IOException {
+			@RequestParam(value="id") int id)  /*throws IOException, Exception*/ {
 		
 		//добавить обработку аватарки
 		//обработка ошибок добавлению/ошибке
+		
+		logger.info("Name : "+file.getOriginalFilename());
+		logger.info("Type : "+file.getContentType());
+		logger.info("Size : "+file.getSize());
 		
 		if ( !
 				("image/png".equals(file.getContentType()) ||  
@@ -92,15 +106,16 @@ public class ImageController {
 				) 
 				|| file.getSize() > 250000 
 			)
+			//throw new Exception("aaa");
 			return "fail";
-		
-		
+	//	throw new Exception("bbb");
+	/*	
 		Image image = new Image();
 			
 		image.setBody(file.getBytes());
 		image.setContentType(file.getContentType());
 		imageService.save(image,itemDetailBuilder.setOne(id).build());
-		
+	*/	
 		return "ok";
 	}
 

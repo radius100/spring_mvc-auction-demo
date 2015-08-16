@@ -55,17 +55,14 @@ public class AccountMonitorTablesBuilder {
 	private List<UserItemDetail> collapsesUID;
 	private List<UserItemDetail> followersUID;
 
-	//проверить на анонима!!!
-	boolean err_flag=false;
-	boolean expandBool;
-	boolean hideBool;
+	private boolean err_flag=false;
+	private boolean expandBool;
+	private boolean hideBool;
 
 	
 	public AccountMonitorTablesBuilder init(Principal principal){
 		
-		//BasicConfigurator.configure();
-		//logger.info("!!!!");
-		
+
 		if( principal == null ) 
 			return null;
 		
@@ -78,7 +75,7 @@ public class AccountMonitorTablesBuilder {
 		
 		collapseItems 	 = new ArrayList<Item>();
 
-		items			 = new ArrayList<Item>();
+		//items			 = new ArrayList<Item>();
 
 		
 		user 		 =	userRepository.findOneByName(principal.getName());
@@ -166,8 +163,7 @@ public class AccountMonitorTablesBuilder {
 	
 	public List<AccountTables> build() {
 		
-		//if(err_flag)
-		//	return null;
+		
 		return accountTables;
 
 	}

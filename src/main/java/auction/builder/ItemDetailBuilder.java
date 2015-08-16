@@ -295,8 +295,9 @@ public class ItemDetailBuilder {
 			setUsers.add(userItemDetail.getUser());
 
 		List<User> listUsers = new ArrayList<User>(setUsers);
+		
 		item.setFollowers(listUsers);
-
+		
 		return this;
 	}
 

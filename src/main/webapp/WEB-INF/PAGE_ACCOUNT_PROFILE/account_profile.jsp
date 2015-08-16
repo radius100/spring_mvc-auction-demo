@@ -234,7 +234,7 @@ jQuery(document).ready(function($) {
 				str = $("#"+line+id+" #linkXXX").attr("href");
 				var pre  = str.substring(0,7);
 				var post = str.substring(15,20);
-				$("#"+line+id+" #linkXXX").attr("href", pre+id+post)
+				$("#"+line+id+" #linkXXX").attr("href", pre+id+post);
 				
 				//parse: "location.href='/item-XXX/edit.html'"
 				str = $("#"+line+id+" #edit_item-XXX").attr("onclick");

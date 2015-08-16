@@ -1,18 +1,11 @@
 package auction.service;
 
 import java.security.Principal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,26 +62,21 @@ public class ItemService {
 	}
 
 	
-	public void update(Item itemToSave, int itemId, Principal principal, Locale locale) {
+	public void update(Item itemToSave, int itemId) {
 
 		Item item = itemRepository.findOne(itemId);
-		UserItemDetail userItemDetail = new UserItemDetail();
 		
-		item.setId(itemId);
 		item.setName(itemToSave.getName());
 		item.setDescr(itemToSave.getDescr());
 		item.setFullDescr(itemToSave.getFullDescr());
 		item.setStartAmount(itemToSave.getStartAmount());
-
 		
+		item.setPublishDate(itemToSave.getPublishDate());
+		item.setStartDate(itemToSave.getStartDate());
+		item.setFinishDate(itemToSave.getFinishDate());
 		
 		itemRepository.save(item);
-		/*
-		userItemDetail.setItem(item);
-		userItemDetail.setUser(userRepository.findOneByName(principal.getName()));
-		userItemDetail.setPublish(true);
 		
-		userItemDetailRepository.save(userItemDetail);*/
 	}
 
 	

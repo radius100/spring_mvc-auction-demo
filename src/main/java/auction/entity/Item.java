@@ -97,22 +97,7 @@ public class Item {
 	@Transient
 	private boolean ownerDeletable;
 
-	@Transient
-	private String publishDateAsString;
-
-	@Transient
-	private String startDateAsString;
-
-	@Transient
-	private String finishDateAsString;
-
 	
-	/*
-	 * public List<Image> getImages() { return images; }
-	 * 
-	 * public void setImages(List<Image> images) { this.images = images; }
-	 */
-
 	public Integer getId() {
 		return id;
 	}
@@ -374,30 +359,6 @@ public class Item {
 
 	public void setTrading(boolean trading) {
 		this.trading = trading;
-	}
-
-	public String getPublishDateAsString() {
-		return publishDateAsString;
-	}
-
-	public void setPublishDateAsString(String publishDateAsString) {
-		this.publishDateAsString = publishDateAsString;
-	}
-
-	public String getStartDateAsString() {
-		return startDateAsString;
-	}
-
-	public void setStartDateAsString(String startDateAsString) {
-		this.startDateAsString = startDateAsString;
-	}
-
-	public String getFinishDateAsString() {
-		return finishDateAsString;
-	}
-
-	public void setFinishDateAsString(String finishDateAsString) {
-		this.finishDateAsString = finishDateAsString;
 	}
 
 	public boolean isArchive() {

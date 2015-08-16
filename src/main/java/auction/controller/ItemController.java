@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import auction.entity.Item;
 import auction.builder.ItemDetailBuilder;
+import auction.constant.Constants;
 import auction.service.ItemService;
 import auction.service.TradePoolService;
 import auction.service.UserItemDetailService;
@@ -33,28 +33,18 @@ import auction.service.UserService;
 @Controller
 public class ItemController {
 
-
-	@ExceptionHandler(Exception.class)
-	public String handleAllException(Exception ex) {
-
-		return "error";
+	@ModelAttribute("item")
+	public Item constract() {
+		return new Item();
 	}
-
 	
 	@InitBinder
 	public void initBinderItem(WebDataBinder binder){
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy HH:mm");
-		
-		binder.registerCustomEditor(Date.class, "publishDate", new CustomDateEditor(simpleDateFormat, true));
-		binder.registerCustomEditor(Date.class, "startDate", new CustomDateEditor(simpleDateFormat, true));
-		binder.registerCustomEditor(Date.class, "finishDate", new CustomDateEditor(simpleDateFormat, true));
-	}
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DATETIMEFORMATTER_STRING);
 
-	
-	@ModelAttribute("item")
-	public Item constract() {
-		return new Item();
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
+//		binder.registerCustomEditor(Date.class, "publishDate", new CustomDateEditor(simpleDateFormat, false));
 	}
 
 	
@@ -138,7 +128,7 @@ public class ItemController {
 				 Locale locale,
 				 @PathVariable int id) {
 
-		if(result.hasErrors()){
+		if (result.hasErrors()){
 
 			return "redirect:/item-{id}/edit.html?success=fail";
 		}
@@ -146,7 +136,7 @@ public class ItemController {
 		
 		if (userService.isOwner(principal, id)) {
 
-			itemService.update(item, id, principal, locale);
+			itemService.update(item, id);
 			return "redirect:/item-{id}/edit.html?success=true";
 		}
 		

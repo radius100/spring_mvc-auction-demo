@@ -71,7 +71,7 @@
 					<label for="publishDate" class="col-sm-2 control-label"><spring:message code="register.item.publishDate" /></label>
 					<div class="col-sm-4">
 						<div class="input-group" id="pickerPublishDate">
-							<form:input path="publishDateAsString" class="form-control datetimepickerInput" />
+							<form:input path="publishDate" class="form-control datetimepickerInput" />
 							<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
 						</div>
 					</div>
@@ -80,7 +80,7 @@
 					<label id="notNessesary" for="startDate" class="col-sm-2 control-label"><spring:message code="register.item.startDate" /></label>
 					<div class="col-sm-4">
 						<div class="input-group" id="pickerStartDate">
-							<form:input path="startDateAsString" class="form-control datetimepickerInput" />
+							<form:input path="startDate" class="form-control datetimepickerInput" />
 							<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
 						</div>
 					</div>
@@ -89,7 +89,7 @@
 					<label for="finishDate" class="col-sm-2 control-label"><spring:message code="register.item.finishDate" /></label>
 					<div class="col-sm-4">
 						<div class="input-group" id="pickerFinishDate">
-							<form:input type="text" path="finishDateAsString" class="form-control" value="${formatFinishDate}" />
+							<form:input type="text" path="finishDate" class="form-control" value="${formatFinishDate}" />
 							<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
 						</div>
 					</div>
